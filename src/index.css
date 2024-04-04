@@ -11,3 +11,44 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Michael's Additions */
+
+/* remove the spin boxes for numeric form inputs */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+
+.align-center{
+  justify-content:center;
+}
+
+.align-left{
+  justify-content:left;
+}
+
+/* Table Widgets */
+
+.tableitem-header{
+  font-size: 2.5em;
+  font-weight: bolder;
+}
+
+
+
+/* Result widget */
+
+.result-lg{
+  font-size: 1.5em;
+}
+
+.result-xl{
+  font-size: 2.5em;
+  font-weight: bolder;
+}
+

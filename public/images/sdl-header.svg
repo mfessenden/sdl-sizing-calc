@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="919px" height="208px" viewBox="0 0 919 208" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>sdl-header</title>
+    <defs>
+        <polygon id="path-1" points="114.929687 86.2978507 57.4789973 114.934725 0.028307171 86.2978507 0.028307171 114.934725 57.4789973 143.570313 114.929687 114.934725"></polygon>
+        <polygon id="path-3" points="100.216392 78.5558601 71.7805521 93.0814193 14.8290975 64.6992666 43.2160432 50.1531239"></polygon>
+    </defs>
+    <g id="sdl-header" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Logo" transform="translate(23.7188, 32.0312)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="Path" fill="#6101FF" xlink:href="#path-1"></use>
+            <mask id="mask-4" fill="white">
+                <use xlink:href="#path-3"></use>
+            </mask>
+            <use id="Path" fill="#6101FF" xlink:href="#path-3"></use>
+            <polygon id="top" fill="#6101FF" fill-rule="nonzero" points="114.90138 57.2724618 57.4506902 28.6355877 0 57.2724618 0 28.6355877 57.4506902 0 114.90138 28.6355877"></polygon>
+        </g>
+        <g id="Logo-Text" transform="translate(180.2974, 34)" fill="#4F4F4F" font-family="Poppins-SemiBold, Poppins" font-size="107" font-weight="500" letter-spacing="-7.086262">
+            <text id="SDL-Calculator---Text-(Poppins)">
+                <tspan x="0" y="112">SDL Calculator</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
