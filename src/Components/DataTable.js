@@ -67,7 +67,7 @@ const TableItem = (props) => {
 
 function DataTable(props) {
     return (
-        <Accordion>
+        <Accordion alwaysOpen>
             <Accordion.Item eventKey='0'>
                 <Accordion.Header className='tableitem-header'>Infrastructure</Accordion.Header>
                 <Accordion.Body>
