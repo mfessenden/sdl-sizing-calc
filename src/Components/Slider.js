@@ -1,13 +1,12 @@
 import Form from 'react-bootstrap/Form';
 
 
-const RangeSlider = (props) => {
+function RangeSlider({device}) {
     return (
         <>
-            <Form.Label>
-                {props.label}
-            </Form.Label>
-            <Form.Range />
+            <Form.Range
+                value={device.quantity}
+            />
         </>
     );
 }

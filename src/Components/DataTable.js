@@ -15,55 +15,54 @@ function TableItem({table_item}) {
     const devices = table_item.devices
     return (
         <div>
+            <Table className= 'align-left'>
+                <thead>
+                <tr>
+                    {/*{props.categories.map(category => (*/}
+                    {/*<th className='align-left'>{category}</th>*/}
 
-                <Table className= 'align-left'>
-                    <thead>
+                    <th>Device Type</th>
+                    <th>Quantity</th>
+                    <th>EPS</th>
+                    <th>GB/day</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {devices.map(device => (
                     <tr>
-                        {/*{props.categories.map(category => (*/}
-                        {/*<th className='align-left'>{category}</th>*/}
-
-                        <th>Device Type</th>
-                        <th>Quantity</th>
-                        <th>EPS</th>
-                        <th>GB/day</th>
+                        <td>
+                            {device.display_name}
+                            <RangeSlider
+                                // value={device.quantity}
+                                device={device}
+                            />
+                        </td>
+                        <td>
+                            <Form.Control
+                                size='sm'
+                                type='number'
+                                onChange={onRangeChanged}
+                                value={device.quantity}
+                            />
+                        </td>
+                        <td>
+                            <Form.Control
+                                size='sm'
+                                type='number'
+                                value={device.quantity}
+                            />
+                        </td>
+                        <td>
+                            <Form.Control
+                                size='sm'
+                                type='number'
+                                value={device.quantity}
+                            />
+                        </td>
                     </tr>
-                    </thead>
-                    <tbody>
-
-                    {devices.map(device => (
-                        <tr>
-                            <td>
-                                {device.display_name}
-                                <RangeSlider
-                                    // value={device.quantity}
-                                    props={device}
-                                />
-                            </td>
-                            <td>
-                                <Form.Control
-                                    size='sm'
-                                    type='number'
-                                    onChange={onRangeChanged}
-                                    value={device.quantity}
-                                />
-                            </td>
-                            <td>
-                                <Form.Control
-                                    size='sm'
-                                    type='number'
-                                    value={device.quantity}
-                                />
-                            </td>
-                            <td>
-                                <Form.Control
-                                    size='sm'
-                                    type='number'
-                                    value={device.quantity}
-                                />
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
+                ))}
+                </tbody>
             </Table>
         </div>
     )
