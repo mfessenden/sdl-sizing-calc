@@ -13,14 +13,17 @@
     },
     "categories": [
         {
+            "id": 0,
             "name": "infrastructure",
             "display_name": "Infrastructure"
         },
         {
+            "id": 2,
             "name": "security",
             "display_name": "Security"
         },
         {
+            "id": 2,
             "name": "network",
             "display_name": "Network"
         }
@@ -28,21 +31,25 @@
     "inputs": {
         "industry": [
             {
+                "id": 0,
                 "name": "energy",
                 "display_name": "Energy / Utilities",
                 "weight": 0.95
             },
             {
+                "id": 1,
                 "name": "consumer_product",
                 "display_name": "Consumer - Products/Equipment",
                 "weight": 1.0
             },
             {
+                "id": 2,
                 "name": "consumer_retail",
                 "display_name": "Consumer - Retail/Services",
                 "weight": 2.0
             },
             {
+                "id": 3,
                 "name": "financial_insurance",
                 "display_name": "Financial - Insurance / Services",
                 "weight": 1.2
@@ -53,26 +60,31 @@
                 "weight": 2.0
             },
             {
+                "id": 4,
                 "name": "government_federal",
                 "display_name": "Government - Federal",
                 "weight": 1.4
             },
             {
+                "id": 5,
                 "name": "government_local",
                 "display_name": "Government - Local",
                 "weight": 0.75
             },
             {
+                "id": 6,
                 "name": "government_state",
                 "display_name": "Government - State",
                 "weight": 1.0
             },
             {
+                "id": 7,
                 "name": "healthcare_services",
                 "display_name": "Health Care Services",
                 "weight": 1.2
             },
             {
+                "id": 8,
                 "name": "higher_education",
                 "display_name": "Higher Education",
                 "weight": 2.5
@@ -155,12 +167,14 @@
     },
     "device_types": [
         {
+            "id": 0,
             "name": "generic_source",
             "display_name": "Generic Data Source (SIEM, etc.)",
             "base_weight": 1.0,
             "category": "infrastructure"
         },
         {
+            "id": 1,
             "name": "legacy_antivirus",
             "display_name": "Legacy Anti-virus",
             "base_weight": 0.005,
@@ -168,78 +182,91 @@
             "category": "infrastructure"
         },
         {
+            "id": 2,
             "name": "application_servers",
             "display_name": "Application Servers",
             "base_weight": 1.0,
             "category": "infrastructure"
         },
         {
+            "id": 3,
             "name": "citrix_servers",
             "display_name": "Citrix Servers",
             "base_weight": 0.5,
             "category": "infrastructure"
         },
         {
+            "id": 4,
             "name": "data_loss_prevention",
             "display_name": "Data Loss Prevention",
             "base_weight": 0.0025,
             "category": "infrastructure"
         },
         {
+            "id": 5,
             "name": "data_loss_prevention_servers",
             "display_name": "Data Loss Prevention - Servers",
             "base_weight": 0.5,
             "category": "infrastructure"
         },
         {
+            "id": 6,
             "name": "database_monitoring_applications",
             "display_name": "Database Monitoring Applications",
             "base_weight": 8.0,
             "category": "infrastructure"
         },
         {
+            "id": 7,
             "name": "database_servers_corporate",
             "display_name": "Database Servers - (Oracle, MSSQL, DB2, etc) - Corporate Wide",
             "base_weight": 5.0,
             "category": "infrastructure"
         },
         {
+            "id": 8,
             "name": "database_servers_workgroup",
             "display_name": "Database Servers - (Oracle, MSSQL, DB2, etc) - Workgroup",
             "base_weight": 2.0,
             "category": "infrastructure"
         },
         {
+            "id": 9,
             "name": "device_control_systems",
             "display_name": "Device Control Systems",
             "base_weight": 0.5,
             "category": "infrastructure"
         },
         {
+            "id": 10,
             "name": "dhcp_servers",
-            "display_name": "DHCP Servers - (Use \\# Endpoints)",
+            "display_name": "DHCP Servers - (Use # Endpoints)",
             "base_weight": 0.1,
             "category": "infrastructure"
         },
         {
+            "id": 11,
             "name": "dns_servers",
-            "display_name": "DNS Servers - (Use \\# Endpoints)",
+            "display_name": "DNS Servers - (Use # Endpoints)",
             "base_weight": 0.15,
             "category": "infrastructure"
         },
         {
+            "id": 12,
             "name": "email_content",
             "display_name": "Email Content/Spam Filtering",
             "base_weight": 10.0,
             "category": "infrastructure"
         },
         {
+            "id": 13,
             "name": "email_servers",
             "display_name": "Email Servers - Exchange / Sendmail",
             "base_weight": 2.0,
             "category": "infrastructure"
         },
         {
+            "id": 14,
             "name": "ids_perimeter",
             "display_name": "IDS / IPS - Perimeter",
             "base_weight": 15.0,
@@ -247,6 +274,7 @@
             "category": "security"
         },
         {
+            "id": 15,
             "name": "ids_internal",
             "display_name": "IDS / IPS - Internal / DMZ",
             "base_weight": 9.0,
@@ -254,6 +282,7 @@
             "category": "security"
         },
         {
+            "id": 16,
             "name": "ids_regional",
             "display_name": "IDS / IPS - Regional / Local",
             "base_weight": 15.0,
@@ -261,18 +290,21 @@
             "category": "security"
         },
         {
+            "id": 17,
             "name": "network_access_control",
             "display_name": "Network Access Control (NAC)",
             "base_weight": 1.0,
             "category": "network"
         },
         {
+            "id": 18,
             "name": "network_behavioral_analysis",
             "display_name": "Network Behavioral Analysis/Detection",
             "base_weight": 1.0,
             "category": "network"
         },
         {
+            "id": 19,
             "name": "network_router",
             "display_name": "Networking - Router - Management Events",
             "base_weight": 0.1,
@@ -280,6 +312,7 @@
             "category": "network"
         },
         {
+            "id": 20,
             "name": "network_switches",
             "display_name": "Networking - Switches - Management Events",
             "base_weight": 0.1,
