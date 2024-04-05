@@ -28,6 +28,28 @@
             "display_name": "Network"
         }
     ],
+    "retention_periods": [
+        {
+            "id": 0,
+            "name": "daily",
+            "display_name": "Daily"
+        },
+        {
+            "id": 2,
+            "name": "weekly",
+            "display_name": "Weekly"
+        },
+        {
+            "id": 2,
+            "name": "monthly",
+            "display_name": "Monthly"
+        },
+        {
+            "id": 4,
+            "name": "yearly",
+            "display_name": "Yearly"
+        }
+    ],
     "inputs": {
         "industry": [
             {
