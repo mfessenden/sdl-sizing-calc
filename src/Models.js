@@ -1,12 +1,14 @@
+import {createContext, useContext} from 'react';
 var jsonData = require('./data.json');
 
 
 // Represents one of the row items in a dropdown table.
 // Slider represents the quantity value
 class Device {
-    quantity = 0;
-    event_size = 0;
-    base_weight = 1;
+    id: number;
+    quantity: number = 0;
+    event_size: number = 0;
+    base_weight: number = 1;
     constructor(name, display_name, event_size=0, base_weight=1) {
         this.name = name;
         this.display_name = display_name;
@@ -18,8 +20,11 @@ class Device {
 
 // Represents a dropdown table payload
 class AccordionTableItem {
-    devices = []
-    constructor(name, display_name, devices=[]) {
+    id: number;
+    name: string;
+    display_name: string;
+    devices: Array<Device> = []
+    constructor(id: number, name: string, display_name: string, devices=[]) {
         this.name = name;
         this.display_name = display_name;
         this.devices = devices;
@@ -31,9 +36,9 @@ class AccordionTableItem {
 
 
 class DataModel {
-    columns = []
-    table_items = []
-    constructor(columns, table_items=[]) {
+    columns: Array<string> = []
+    table_items: Array<AccordionTableItem> = []
+    constructor(columns: Array<string>, table_items: Array<AccordionTableItem> = []) {
         this.columns = columns;
         this.table_items = table_items;
     }
@@ -60,7 +65,7 @@ export default function loadData() {
 
     // iterate categories to build the table items
     for (const category of categories) {
-        const table_item: AccordionTableItem = new AccordionTableItem(category.name, category.display_name);
+        const table_item: AccordionTableItem = new AccordionTableItem(category.id, category.name, category.display_name);
         table_items.push(table_item)
         for (const device of device_types) {
 
@@ -78,4 +83,17 @@ export default function loadData() {
 
     const data_model: DataModel = new DataModel(default_columns, table_items)
     return data_model
+}
+
+
+// create a context with data model object
+export const StateContext = createContext(loadData());
+
+// returns the context data model
+export const useStateStore = () => useContext(StateContext);
+
+
+// Stubs for reducer handlers
+function setDeviceQuantity(device: Device, quantity: number) {
+
 }

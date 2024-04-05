@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {Component, useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import useStateStore from "../Models";
 
 
 // form group for the given tab
@@ -30,7 +31,7 @@ function TabbedResultOutput() {
 
 
 function ResultTabs() {
-    const [key, setKey] = useState('home');
+    const [key, setKey] = useState('daily');
 
     return (
         <Tabs
@@ -56,13 +57,17 @@ function ResultTabs() {
 }
 
 
-const Result = (props) => {
+export default function Result() {
+    const data = useStateStore()
+    console.log('Result:')
+    console.log(data)
+
     return (
-        <Container >
+        <Container>
             <Row className='align-center result-lg'>
                 Your estimated data ingest:
             </Row>
-            <Row className='align-center result-xl' >
+            <Row className='align-center result-xl'>
                 0.00 GB
             </Row>
             <Row className='align-center'>
@@ -74,13 +79,13 @@ const Result = (props) => {
                         as='input'
                         type='button'
                         value='Get a Quote!'
+                        onClick={() => {
+                            alert('You clicked me!');
+                        }}
                     />
                 </Col>
             </Row>
         </Container>
     );
+
 }
-
-
-
-export default Result;
