@@ -3,17 +3,18 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import RangeSlider from './Slider';
 import '../index.css';
+import {useStateStore} from "../Models";
+
 
 // dummy handler
 function onRangeChanged(value) {
     alert(value.value)
 }
 
-function TableItem() {
-
+function TableItem({table_item}) {
     return (
-        <Table className= 'align-left'>
-            <thead>
+            <Table className= 'align-left'>
+                <thead>
                 <tr>
                     {/*{props.categories.map(category => (*/}
                     {/*<th className='align-left'>{category}</th>*/}
@@ -23,8 +24,8 @@ function TableItem() {
                     <th>EPS</th>
                     <th>GB/day</th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr>
                     <td>
                         Label:
@@ -50,39 +51,32 @@ function TableItem() {
                         />
                     </td>
                 </tr>
-            </tbody>
-        </Table>
-    );
+                </tbody>
+            </Table>
+        )
 }
 
 
+
 export default function DataTable() {
-
+    const data = useStateStore()
+    const table_items = data.table_items
     return (
-        <Accordion alwaysOpen>
-            <Accordion.Item eventKey='0'>
-                <Accordion.Header
-                    bsPrefix='h1'
-                >
-                    Infrastructure
-                </Accordion.Header>
-                <Accordion.Body>
-                    <TableItem/>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey='1'>
-                <Accordion.Header>Security</Accordion.Header>
-                <Accordion.Body>
-                    <TableItem/>
-                </Accordion.Body>
-            </Accordion.Item>
-            <Accordion.Item eventKey='2'>
-                <Accordion.Header>Network</Accordion.Header>
-                <Accordion.Body>
-                    <TableItem/>
-                </Accordion.Body>
-            </Accordion.Item>
-        </Accordion>
-    );
-
+        <div>
+            {table_items.map(table_item => (
+                <Accordion alwaysOpen>
+                    <Accordion.Item eventKey={table_item.category_id}>
+                        <Accordion.Header>
+                            {table_item.display_name}
+                        </Accordion.Header>
+                        <Accordion.Body>
+                            <TableItem
+                                table_item={table_item}
+                            />
+                        </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion>
+            ))}
+        </div>
+    )
 }
