@@ -12,50 +12,62 @@ function onRangeChanged(value) {
 }
 
 function TableItem({table_item}) {
+    const devices = table_item.devices
     return (
-            <Table className= 'align-left'>
-                <thead>
-                <tr>
-                    {/*{props.categories.map(category => (*/}
-                    {/*<th className='align-left'>{category}</th>*/}
+        <div>
 
-                    <th>Device Type</th>
-                    <th>Quantity</th>
-                    <th>EPS</th>
-                    <th>GB/day</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>
-                        Label:
-                        <RangeSlider/>
-                    </td>
-                    <td>
-                        <Form.Control
-                            size='sm'
-                            type='number'
-                            onChange={onRangeChanged}
-                        />
-                    </td>
-                    <td>
-                        <Form.Control
-                            size='sm'
-                            type='number'
-                        />
-                    </td>
-                    <td>
-                        <Form.Control
-                            size='sm'
-                            type='number'
-                        />
-                    </td>
-                </tr>
-                </tbody>
+                <Table className= 'align-left'>
+                    <thead>
+                    <tr>
+                        {/*{props.categories.map(category => (*/}
+                        {/*<th className='align-left'>{category}</th>*/}
+
+                        <th>Device Type</th>
+                        <th>Quantity</th>
+                        <th>EPS</th>
+                        <th>GB/day</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {devices.map(device => (
+                        <tr>
+                            <td>
+                                {device.display_name}
+                                <RangeSlider
+                                    // value={device.quantity}
+                                    props={device}
+                                />
+                            </td>
+                            <td>
+                                <Form.Control
+                                    size='sm'
+                                    type='number'
+                                    onChange={onRangeChanged}
+                                    value={device.quantity}
+                                />
+                            </td>
+                            <td>
+                                <Form.Control
+                                    size='sm'
+                                    type='number'
+                                    value={device.quantity}
+                                />
+                            </td>
+                            <td>
+                                <Form.Control
+                                    size='sm'
+                                    type='number'
+                                    value={device.quantity}
+                                />
+                            </td>
+                        </tr>
+                    ))}
+                    </tbody>
             </Table>
-        )
+        </div>
+    )
 }
-
 
 
 export default function DataTable() {

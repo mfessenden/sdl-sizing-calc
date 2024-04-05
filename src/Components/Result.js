@@ -1,4 +1,4 @@
-import {Component, useState} from 'react';
+import {useState, React} from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -6,7 +6,40 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import useStateStore from "../Models";
+import {useStateStore, useResultStore} from "../Models";
+
+
+/**
+ * Format bytes as human-readable text.
+ *
+ * @param bytes Number of bytes.
+ * @param si True to use metric (SI) units, aka powers of 1000. False to use
+ *           binary (IEC), aka powers of 1024.
+ * @param dp Number of decimal places to display.
+ *
+ * @return Formatted string.
+ */
+function humanFileSize(bytes, si=false, dp=1) {
+    const thresh = si ? 1000 : 1024;
+
+    if (Math.abs(bytes) < thresh) {
+        return bytes + ' GB';
+    }
+
+    const units = si
+        ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+        : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+    let u = -1;
+    const r = 10**dp;
+
+    do {
+        bytes /= thresh;
+        ++u;
+    } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+
+
+    return bytes.toFixed(dp) + ' ' + units[u];
+}
 
 
 // form group for the given tab
@@ -32,7 +65,10 @@ function TabbedResultOutput() {
 
 function ResultTabs() {
     const [key, setKey] = useState('daily');
-
+    const data = useStateStore()
+    const periods = data.periods
+    console.log('Periods: ')
+    console.log(periods)
     return (
         <Tabs
             id='controlled-tab-example'
@@ -58,7 +94,7 @@ function ResultTabs() {
 
 
 export default function Result() {
-    const data = useStateStore()
+    const data = useResultStore()
     console.log('Result:')
     console.log(data)
 
@@ -68,7 +104,7 @@ export default function Result() {
                 Your estimated data ingest:
             </Row>
             <Row className='align-center result-xl'>
-                0.00 GB
+                {humanFileSize(data.usage)}
             </Row>
             <Row className='align-center'>
                 <ResultTabs/>
@@ -87,5 +123,4 @@ export default function Result() {
             </Row>
         </Container>
     );
-
 }
