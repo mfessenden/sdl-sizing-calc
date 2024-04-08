@@ -27,7 +27,7 @@ function TableItem({table_item, columns}) {
                 <tbody>
 
                 {devices.map(device => (  // build a table row for each device
-                    <tr>
+                    <tr key={device.id}>
                         <td>
                             {device.display_name}
                             <RangeSlider
@@ -77,6 +77,7 @@ export default function DataTable() {
     const table_items = data.table_items
     return (
         <div>
+
             {table_items.map(table_item => (
                 // don't show the table if there are no entries
                 table_item.devices.length > 0 ? (
