@@ -46,19 +46,18 @@ function TableItem({table_item, columns}) {
                                 value={device.quantity}
                             />
                         </td>
-                        <td>
+                        <td className='text-center'>
                             <Form.Text
                                 key={device.id}
-                                className='whoops'
+                                // style={{width: '100px'}}
                                 type='number'
                             >
                                 {device.quantity}
                             </Form.Text>
                         </td>
-                        <td>
+                        <td className='text-center'>
                             <Form.Text
                                 key={device.id}
-                                className='whoops'
                                 type='number'
                             >
                                 {device.quantity}
