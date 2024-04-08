@@ -87,13 +87,11 @@ class DataContext {
     }
 
     setDeviceQuantity(device_id: number, quantity: number) {
-        console.log(`Updating device id: ${device_id}`)
+
         for (const table_item: CalculatorTable in this.table_items) {
-            console.log(`Checking table:  ${table_item.devices}`)
             for (const device: Device in table_item.devices) {
-                console.log(`Checking device:  ${device.id}`)
-                if (device.id == device_id) {
-                    console.log('Matched device...')
+                if (device.id === device_id) {
+                    console.log(`Updating device id: ${device_id} -> ${quantity}`)
                     device.quantity = quantity
                 }
             }
@@ -138,12 +136,11 @@ export function buildDataContext() {
     const table_items = []
     const category_items = []
     const period_items = []
-    console.log(`Starting up...`)
+
     // iterate categories to build the table items
     for (const category of categories) {
         const categoryObj = new Category(category.id, category.name, category.display_name)
         const table_item: CalculatorTable = new CalculatorTable(category.id, category.display_name);
-        console.log(`Creating table id: ${category.id}`)
         table_items.push(table_item)
         category_items.push(categoryObj)
 
