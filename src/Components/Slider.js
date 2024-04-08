@@ -1,19 +1,22 @@
 import Form from 'react-bootstrap/Form';
-import {useState} from "react";
+import {useStateStore} from '../Models';
 
 
 function RangeSlider({device}) {
-
-    const [sliderValue, setSliderValue] = useState(0);
+    const data = useStateStore()
 
     const handleSliderChange = (e) => {
-        setSliderValue(e.target.value);
+        // device.quantity = e.target.value
+
+        data.setDeviceQuantity(device.id, e.target.value)
+        console.log(`Device updated: '${device.name}', value: '${device.quantity}'`)
     };
 
     return (
         <>
             <Form.Range
-                value={sliderValue}
+                key={device.id}
+                value={device.quantity}
                 onChange={handleSliderChange}
             />
         </>

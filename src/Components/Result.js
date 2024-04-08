@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import {useStateStore, useResultStore} from "../Models";
+import {useStateStore, useResultStore} from '../Models';
 
 
 /**
@@ -44,19 +44,39 @@ function humanFileSize(bytes, si=false, dp=1) {
 
 // form group for the given tab
 function TabbedResultOutput() {
+
+    const handleValueChanged = (e) => {
+        console.log(`Value changed: '${e.target.value}'`)
+    };
+
     return (
         <Form>
-            <Form.Group>
+            <Form.Group className='text-center'>
                 <Form.Label>Data Retention Period</Form.Label>
-                <Form.Control size='sm' />
+                <Form.Control
+                    size='sm'
+                    value='1'
+                    className='text-center'
+                    onChange={handleValueChanged}
+                />
             </Form.Group>
             <Form.Group>
                 <Form.Label>No. of Employees</Form.Label>
-                <Form.Control size='sm' />
+                <Form.Control
+                    size='sm'
+                    value='1'
+                    className='text-center'
+                    onChange={handleValueChanged}
+                />
             </Form.Group>
             <Form.Group>
                 <Form.Label>SOAR Seats</Form.Label>
-                <Form.Control size='sm' />
+                <Form.Control
+                    size='sm'
+                    value='0'
+                    className='text-center'
+                    onChange={handleValueChanged}
+                />
             </Form.Group>
         </Form>
     );
@@ -65,27 +85,41 @@ function TabbedResultOutput() {
 
 function ResultTabs() {
     const [key, setKey] = useState('daily');
-    const data = useStateStore()
-    const periods = data.periods
-    console.log('Periods: ')
-    console.log(periods)
+
+    const tabChanged = (e) => {
+        console.log(`Value changed: '${e.target.value}'`)
+    };
+
     return (
         <Tabs
             id='controlled-tab-example'
             // activeKey={key}
             onSelect={(k) => setKey(k)}
             className='align-center'
+            onChange={tabChanged}
         >
-            <Tab eventKey='daily' title='Daily'>
+            <Tab
+                eventKey='daily'
+                title='Daily'
+            >
                 <TabbedResultOutput/>
             </Tab>
-            <Tab eventKey='weekly' title='Weekly'>
+            <Tab
+                eventKey='weekly'
+                title='Weekly'
+            >
                 <TabbedResultOutput/>
             </Tab>
-            <Tab eventKey='monthly' title='Monthly'>
+            <Tab
+                eventKey='monthly'
+                title='Monthly'
+            >
                 <TabbedResultOutput/>
             </Tab>
-            <Tab eventKey='yearly' title='Yearly'>
+            <Tab
+                eventKey='yearly'
+                title='Yearly'
+            >
                 <TabbedResultOutput/>
             </Tab>
         </Tabs>
@@ -95,9 +129,6 @@ function ResultTabs() {
 
 export default function Result() {
     const data = useResultStore()
-    console.log('Result:')
-    console.log(data)
-
     return (
         <Container>
             <Row className='align-center result-lg'>

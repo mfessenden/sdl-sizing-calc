@@ -54,3 +54,23 @@ tr {
   font-weight: bolder;
 }
 
+/* spacing for top navbar item placement */
+.navbar{
+  left: -30px;
+}
+
+.md {
+  margin-left: -100px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.div.container {
+  max-width: 1600px;
+}
