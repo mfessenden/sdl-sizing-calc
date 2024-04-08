@@ -1,4 +1,5 @@
 import {createContext, useContext} from 'react';
+
 var jsonData = require('./data.json');
 
 
@@ -8,12 +9,15 @@ class Device {
     id: number;
     name: string
     display_name: string
+    category_id: number
     quantity: number = 0;
     event_size: number = 0;
     base_weight: number = 1;
-    constructor(name: string, display_name: string, event_size: number = 0, base_weight: number = 1) {
+    constructor(id: number, name: string, display_name: string, category_id: number, event_size: number = 0, base_weight: number = 1) {
+        this.id = id;
         this.name = name;
         this.display_name = display_name;
+        this.category_id = category_id;
         this.event_size = event_size;
         this.base_weight = base_weight;
     }
@@ -66,10 +70,12 @@ class DataContext {
     categories: Array<Category> = []
     periods: Array<Period> = []
     table_items: Array<CalculatorTable> = []
-    constructor(categories, periods, table_items) {
+    columns: Array<string> = []  // table column names
+    constructor(categories, periods, table_items, columns) {
         this.categories = categories
         this.periods = periods
         this.table_items = table_items
+        this.columns = columns
     }
     getCategoryDisplayName(category_id: number) {
         for (const category: Category in this.categories) {
@@ -78,6 +84,20 @@ class DataContext {
             }
         }
         return null
+    }
+
+    setDeviceQuantity(device_id: number, quantity: number) {
+        console.log(`Updating device id: ${device_id}`)
+        for (const table_item: CalculatorTable in this.table_items) {
+            console.log(`Checking table:  ${table_item.devices}`)
+            for (const device: Device in table_item.devices) {
+                console.log(`Checking device:  ${device.id}`)
+                if (device.id == device_id) {
+                    console.log('Matched device...')
+                    device.quantity = quantity
+                }
+            }
+        }
     }
 }
 
@@ -99,13 +119,14 @@ export const useResultStore = () => useContext(ResultContext);
 // TODO: build a thin wrapper around JSON data, don't use classes
 // Loads the current data from disk and returns a data object
 // for use in the app
-export default function buildDataContext() {
+export function buildDataContext() {
     const defaults = jsonData['defaults']
 
     // default property values
     const default_event_size = defaults['device_type_event_size']
     const default_base_weight = defaults['device_base_weight']
-    const default_category = defaults['device_type_category']
+    const default_category_id = defaults['device_type_category_id']
+    const columns = defaults['columns']
 
 
     // data for the table items
@@ -117,11 +138,12 @@ export default function buildDataContext() {
     const table_items = []
     const category_items = []
     const period_items = []
-
+    console.log(`Starting up...`)
     // iterate categories to build the table items
     for (const category of categories) {
         const categoryObj = new Category(category.id, category.name, category.display_name)
         const table_item: CalculatorTable = new CalculatorTable(category.id, category.display_name);
+        console.log(`Creating table id: ${category.id}`)
         table_items.push(table_item)
         category_items.push(categoryObj)
 
@@ -129,12 +151,12 @@ export default function buildDataContext() {
         for (const device of device_types) {
 
             // use default category of 'infrastructure' if not specified
-            const deviceCategory = device.category ? device.category : default_category;
+            const deviceCategoryId = device.category_id ? device.category_id : default_category_id;
 
-            if (deviceCategory === category.name) {
+            if (deviceCategoryId === category.id) {
                 const eventSize = device.event_size ? device.event_size : default_event_size;
                 const baseWeight = device.base_weight ? device.base_weight : default_base_weight;
-                const table_device: Device = new Device(device.name, device.display_name, eventSize, baseWeight)
+                const table_device: Device = new Device(device.id, device.name, device.display_name, device.category_id, eventSize, baseWeight)
                 table_item.addDevice(table_device)
             }
         }
@@ -145,18 +167,27 @@ export default function buildDataContext() {
         period_items.push(periodObj)
     }
 
-    const data_model: DataContext = new DataContext(category_items, period_items, table_items)
-    return data_model
+    return new DataContext(category_items, period_items, table_items, columns)
 }
 
 
 // create a context with data model object
-export const StateContext = createContext(buildDataContext());
+const StateContext = createContext(buildDataContext());
 
 // returns the context data model
-export const useStateStore = () => useContext(StateContext);
-
+const useStateStore = () => useContext(StateContext);
 
 
 // Stubs for reducer handlers
 function setDeviceQuantity(device: Device, quantity: number) {}
+
+
+export {
+    Category,
+    Device,
+    Period,
+    CalculatorTable,
+    DataContext,
+    StateContext,
+    useStateStore,
+}

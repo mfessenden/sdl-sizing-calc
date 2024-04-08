@@ -3,13 +3,17 @@
         "device_type_event_size": 508,
         "device_base_weight": 1.0,
         "device_quantity": 0.0,
-        "device_type_category": "infrastructure",
+        "device_type_category_id": 0,
         "columns": [
             "Device Type",
             "Quantity",
             "EPS",
             "GB/Day"
         ]
+    },
+    "current_state": {
+        "retention_period": 0,
+        "expanded_table_items": []
     },
     "categories": [
         {
@@ -26,6 +30,11 @@
             "id": 2,
             "name": "network",
             "display_name": "Network"
+        },
+        {
+            "id": 3,
+            "name": "unknown",
+            "display_name": "Unknown"
         }
     ],
     "retention_periods": [
@@ -193,7 +202,7 @@
             "name": "generic_source",
             "display_name": "Generic Data Source (SIEM, etc.)",
             "base_weight": 1.0,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 1,
@@ -201,91 +210,91 @@
             "display_name": "Legacy Anti-virus",
             "base_weight": 0.005,
             "event_size": 286,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 2,
             "name": "application_servers",
             "display_name": "Application Servers",
             "base_weight": 1.0,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 3,
             "name": "citrix_servers",
             "display_name": "Citrix Servers",
             "base_weight": 0.5,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 4,
             "name": "data_loss_prevention",
             "display_name": "Data Loss Prevention",
             "base_weight": 0.0025,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 5,
             "name": "data_loss_prevention_servers",
             "display_name": "Data Loss Prevention - Servers",
             "base_weight": 0.5,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 6,
             "name": "database_monitoring_applications",
             "display_name": "Database Monitoring Applications",
             "base_weight": 8.0,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 7,
             "name": "database_servers_corporate",
             "display_name": "Database Servers - (Oracle, MSSQL, DB2, etc) - Corporate Wide",
             "base_weight": 5.0,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 8,
             "name": "database_servers_workgroup",
             "display_name": "Database Servers - (Oracle, MSSQL, DB2, etc) - Workgroup",
             "base_weight": 2.0,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 9,
             "name": "device_control_systems",
             "display_name": "Device Control Systems",
             "base_weight": 0.5,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 10,
             "name": "dhcp_servers",
             "display_name": "DHCP Servers - (Use # Endpoints)",
             "base_weight": 0.1,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 11,
             "name": "dns_servers",
             "display_name": "DNS Servers - (Use # Endpoints)",
             "base_weight": 0.15,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 12,
             "name": "email_content",
             "display_name": "Email Content/Spam Filtering",
             "base_weight": 10.0,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 13,
             "name": "email_servers",
             "display_name": "Email Servers - Exchange / Sendmail",
             "base_weight": 2.0,
-            "category": "infrastructure"
+            "category_id": 0
         },
         {
             "id": 14,
@@ -293,7 +302,7 @@
             "display_name": "IDS / IPS - Perimeter",
             "base_weight": 15.0,
             "event_size": 286,
-            "category": "security"
+            "category_id": 1
         },
         {
             "id": 15,
@@ -301,7 +310,7 @@
             "display_name": "IDS / IPS - Internal / DMZ",
             "base_weight": 9.0,
             "event_size": 286,
-            "category": "security"
+            "category_id": 1
         },
         {
             "id": 16,
@@ -309,21 +318,21 @@
             "display_name": "IDS / IPS - Regional / Local",
             "base_weight": 15.0,
             "event_size": 286,
-            "category": "security"
+            "category_id": 1
         },
         {
             "id": 17,
             "name": "network_access_control",
             "display_name": "Network Access Control (NAC)",
             "base_weight": 1.0,
-            "category": "network"
+            "category_id": 2
         },
         {
             "id": 18,
             "name": "network_behavioral_analysis",
             "display_name": "Network Behavioral Analysis/Detection",
             "base_weight": 1.0,
-            "category": "network"
+            "category_id": 2
         },
         {
             "id": 19,
@@ -331,7 +340,7 @@
             "display_name": "Networking - Router - Management Events",
             "base_weight": 0.1,
             "event_size": 237,
-            "category": "network"
+            "category_id": 2
         },
         {
             "id": 20,
@@ -339,7 +348,210 @@
             "display_name": "Networking - Switches - Management Events",
             "base_weight": 0.1,
             "event_size": 118,
-            "category": "network"
+            "category_id": 2
+        },
+        {
+            "id": 21,
+            "name": "hypervisors",
+            "display_name": "Hypervisors (VMWare, KWM",
+            "base_weight": 3,
+            "event_size": 958,
+            "category_id": 3
+        },
+        {
+            "id": 22,
+            "name": "identity",
+            "display_name": "Identity / Access Management",
+            "base_weight": 2,
+            "category_id": 3
+        },
+        {
+            "id": 23,
+            "name": "load_balancers",
+            "display_name": "Load Balancers",
+            "event_size": 142,
+            "category_id": 3
+        },
+        {
+            "id": 24,
+            "name": "mainframe",
+            "display_name": "Mainframe / iSeries",
+            "base_weight": 15,
+            "category_id": 3
+        },
+        {
+            "id": 25,
+            "name": "malware",
+            "display_name": "Malware / Sandbox / Threat Servers - (Use # Endpoints)",
+            "base_weight": 0.01,
+            "event_size": 711,
+            "category_id": 3
+        },
+        {
+            "id": 26,
+            "name": "netflows",
+            "display_name": "Netflows - (Use # Endpoints)",
+            "base_weight": 0.75,
+            "event_size": 383,
+            "category_id": 3
+        },
+        {
+            "id": 27,
+            "name": "radius",
+            "display_name": "RADIUS / LDAP / Directory Services",
+            "base_weight": 12,
+            "category_id": 3
+        },
+        {
+            "id": 28,
+            "name": "storage",
+            "display_name": "Storage Servers / Systems",
+            "category_id": 3
+        },
+        {
+            "id": 29,
+            "name": "unix_high",
+            "display_name": "Unix/Linux - High Activity",
+            "base_weight": 2,
+            "event_size": 277,
+            "category_id": 3
+        },
+        {
+            "id": 30,
+            "name": "unix_average",
+            "display_name": "Unix/Linux - Average Activity",
+            "event_size": 277,
+            "category_id": 3
+        },
+        {
+            "id": 31,
+            "name": "unix_desktops",
+            "display_name": "Unix/Linux - Desktops",
+            "base_weight": 0.3,
+            "event_size": 277,
+            "category_id": 3
+        },
+        {
+            "id": 32,
+            "name": "vpn",
+            "display_name": "VPN",
+            "base_weight": 2,
+            "event_size": 296,
+            "category_id": 3
+        },
+        {
+            "id": 33,
+            "name": "vulnerability_sever",
+            "display_name": "Vulnerability Management - Server",
+            "category_id": 3
+        },
+        {
+            "id": 34,
+            "name": "vulnerability_endpoints",
+            "display_name": "Vulnerability Management - Endpoints",
+            "base_weight": 0.003,
+            "category_id": 3
+        },
+        {
+            "id": 35,
+            "name": "wan_accelerators",
+            "display_name": "WAN Accelerators",
+            "category_id": 3
+        },
+        {
+            "id": 36,
+            "name": "web_firewall_high",
+            "display_name": "Web Application Firewall - High Load",
+            "base_weight": 50,
+            "event_size": 711,
+            "category_id": 3
+        },
+        {
+            "id": 37,
+            "name": "web_firewall_low",
+            "display_name": "Web Application Firewall - Low Load",
+            "base_weight": 10,
+            "event_size": 711,
+            "category_id": 3
+        },
+        {
+            "id": 38,
+            "name": "web_gateway",
+            "display_name": "Web Gateway / Proxy / Content Filtering",
+            "base_weight": 15,
+            "event_size": 622,
+            "category_id": 3
+        },
+        {
+            "id": 39,
+            "name": "web_servers_internal",
+            "display_name": "Web Servers (Apache, IIS, etc) - Internal/Workgroup",
+            "event_size": 711,
+            "category_id": 3
+        },
+        {
+            "id": 40,
+            "name": "web_servers_external",
+            "display_name": "Web Servers (Apache, IIS, etc) - External non-eCommerce",
+            "base_weight": 3,
+            "event_size": 711,
+            "category_id": 3
+        },
+        {
+            "id": 41,
+            "name": "windows_corporate",
+            "display_name": "Windows - Domain Controllers - Corporate",
+            "base_weight": 20,
+            "event_size": 660,
+            "category_id": 3
+        },
+        {
+            "id": 42,
+            "name": "windows_regional",
+            "display_name": "Windows - Domain Controllers - Regional",
+            "base_weight": 12,
+            "event_size": 660,
+            "category_id": 3
+        },
+        {
+            "id": 43,
+            "name": "windows_office",
+            "display_name": "Windows - Domain Controllers - Office",
+            "base_weight": 3,
+            "event_size": 660,
+            "category_id": 3
+        },
+        {
+            "id": 44,
+            "name": "windows_servers_hosting",
+            "display_name": "Windows - Servers - (Hosting Apps, DB, or other services listed)",
+            "base_weight": 1.25,
+            "event_size": 660,
+            "category_id": 3
+        },
+        {
+            "id": 45,
+            "name": "windows_servers_low",
+            "display_name": "Windows - Servers - Low Activity (ie: Print or Workgroup hosts)",
+            "base_weight": 2,
+            "event_size": 660,
+            "category_id": 3
+        },
+        {
+            "id": 46,
+            "name": "windows_servers_medium",
+            "display_name": "Windows - Servers - Medium Activity",
+            "base_weight": 8,
+            "event_size": 660,
+            "category_id": 3
+        },
+        {
+            "id": 47,
+            "name": "windows_servers_high",
+            "display_name": "Windows - Servers - High Activity (ie: File Servers, ERP or CRM)",
+            "base_weight": 30,
+            "event_size": 660,
+            "category_id": 3
         }
     ]
 }
