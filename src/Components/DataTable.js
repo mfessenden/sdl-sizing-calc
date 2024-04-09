@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import RangeSlider from './Slider';
 import '../index.css';
-import {useStateStore} from '../Models';
+import {useStateStore} from '../Model/Context';
 
 
 function TableItem({table_item, columns}) {

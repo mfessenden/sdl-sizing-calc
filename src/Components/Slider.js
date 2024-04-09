@@ -1,5 +1,5 @@
 import Form from 'react-bootstrap/Form';
-import {useStateStore} from '../Models';
+import {useStateStore} from '../Model/Context';
 
 
 function RangeSlider({device}) {

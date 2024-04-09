@@ -1,6 +1,6 @@
 import {createContext, useContext} from 'react';
 
-var jsonData = require('./data.json');
+var jsonData = require('../data.json');
 
 
 // Represents one of the row items in a dropdown table.
@@ -118,7 +118,9 @@ export const useResultStore = () => useContext(ResultContext);
 // Loads the current data from disk and returns a data object
 // for use in the app
 export function buildDataContext() {
-    const defaults = jsonData['defaults']
+    // create a copy of the original
+    const contextData = { ...jsonData };
+    const defaults = contextData['defaults']
 
     // default property values
     const default_event_size = defaults['device_type_event_size']
@@ -128,9 +130,9 @@ export function buildDataContext() {
 
 
     // data for the table items
-    const categories = jsonData['categories']
-    const periods = jsonData['retention_periods']
-    const device_types = jsonData['device_types']
+    const categories = contextData['categories']
+    const periods = contextData['retention_periods']
+    const device_types = contextData['device_types']
 
     // result table items
     const table_items = []
