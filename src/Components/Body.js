@@ -9,7 +9,7 @@ import Result from './Result';
 
 export default function Body() {
     return (
-        <Container>
+        <Container fluid>
             <Row>
                 <Col md={8}>
                     <DataTable/>
