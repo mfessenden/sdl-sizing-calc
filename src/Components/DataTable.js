@@ -6,11 +6,14 @@ import '../index.css';
 import {useStateStore} from '../Model/Context';
 
 
+// renders the rows & columns of one table, currently broken out by category
 function TableItem({table_item, columns}) {
-    const devices = table_item.devices
+    const devices = table_item.device_types
+    console.log('Building table:')
+    console.log(table_item)
 
-    const handleSliderChange = (e) => {
-        console.log(`Updated: '${e.target}'`)
+    const quantityUpdated = (e) => {
+        console.log(`Updated: '${e.target.value}'`)
     };
 
 
@@ -42,7 +45,7 @@ function TableItem({table_item, columns}) {
                                 className='text-center'
                                 size='sm'
                                 type='number'
-                                onChange={handleSliderChange}
+                                // onChange={() => toggleShow(true)}
                                 value={device.quantity}
                             />
                         </td>
@@ -73,14 +76,45 @@ function TableItem({table_item, columns}) {
 
 
 export default function DataTable() {
-    const data = useStateStore()
-    const table_items = data.table_items
+
+    const buildTables = (data) => {
+        const tableItems = []
+
+        const interfaceData = data['interface_data']
+        const categoryData = interfaceData['categories']
+        const deviceTypes = contextData['device_types']
+
+        for (const category of categoryData) {
+            console.log(category)
+            const categoryDevices = []
+
+            for (let device of deviceTypes) {
+                if (device.category_id === category.id) {
+                    categoryDevices.push(device)
+                }
+            }
+
+            var tableItem = {
+                display_name: category.display_name,
+                category_id: category.category_id,
+                device_types: categoryDevices
+            }
+            console.log(`Building devices for: '${category.display_name}'`)
+            tableItems.push(tableItem)
+        }
+
+        return tableItems
+    }
+
+    const contextData = useStateStore()
+    const table_items = buildTables(contextData)
+    const columnNames = contextData.interface_data.table_columns
     return (
         <div>
 
             {table_items.map(table_item => (
                 // don't show the table if there are no entries
-                table_item.devices.length > 0 ? (
+                table_item.device_types.length > 0 ? (
                     <Accordion
                         alwaysOpen
                         key={table_item.category_id}
@@ -95,7 +129,7 @@ export default function DataTable() {
                                 <TableItem
                                     key={table_item.category_id}
                                     table_item={table_item}
-                                    columns={data.columns}
+                                    columns={columnNames}
                                 />
 
                             </Accordion.Body>

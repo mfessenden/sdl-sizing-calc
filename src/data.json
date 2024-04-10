@@ -1,207 +1,209 @@
 {
-    "defaults": {
-        "device_type_event_size": 508,
-        "device_base_weight": 1.0,
-        "device_quantity": 0.0,
-        "device_type_category_id": 0,
-        "columns": [
+    "interface_data": {
+        "table_columns": [
             "Device Type",
             "Quantity",
             "EPS",
             "GB/Day"
+        ],
+        "input_menu_data": {
+            "industry": [
+                {
+                    "id": 0,
+                    "name": "energy",
+                    "display_name": "Energy / Utilities",
+                    "weight": 0.95
+                },
+                {
+                    "id": 1,
+                    "name": "consumer_product",
+                    "display_name": "Consumer - Products/Equipment",
+                    "weight": 1
+                },
+                {
+                    "id": 2,
+                    "name": "consumer_retail",
+                    "display_name": "Consumer - Retail/Services",
+                    "weight": 2
+                },
+                {
+                    "id": 3,
+                    "name": "financial_insurance",
+                    "display_name": "Financial - Insurance / Services",
+                    "weight": 1.2
+                },
+                {
+                    "name": "financial_retail",
+                    "display_name": "Financial - Retail",
+                    "weight": 2
+                },
+                {
+                    "id": 4,
+                    "name": "government_federal",
+                    "display_name": "Government - Federal",
+                    "weight": 1.4
+                },
+                {
+                    "id": 5,
+                    "name": "government_local",
+                    "display_name": "Government - Local",
+                    "weight": 0.75
+                },
+                {
+                    "id": 6,
+                    "name": "government_state",
+                    "display_name": "Government - State",
+                    "weight": 1
+                },
+                {
+                    "id": 7,
+                    "name": "healthcare_services",
+                    "display_name": "Health Care Services",
+                    "weight": 1.2
+                },
+                {
+                    "id": 8,
+                    "name": "higher_education",
+                    "display_name": "Higher Education",
+                    "weight": 2.5
+                }
+            ],
+            "industry_size": [
+                {
+                    "name": "regional",
+                    "display_name": "Regional / SMB",
+                    "weight": 0.25
+                },
+                {
+                    "name": "small",
+                    "display_name": "Small / Fortune 2000",
+                    "weight": 0.75
+                },
+                {
+                    "name": "medium",
+                    "display_name": "Medium / Fortune 1000",
+                    "weight": 1
+                },
+                {
+                    "name": "large",
+                    "display_name": "Large / Fortune 500",
+                    "weight": 1.75
+                },
+                {
+                    "name": "global",
+                    "display_name": "Global / Fortune 200",
+                    "weight": 3
+                }
+            ],
+            "org_size": [
+                {
+                    "name": "size1",
+                    "display_name": "Under 500",
+                    "weight": 0.25
+                },
+                {
+                    "name": "size2",
+                    "display_name": "500 to 2000",
+                    "weight": 0.65
+                },
+                {
+                    "name": "size3",
+                    "display_name": "2000 to 5000",
+                    "weight": 1
+                },
+                {
+                    "name": "size4",
+                    "display_name": "5000 to 10000",
+                    "weight": 1.45
+                },
+                {
+                    "name": "size5",
+                    "display_name": "10000 to 25000",
+                    "weight": 2
+                },
+                {
+                    "name": "size6",
+                    "display_name": "25000 to 40000",
+                    "weight": 2.75
+                },
+                {
+                    "name": "size7",
+                    "display_name": "40000 to 65000",
+                    "weight": 4.25
+                },
+                {
+                    "name": "size8",
+                    "display_name": "65000 to 85000",
+                    "weight": 5
+                },
+                {
+                    "name": "size9",
+                    "display_name": "Over 85000",
+                    "weight": 5.85
+                }
+            ]
+        },
+        "categories": [
+            {
+                "id": 0,
+                "name": "infrastructure",
+                "display_name": "Infrastructure"
+            },
+            {
+                "id": 2,
+                "name": "security",
+                "display_name": "Security"
+            },
+            {
+                "id": 2,
+                "name": "network",
+                "display_name": "Network"
+            },
+            {
+                "id": 3,
+                "name": "unknown",
+                "display_name": "Unknown"
+            }
+        ],
+        "retention_periods": [
+            {
+                "id": 0,
+                "name": "daily",
+                "display_name": "Daily"
+            },
+            {
+                "id": 2,
+                "name": "weekly",
+                "display_name": "Weekly"
+            },
+            {
+                "id": 2,
+                "name": "monthly",
+                "display_name": "Monthly"
+            },
+            {
+                "id": 4,
+                "name": "yearly",
+                "display_name": "Yearly"
+            }
         ]
+    },
+    "device_type_defaults": {
+        "event_size": 508,
+        "base_weight": 1,
+        "quantity": 0,
+        "category_id": 0
+
     },
     "current_state": {
         "retention_period": 0,
         "expanded_table_items": []
-    },
-    "categories": [
-        {
-            "id": 0,
-            "name": "infrastructure",
-            "display_name": "Infrastructure"
-        },
-        {
-            "id": 2,
-            "name": "security",
-            "display_name": "Security"
-        },
-        {
-            "id": 2,
-            "name": "network",
-            "display_name": "Network"
-        },
-        {
-            "id": 3,
-            "name": "unknown",
-            "display_name": "Unknown"
-        }
-    ],
-    "retention_periods": [
-        {
-            "id": 0,
-            "name": "daily",
-            "display_name": "Daily"
-        },
-        {
-            "id": 2,
-            "name": "weekly",
-            "display_name": "Weekly"
-        },
-        {
-            "id": 2,
-            "name": "monthly",
-            "display_name": "Monthly"
-        },
-        {
-            "id": 4,
-            "name": "yearly",
-            "display_name": "Yearly"
-        }
-    ],
-    "inputs": {
-        "industry": [
-            {
-                "id": 0,
-                "name": "energy",
-                "display_name": "Energy / Utilities",
-                "weight": 0.95
-            },
-            {
-                "id": 1,
-                "name": "consumer_product",
-                "display_name": "Consumer - Products/Equipment",
-                "weight": 1.0
-            },
-            {
-                "id": 2,
-                "name": "consumer_retail",
-                "display_name": "Consumer - Retail/Services",
-                "weight": 2.0
-            },
-            {
-                "id": 3,
-                "name": "financial_insurance",
-                "display_name": "Financial - Insurance / Services",
-                "weight": 1.2
-            },
-            {
-                "name": "financial_retail",
-                "display_name": "Financial - Retail",
-                "weight": 2.0
-            },
-            {
-                "id": 4,
-                "name": "government_federal",
-                "display_name": "Government - Federal",
-                "weight": 1.4
-            },
-            {
-                "id": 5,
-                "name": "government_local",
-                "display_name": "Government - Local",
-                "weight": 0.75
-            },
-            {
-                "id": 6,
-                "name": "government_state",
-                "display_name": "Government - State",
-                "weight": 1.0
-            },
-            {
-                "id": 7,
-                "name": "healthcare_services",
-                "display_name": "Health Care Services",
-                "weight": 1.2
-            },
-            {
-                "id": 8,
-                "name": "higher_education",
-                "display_name": "Higher Education",
-                "weight": 2.5
-            }
-        ],
-        "industry_size": [
-            {
-                "name": "regional",
-                "display_name": "Regional / SMB",
-                "weight": 0.25
-            },
-            {
-                "name": "small",
-                "display_name": "Small / Fortune 2000",
-                "weight": 0.75
-            },
-            {
-                "name": "medium",
-                "display_name": "Medium / Fortune 1000",
-                "weight": 1.0
-            },
-            {
-                "name": "large",
-                "display_name": "Large / Fortune 500",
-                "weight": 1.75
-            },
-            {
-                "name": "global",
-                "display_name": "Global / Fortune 200",
-                "weight": 3.0
-            }
-        ],
-        "org_size": [
-            {
-                "name": "size1",
-                "display_name": "Under 500",
-                "weight": 0.25
-            },
-            {
-                "name": "size2",
-                "display_name": "500 to 2000",
-                "weight": 0.65
-            },
-            {
-                "name": "size3",
-                "display_name": "2000 to 5000",
-                "weight": 1.0
-            },
-            {
-                "name": "size4",
-                "display_name": "5000 to 10000",
-                "weight": 1.45
-            },
-            {
-                "name": "size5",
-                "display_name": "10000 to 25000",
-                "weight": 2.0
-            },
-            {
-                "name": "size6",
-                "display_name": "25000 to 40000",
-                "weight": 2.75
-            },
-            {
-                "name": "size7",
-                "display_name": "40000 to 65000",
-                "weight": 4.25
-            },
-            {
-                "name": "size8",
-                "display_name": "65000 to 85000",
-                "weight": 5.0
-            },
-            {
-                "name": "size9",
-                "display_name": "Over 85000",
-                "weight": 5.85
-            }
-        ]
     },
     "device_types": [
         {
             "id": 0,
             "name": "generic_source",
             "display_name": "Generic Data Source (SIEM, etc.)",
-            "base_weight": 1.0,
             "category_id": 0
         },
         {
@@ -216,7 +218,6 @@
             "id": 2,
             "name": "application_servers",
             "display_name": "Application Servers",
-            "base_weight": 1.0,
             "category_id": 0
         },
         {
@@ -244,21 +245,21 @@
             "id": 6,
             "name": "database_monitoring_applications",
             "display_name": "Database Monitoring Applications",
-            "base_weight": 8.0,
+            "base_weight": 8,
             "category_id": 0
         },
         {
             "id": 7,
             "name": "database_servers_corporate",
             "display_name": "Database Servers - (Oracle, MSSQL, DB2, etc) - Corporate Wide",
-            "base_weight": 5.0,
+            "base_weight": 5,
             "category_id": 0
         },
         {
             "id": 8,
             "name": "database_servers_workgroup",
             "display_name": "Database Servers - (Oracle, MSSQL, DB2, etc) - Workgroup",
-            "base_weight": 2.0,
+            "base_weight": 2,
             "category_id": 0
         },
         {
@@ -286,21 +287,21 @@
             "id": 12,
             "name": "email_content",
             "display_name": "Email Content/Spam Filtering",
-            "base_weight": 10.0,
+            "base_weight": 10,
             "category_id": 0
         },
         {
             "id": 13,
             "name": "email_servers",
             "display_name": "Email Servers - Exchange / Sendmail",
-            "base_weight": 2.0,
+            "base_weight": 2,
             "category_id": 0
         },
         {
             "id": 14,
             "name": "ids_perimeter",
             "display_name": "IDS / IPS - Perimeter",
-            "base_weight": 15.0,
+            "base_weight": 15,
             "event_size": 286,
             "category_id": 1
         },
@@ -308,7 +309,7 @@
             "id": 15,
             "name": "ids_internal",
             "display_name": "IDS / IPS - Internal / DMZ",
-            "base_weight": 9.0,
+            "base_weight": 9,
             "event_size": 286,
             "category_id": 1
         },
@@ -316,7 +317,7 @@
             "id": 16,
             "name": "ids_regional",
             "display_name": "IDS / IPS - Regional / Local",
-            "base_weight": 15.0,
+            "base_weight": 15,
             "event_size": 286,
             "category_id": 1
         },
@@ -324,14 +325,12 @@
             "id": 17,
             "name": "network_access_control",
             "display_name": "Network Access Control (NAC)",
-            "base_weight": 1.0,
             "category_id": 2
         },
         {
             "id": 18,
             "name": "network_behavioral_analysis",
             "display_name": "Network Behavioral Analysis/Detection",
-            "base_weight": 1.0,
             "category_id": 2
         },
         {
