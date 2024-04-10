@@ -296,7 +296,7 @@ export default function Result({useButton = true}) {
     const dropdown_data = DropDownData.industry
 
     return (
-        <Container xs>
+        <Container>
             <Row className='align-center result-lg'>
                 Your estimated data ingest:
             </Row>
