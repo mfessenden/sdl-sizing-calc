@@ -32,7 +32,6 @@ function TableItem({table_item, columns}) {
                 {devices.map(device => (  // build a table row for each device
                     <tr key={device.id}>
                         <td>
-                            {device.display_name}
                             <RangeSlider
                                 key={device.id}
                                 device={device}

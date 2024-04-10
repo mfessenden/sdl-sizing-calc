@@ -1,25 +1,33 @@
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
-import {useStateStore} from '../Model/Context';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 function RangeSlider({device}) {
-    const data = useStateStore()
 
     const handleSliderChange = (e) => {
-        // device.quantity = e.target.value
-
-        data.setDeviceQuantity(device.id, e.target.value)
-        console.log(`Device updated: '${device.name}', value: '${device.quantity}'`)
+        console.log(`Slider changed: ${e.target.value}`)
+        device.quantity = e.target.value
     };
 
     return (
-        <>
-            <Form.Range
-                key={device.id}
-                value={device.quantity}
-                onChange={handleSliderChange}
-            />
-        </>
+        <Container>
+            <Row>
+                <Col md={8}>
+                    <Form.Label>
+                        {device.display_name}
+                    </Form.Label>
+                </Col>
+                <Col md={4}>
+                    <Form.Range
+                        key={device.id}
+                        value={device.quantity}
+                        onChange={handleSliderChange}
+                    />
+                </Col>
+            </Row>
+        </Container>
     );
 }
 
