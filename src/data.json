@@ -197,7 +197,10 @@
     },
     "current_state": {
         "retention_period": 0,
-        "expanded_table_items": []
+        "expanded_table_items": [],
+        "data_source": "../data.json",
+        "filter_string": null,
+        "data_sources": []
     },
     "device_types": [
         {
