@@ -4,10 +4,17 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import {useStateStore} from "../Model/Context";
 
 
 
-export function TopNavbart() {
+export function TopNavbar() {
+
+    const searchFilterUpdated = (e) => {
+        console.log(`Search filter updated: '${e.target.value}'`)
+    };
+
+    const contextData = useStateStore()
     return (
         <Navbar expand='lg' className='bg-body-tertiary mb-3'>
             <Container fluid>
@@ -33,12 +40,13 @@ export function TopNavbart() {
                     </Offcanvas.Header>
                     <Offcanvas.Body>
                         <Nav className='flex-grow-1 pe-3'>
-                            <Nav.Link href='#action1'>Edit Data</Nav.Link>
-                            <Nav.Link href='#action2'>Settings</Nav.Link>
+                            <Nav.Link href='/data'>Edit Data</Nav.Link>
+                            <Nav.Link href='/settings'>Settings</Nav.Link>
                             <NavDropdown
                                 title='Actions'
                                 id='offcanvasNavbarDropdown-expand-lg'
                             >
+                                {/* these will call functions, not routes */}
                                 <NavDropdown.Item href='#resetstate'>Reset State</NavDropdown.Item>
                                 <NavDropdown.Item href='#savestate'>Save State</NavDropdown.Item>
                             </NavDropdown>
@@ -49,6 +57,7 @@ export function TopNavbart() {
                                 placeholder='Filter'
                                 className='me-2'
                                 aria-label='filter'
+                                onChange={searchFilterUpdated}
                             />
                         </Form>
                     </Offcanvas.Body>

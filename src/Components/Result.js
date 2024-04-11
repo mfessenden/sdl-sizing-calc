@@ -1,6 +1,7 @@
 import {useState, React} from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
+import Card from "react-bootstrap/Card";
 import Container from 'react-bootstrap/Container';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -8,8 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import {useResultStore} from '../Model/Context';
-
+import {useStateStore} from '../Model/Context';
 
 /**
  * Format bytes as human-readable text.
@@ -274,6 +274,7 @@ const DropDownData = {
 function DropDownItem({name, display_name, menuItems}) {
     return (
         <DropdownButton
+            id={name}
             title={display_name}
             variant='secondary'
         >
@@ -291,10 +292,11 @@ function DropDownItem({name, display_name, menuItems}) {
 
 
 export default function ResultComponent({useButton = true}) {
-    const data = useResultStore()
+    const data = useStateStore()
     const dropdown_data = DropDownData.industry
 
     return (
+        <Card>
         <Container>
             <Row className='align-center result-lg'>
                 Your estimated data ingest:
@@ -334,5 +336,6 @@ export default function ResultComponent({useButton = true}) {
             }
 
         </Container>
+        </Card>
     );
 }

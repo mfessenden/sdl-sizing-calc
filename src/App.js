@@ -1,9 +1,9 @@
 import {useEffect} from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import {TopNavbart} from './Components/Navbar';
+import {TopNavbar} from './Components/Navbar';
 import Body from './Components/Body';
 import {StateProvider} from './Model/Context';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 
 export default function App() {
@@ -15,7 +15,7 @@ export default function App() {
     return (
         <div className='App'>
             <StateProvider>
-                <TopNavbart/>
+                <TopNavbar/>
                 <Body/>
             </StateProvider>
 

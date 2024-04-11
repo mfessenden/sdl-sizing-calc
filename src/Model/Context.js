@@ -1,54 +1,6 @@
 import {createContext, useContext, useReducer, useEffect} from 'react';
 var ContextRawData = require('../data.json');
-
-
-const RESULT_CONTEXT = {
-    period: 0,
-    usage: 0,   // total usage (in GB)
-    actions: {
-        setPeriod: (period_id) => {},  // handles retention period tab change
-    },
-};
-
-
-export function ContextReducer() {
-    const [state, dispatch] = useReducer(reducer, buildDataContext())
-    const updatedState = { ...state };
-    return updatedState;
-}
-
-function reducer(data, action) {
-    switch (action.type) {
-        case 'set_quantity':
-            const deviceId = action.device_id
-        default:
-            throw new Error();
-    }
-}
-
-
-export function setDeviceQuantity(deviceId: number, quantity: number) {
-    const contextData = buildDataContext();
-    const deviceTypes = contextData['device_types']
-
-
-    for (const deviceType of deviceTypes) {
-        if(deviceType.id === deviceId) {
-            deviceType.quantity = quantity
-            console.log(`Updating quantity: '${deviceType.name}' -> '${deviceType.quantity}'`)
-        }
-    }
-}
-
-
-// example from 'database.ts'
-// export const getCommentsByObj = (query: object) => getAllByObj(COMMENT_TABLE, query);
-
-
-
-export const ResultContext = createContext(RESULT_CONTEXT);
-
-export const useResultStore = () => useContext(ResultContext);
+var ContextData = buildDataContext()
 
 
 // Loads the current data from disk. Updates data for use as a data model
@@ -80,20 +32,84 @@ export function buildDataContext() {
 }
 
 
-// create a context with data model object
-const StateContext = createContext(buildDataContext());
-
-// returns the context data model
-const useStateStore = () => useContext(StateContext);
+export const StateContext = createContext(ContextData);
 
 
+// Update the state date with actions
 export function StateReducer(state, action) {
-    const updatedState = { ...state };
+    // 'state' is an array of devices
+    const updatedState =  {...state};
+    const devices = state.device_types
+
     switch (action.type) {
-        case 'SET_QUANTITY': {
-            updatedState.theme = action.theme;
+        case 'SET_NAME': {
+            const deviceId = action.deviceId
+            const deviceName = action.deviceName
+
+            const device = devices.filter((d) => d.id === deviceId)[0]
+
+            console.log('Device Name:')
+            console.log(device)
+            device.name = deviceName
+
+            console.log(`Setting name: '${deviceName}' for device: ${deviceId}`);
+            updatedState.device_types[deviceId] = device
             break;
         }
+
+        case 'SET_DISPLAY_NAME': {
+            console.log(action)
+            const deviceId = action.deviceId
+            const displayName = action.displayName
+
+            const device = devices.filter((d) => d.id === deviceId)[0]
+            console.log('Device Display Name:')
+            console.log(device)
+            device.display_name = displayName
+            console.log(`Setting display name: '${displayName}' for device: ${deviceId}`);
+            updatedState.device_types[deviceId] = device
+            break;
+        }
+
+        case 'SET_QUANTITY': {
+            console.log(action)
+            const deviceId = action.deviceId
+            const quantity = action.quantity
+
+            const device = devices.filter((d) => d.id === deviceId)[0]
+            console.log('Device Quantity:')
+            console.log(device)
+            device.quantity = quantity
+            console.log(`Setting quantity: ${quantity} for device: ${deviceId}`);
+            updatedState.device_types[deviceId] = device
+            break;
+        }
+
+        case 'SET_BASE_WEIGHT': {
+            const deviceId = action.deviceId
+            const baseWeight = action.baseWeight
+
+            const device = devices.filter((d) => d.id === deviceId)[0]
+            device.base_weight = baseWeight
+            console.log(`Setting base weight: ${baseWeight} for device: ${deviceId}`);
+            updatedState.device_types[deviceId] = device
+            break;
+
+        }
+
+        case 'SET_EVENT_SIZE': {
+            const deviceId = action.deviceId
+            const eventSize = action.eventSize
+
+            const device = devices.filter((d) => d.id === deviceId)[0]
+            device.event_size = eventSize
+
+            console.log(`Setting event size: ${eventSize} for device: ${deviceId}`);
+            updatedState.device_types[deviceId] = device
+            break;
+
+        }
+
         default:
             console.log(`Error: ${action.type} not caught by State reducer`);
     }
@@ -101,25 +117,27 @@ export function StateReducer(state, action) {
 }
 
 
-export const useCustomState = (defaultState=buildDataContext()) => {
+export const useCustomState = (defaultState = ContextData) => {
     const [state, dispatch] = useReducer(StateReducer, defaultState);
     return {
-        ...state,
+        state,
         actions: {
-            setQuantity: (id, quantity) => dispatch({ type: 'SET_QUANTITY', id, quantity }),
+            setName: (deviceId, deviceName) => dispatch({type: 'SET_NAME', deviceId, deviceName }),
+            setDisplayName: (deviceId, displayName) => dispatch({type: 'SET_DISPLAY_NAME', deviceId, displayName }),
+            setQuantity: (deviceId, quantity) => dispatch({type: 'SET_QUANTITY', deviceId, quantity }),
+            setBaseWeight: (deviceId, baseWeight) => dispatch({type: 'SET_BASE_WEIGHT', deviceId, baseWeight }),
+            setEventSize: (deviceId, eventSize) => dispatch({type: 'SET_EVENT_SIZE', deviceId, eventSize }),
         },
     };
 };
 
 
-const StateProvider = ({ children }: any) => {
+export const StateProvider = ({ children }: any) => {
+    // state contains two items: 'devices' & 'actions'
     const state = useCustomState();
     return <StateContext.Provider value={state}>{children}</StateContext.Provider>;
 };
 
 
-export {
-    StateContext,
-    StateProvider,
-    useStateStore,
-}
+// returns the context JSON data
+export const useStateStore = () => useContext(StateContext);

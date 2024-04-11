@@ -7,19 +7,14 @@ import {useStateStore} from '../Model/Context';
 
 
 function TableRow({device}) {
-    const handleQuantityChanged = (e) => {
-        console.log(device)
-
-        device.quantity = e.target.value
-        console.log(`Device '${device.name}' quantity changed: '${device.quantity}'`)
-    };
-
+    const {devices, actions: {setQuantity}} = useStateStore();
     return (
         <tr key={device.id}>
             <td>
                 <RangeSlider
                     key={device.id}
                     device={device}
+                    onChange={e => setQuantity(device.id, e.target.value)}
                 />
             </td>
             <td>
@@ -28,7 +23,7 @@ function TableRow({device}) {
                     className='text-center'
                     size='sm'
                     type='number'
-                    onChange={handleQuantityChanged}
+                    onChange={e => setQuantity(device.id, e.target.value)}
                     value={device.quantity}
                 />
             </td>
@@ -58,13 +53,6 @@ function TableRow({device}) {
 function CategoryTable({table_item, columns}) {
     // query the devices associated with this category
     const devices = table_item.device_types
-    console.log('Building table:')
-    console.log(table_item)
-
-    const quantityUpdated = (e) => {
-        console.log(`Updated: '${e.target.value}'`)
-    };
-
 
     return (
         <div>
@@ -95,11 +83,12 @@ export default function DataTable() {
 
     const buildTables = (data) => {
         const tableItems = []
-
-        const interfaceData = data['interface_data']
-        const categoryData = interfaceData['categories']
-        const deviceTypes = contextData['device_types']
-
+        // const interfaceData = data['state']
+        const interfaceData = data.interface_data
+        const categoryData = interfaceData.categories
+        const deviceTypes = data.device_types
+        console.log('Device Types:')
+        console.log(deviceTypes)
         for (const category of categoryData) {
             console.log(category)
             const categoryDevices = []
@@ -123,8 +112,10 @@ export default function DataTable() {
     }
 
     const contextData = useStateStore()
-    const table_items = buildTables(contextData)
-    const columnNames = contextData.interface_data.table_columns
+    console.log('Data:')
+    console.log(contextData.state)
+    const table_items = buildTables(contextData.state)
+    const columnNames = contextData.state.interface_data.table_columns
     return (
         <div>
 
