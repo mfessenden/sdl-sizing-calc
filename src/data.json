@@ -150,7 +150,7 @@
                 "display_name": "Infrastructure"
             },
             {
-                "id": 2,
+                "id": 1,
                 "name": "security",
                 "display_name": "Security"
             },
@@ -172,7 +172,7 @@
                 "display_name": "Daily"
             },
             {
-                "id": 2,
+                "id": 1,
                 "name": "weekly",
                 "display_name": "Weekly"
             },
@@ -182,7 +182,7 @@
                 "display_name": "Monthly"
             },
             {
-                "id": 4,
+                "id": 3,
                 "name": "yearly",
                 "display_name": "Yearly"
             }

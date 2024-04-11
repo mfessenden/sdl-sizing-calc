@@ -46,10 +46,9 @@ function humanFileSize(bytes, si = false, dp = 1) {
 
 
 // form group for the given tab
-function TabbedResultOutput() {
+function TabbedResultOutput({retentionPeriodId}) {
     const {state, actions: {setRetentionValue, setEmployeeCount, setSeatCount}} = useStateStore();
     const currentState = state.current_state
-    const retentionPeriodId = currentState.retention_period_id
 
     return (
         <div>
@@ -60,7 +59,7 @@ function TabbedResultOutput() {
                         size='sm'
                         value={currentState.retention_period_value}
                         className='text-center'
-                        onChange={e => setRetentionValue(e.target.value)}
+                        onChange={e => setRetentionValue(parseInt(e.target.value))}
                     />
 
                 </Form.Group>
@@ -70,7 +69,7 @@ function TabbedResultOutput() {
                         size='sm'
                         value={currentState.employee_count}
                         className='text-center'
-                        onChange={e => setEmployeeCount(e.target.value)}
+                        onChange={e => setEmployeeCount(parseInt(e.target.value))}
                     />
                 </Form.Group>
                 <Form.Group>
@@ -79,7 +78,7 @@ function TabbedResultOutput() {
                         size='sm'
                         value={currentState.soar_seats}
                         className='text-center'
-                        onChange={e => setSeatCount(e.target.value)}
+                        onChange={e => setSeatCount(parseInt(e.target.value))}
                     />
                 </Form.Group>
             </Form>
@@ -89,43 +88,39 @@ function TabbedResultOutput() {
 
 
 function ResultTabs() {
-    const [key, setKey] = useState('daily');
-
-    const tabChanged = (e) => {
-        console.log(`Value changed: '${e.target.value}'`)
-    };
+    const {state, actions: {setRetentionPeriod}} = useStateStore();
+    const currentState = state.current_state
 
     return (
         <Tabs
             id='controlled-tab-example'
-            // activeKey={key}
-            onSelect={(k) => setKey(k)}
+            activeKey={currentState.retention_period_id}
+            onSelect={(k) => setRetentionPeriod(parseInt(k))}
             className='align-center'
-            onChange={tabChanged}
         >
             <Tab
-                eventKey='daily'
+                eventKey={0}
                 title='Daily'
             >
-                <TabbedResultOutput/>
+                <TabbedResultOutput retentionPeriodId={0}/>
             </Tab>
             <Tab
-                eventKey='weekly'
+                eventKey={1}
                 title='Weekly'
             >
-                <TabbedResultOutput/>
+                <TabbedResultOutput retentionPeriodId={1}/>
             </Tab>
             <Tab
-                eventKey='monthly'
+                eventKey={2}
                 title='Monthly'
             >
-                <TabbedResultOutput/>
+                <TabbedResultOutput retentionPeriodId={2}/>
             </Tab>
             <Tab
-                eventKey='yearly'
+                eventKey={3}
                 title='Yearly'
             >
-                <TabbedResultOutput/>
+                <TabbedResultOutput retentionPeriodId={3}/>
             </Tab>
         </Tabs>
     );
@@ -136,35 +131,34 @@ function ResultTabs() {
 export default function ResultComponent({useButton = true}) {
 
     return (
-        <Card>
-        <Container>
-            <Row className='align-center result-lg'>
-                Your estimated data ingest:
-            </Row>
-            <Row className='align-center result-xl'>
-                {humanFileSize(0)}
-            </Row>
-            <Row className='align-center'>
-                <ResultTabs/>
-            </Row>
-
-
-            {useButton &&
-                <Row>
-                    <Col>
-                        <Button
-                            as='input'
-                            type='button'
-                            value='Get a Quote!'
-                            onClick={() => {
-                                alert('You clicked me!');
-                            }}
-                        />
-                    </Col>
+        <Card className='mx-auto my-2'>
+            <Container>
+                <Row className='align-center result-lg'>
+                    Your estimated data ingest:
                 </Row>
-            }
+                <Row className='align-center result-xl'>
+                    {humanFileSize(0)}
+                </Row>
+                <Row className='align-center'>
+                    <ResultTabs/>
+                </Row>
 
-        </Container>
+                {useButton &&
+                    <Row>
+                        <Col>
+                            <Button
+                                as='input'
+                                type='button'
+                                value='Get a Quote!'
+                                onClick={() => {
+                                    alert('You clicked me!');
+                                }}
+                            />
+                        </Col>
+                    </Row>
+                }
+
+            </Container>
         </Card>
     );
 }

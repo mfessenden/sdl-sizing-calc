@@ -42,6 +42,7 @@ export function StateReducer(state, action) {
     const devices = state.device_types
     // state values for the current session
     const currentState = state.current_state
+    const interfaceData = state.interface_data
 
     switch (action.type) {
         case 'SET_NAME': {
@@ -113,6 +114,9 @@ export function StateReducer(state, action) {
         }
 
         case 'SET_RETENTION_PERIOD': {
+            const retentionPeriods = interfaceData.retention_periods
+            const retentionData = retentionPeriods.filter((d) => d.id === action.value)[0]
+            console.log(`Setting retention period: ${action.value} (${retentionData.name})`);
             currentState.retention_period_id = action.value
             break;
         }
