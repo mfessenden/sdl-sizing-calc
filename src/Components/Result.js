@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import {useStateStore, useResultStore} from '../Model/Context';
+import {useResultStore} from '../Model/Context';
 
 
 /**
@@ -282,6 +282,7 @@ function DropDownItem({name, display_name, menuItems}) {
             {/*<Dropdown.ItemText>{item.description}</Dropdown.ItemText>*/}
             {menuItems.map(menuItem => (
                 <Dropdown.Item
+                    key={name}
                     as='button'>
                     {menuItem.display_name}
                 </Dropdown.Item>
