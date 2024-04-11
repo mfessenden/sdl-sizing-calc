@@ -74,6 +74,7 @@ function CategoryTable({table_item, columns}) {
 
                 {devices.map(device => (
                     <TableRow
+                        key={device.id}
                         device={device}
                     />
                 ))}
