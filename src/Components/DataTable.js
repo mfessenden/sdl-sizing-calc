@@ -20,7 +20,6 @@ function TableRow({device}) {
                 <RangeSlider
                     key={device.id}
                     device={device}
-                    // onChange={handleSliderChange}
                 />
             </td>
             <td>

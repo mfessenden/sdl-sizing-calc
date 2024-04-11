@@ -53,36 +53,36 @@ function TabbedResultOutput() {
 
     return (
         <div>
-        <Form p={3}>
-            <Form.Group className='text-center'>
-                <Form.Label>Data Retention Period</Form.Label>
-                <Form.Control
-                    size='sm'
-                    value='1'
-                    className='text-center'
-                    onChange={handleValueChanged}
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>No. of Employees</Form.Label>
-                <Form.Control
-                    size='sm'
-                    value='1'
-                    className='text-center'
-                    onChange={handleValueChanged}
-                />
-            </Form.Group>
-            <Form.Group>
-                <Form.Label>SOAR Seats</Form.Label>
-                <Form.Control
-                    size='sm'
-                    value='0'
-                    className='text-center'
-                    onChange={handleValueChanged}
-                />
-            </Form.Group>
-        </Form>
-    </div>
+            <Form p={3}>
+                <Form.Group className='text-center'>
+                    <Form.Label>Data Retention Period</Form.Label>
+                    <Form.Control
+                        size='sm'
+                        value='1'
+                        className='text-center'
+                        onChange={handleValueChanged}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>No. of Employees</Form.Label>
+                    <Form.Control
+                        size='sm'
+                        value='1'
+                        className='text-center'
+                        onChange={handleValueChanged}
+                    />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>SOAR Seats</Form.Label>
+                    <Form.Control
+                        size='sm'
+                        value='0'
+                        className='text-center'
+                        onChange={handleValueChanged}
+                    />
+                </Form.Group>
+            </Form>
+        </div>
     );
 }
 
@@ -193,7 +193,7 @@ const DropDownData = {
             weight: 2.5
         }
     ],
-        industry_size: [
+    industry_size: [
         {
             name: 'regional',
             display_name: 'Regional / SMB',
@@ -220,7 +220,7 @@ const DropDownData = {
             weight: 3
         }
     ],
-        org_size: [
+    org_size: [
         {
             name: 'size1',
             display_name: 'Under 500',
@@ -272,10 +272,8 @@ const DropDownData = {
 
 
 function DropDownItem({name, display_name, menuItems}) {
-
     return (
         <DropdownButton
-            id={name}
             title={display_name}
             variant='secondary'
         >
