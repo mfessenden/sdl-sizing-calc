@@ -282,7 +282,7 @@ function DropDownItem({name, display_name, menuItems}) {
             {/*<Dropdown.ItemText>{item.description}</Dropdown.ItemText>*/}
             {menuItems.map(menuItem => (
                 <Dropdown.Item
-                    key={name}
+                    key={menuItem.id}
                     as='button'>
                     {menuItem.display_name}
                 </Dropdown.Item>
@@ -292,7 +292,7 @@ function DropDownItem({name, display_name, menuItems}) {
 }
 
 
-export default function Result({useButton = true}) {
+export default function ResultComponent({useButton = true}) {
     const data = useResultStore()
     const dropdown_data = DropDownData.industry
 

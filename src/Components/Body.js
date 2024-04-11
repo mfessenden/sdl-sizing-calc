@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import DataTable from './DataTable';
-import Result from './Result';
+import ResultComponent from './Result';
 
 
 
@@ -15,7 +15,7 @@ export default function Body() {
                     <DataTable/>
                 </Col>
                 <Col md={4}>
-                    <Result/>
+                    <ResultComponent useButton={false}/>
                 </Col>
             </Row>
         </Container>
