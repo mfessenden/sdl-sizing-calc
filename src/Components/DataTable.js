@@ -6,6 +6,48 @@ import '../index.css';
 import {useStateStore} from '../Model/Context';
 
 
+function TableRow({device}) {
+    return (
+        <tr key={device.id}>
+            <td>
+                <RangeSlider
+                    key={device.id}
+                    device={device}
+                    // onChange={handleSliderChange}
+                />
+            </td>
+            <td>
+                <Form.Control
+                    key={device.id}
+                    className='text-center'
+                    size='sm'
+                    type='number'
+                    // onChange={() => toggleShow(true)}
+                    value={device.quantity}
+                />
+            </td>
+            <td className='text-center'>
+                <Form.Text
+                    key={device.id}
+                    // style={{width: '100px'}}
+                    type='number'
+                >
+                    {device.quantity}
+                </Form.Text>
+            </td>
+            <td className='text-center'>
+                <Form.Text
+                    key={device.id}
+                    type='number'
+                >
+                    {device.quantity}
+                </Form.Text>
+            </td>
+        </tr>
+    )
+}
+
+
 // renders the rows & columns of one table, currently broken out by category
 function CategoryTable({table_item, columns}) {
     // query the devices associated with this category
@@ -30,43 +72,10 @@ function CategoryTable({table_item, columns}) {
                 </thead>
                 <tbody>
 
-                {devices.map(device => (  // build a table row for each device
-                    <tr key={device.id}>
-                        <td>
-                            <RangeSlider
-                                key={device.id}
-                                device={device}
-                                // onChange={handleSliderChange}
-                            />
-                        </td>
-                        <td>
-                            <Form.Control
-                                key={device.id}
-                                className='text-center'
-                                size='sm'
-                                type='number'
-                                // onChange={() => toggleShow(true)}
-                                value={device.quantity}
-                            />
-                        </td>
-                        <td className='text-center'>
-                            <Form.Text
-                                key={device.id}
-                                // style={{width: '100px'}}
-                                type='number'
-                            >
-                                {device.quantity}
-                            </Form.Text>
-                        </td>
-                        <td className='text-center'>
-                            <Form.Text
-                                key={device.id}
-                                type='number'
-                            >
-                                {device.quantity}
-                            </Form.Text>
-                        </td>
-                    </tr>
+                {devices.map(device => (
+                    <TableRow
+                        device={device}
+                    />
                 ))}
                 </tbody>
             </Table>
