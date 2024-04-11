@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+import {useEffect} from 'react';
 import {TopNavbar} from './Components/Navbar';
 import Body from './Components/Body';
 import {StateProvider} from './Model/Context';
@@ -15,7 +15,7 @@ export default function App() {
     return (
         <div className='App'>
             <StateProvider>
-                <TopNavbar/>
+                <TopNavbar debugMode={false}/>
                 <Body/>
             </StateProvider>
 

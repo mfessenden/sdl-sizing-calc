@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import DataTable from './DataTable';
 import ResultComponent from './Result';
-import {useStateStore} from "../Model/Context";
+import {useStateStore} from '../Model/Context';
 
 
 

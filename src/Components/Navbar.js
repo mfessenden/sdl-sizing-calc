@@ -4,11 +4,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import {useStateStore} from "../Model/Context";
+import {useStateStore} from '../Model/Context';
 
 
 
-export function TopNavbar() {
+export function TopNavbar({debugMode = false}) {
 
     const {state, actions: {applyFilterString}} = useStateStore();
     const stateData = state.current_state
@@ -36,27 +36,31 @@ export function TopNavbar() {
                         </Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body>
-                        <Nav className='flex-grow-1 pe-3'>
-                            <Nav.Link href='/data'>Edit Data</Nav.Link>
-                            <Nav.Link href='/settings'>Settings</Nav.Link>
-                            <NavDropdown
-                                title='Actions'
-                                id='offcanvasNavbarDropdown-expand-lg'
-                            >
-                                {/* these will call functions, not routes */}
-                                <NavDropdown.Item href='#resetstate'>Reset State</NavDropdown.Item>
-                                <NavDropdown.Item href='#savestate'>Save State</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
-                        <Form>
-                            <Form.Control
-                                type='search'
-                                placeholder='Filter'
-                                className='me-2'
-                                aria-label='filter'
-                                onChange={e => applyFilterString(e.target.value.toLowerCase())}
-                            />
-                        </Form>
+                        {debugMode &&
+                            <Nav className='flex-grow-1 pe-3'>
+                                <Nav.Link href='/data'>Edit Data</Nav.Link>
+                                <Nav.Link href='/settings'>Settings</Nav.Link>
+                                <NavDropdown
+                                    title='Actions'
+                                    id='offcanvasNavbarDropdown-expand-lg'
+                                >
+                                    {/* these will call functions, not routes */}
+                                    <NavDropdown.Item href='#resetstate'>Reset State</NavDropdown.Item>
+                                    <NavDropdown.Item href='#savestate'>Save State</NavDropdown.Item>
+                                </NavDropdown>
+                            </Nav>
+                        }
+                        <div className="d-flex justify-content-end">
+                            <Form>
+                                <Form.Control
+                                    type='search'
+                                    placeholder='Filter'
+                                    className='me-2'
+                                    aria-label='filter'
+                                    onChange={e => applyFilterString(e.target.value.toLowerCase())}
+                                />
+                            </Form>
+                        </div>
                     </Offcanvas.Body>
                 </Navbar.Offcanvas>
             </Container>
