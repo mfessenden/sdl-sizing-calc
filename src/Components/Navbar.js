@@ -19,6 +19,7 @@ export default function SDLNavbar() {
                     />{' '}
                 </Navbar.Brand>
             </Container>
+            {/* filter the results*/}
             <Form inline className='justify-content-end'>
                 <Row>
                     <Col xs='auto'>

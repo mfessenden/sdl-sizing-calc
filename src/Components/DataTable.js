@@ -7,7 +7,8 @@ import {useStateStore} from '../Model/Context';
 
 
 // renders the rows & columns of one table, currently broken out by category
-function TableItem({table_item, columns}) {
+function CategoryTable({table_item, columns}) {
+    // query the devices associated with this category
     const devices = table_item.device_types
     console.log('Building table:')
     console.log(table_item)
@@ -125,7 +126,7 @@ export default function DataTable() {
                                 {table_item.display_name}
                             </Accordion.Header>
                             <Accordion.Body>
-                                <TableItem
+                                <CategoryTable
                                     key={table_item.category_id}
                                     table_item={table_item}
                                     columns={columnNames}
