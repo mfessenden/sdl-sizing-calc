@@ -1,4 +1,4 @@
-import {createContext, useContext, useReducer, useEffect} from 'react';
+import {createContext, useContext, useReducer} from 'react';
 var ContextRawData = require('../data.json');
 var ContextData = buildDataContext()
 
@@ -40,6 +40,8 @@ export function StateReducer(state, action) {
     // 'state' is an array of devices
     const updatedState =  {...state};
     const devices = state.device_types
+    // state values for the current session
+    const currentState = state.current_state
 
     switch (action.type) {
         case 'SET_NAME': {
@@ -47,9 +49,6 @@ export function StateReducer(state, action) {
             const deviceName = action.deviceName
 
             const device = devices.filter((d) => d.id === deviceId)[0]
-
-            console.log('Device Name:')
-            console.log(device)
             device.name = deviceName
 
             console.log(`Setting name: '${deviceName}' for device: ${deviceId}`);
@@ -58,13 +57,10 @@ export function StateReducer(state, action) {
         }
 
         case 'SET_DISPLAY_NAME': {
-            console.log(action)
             const deviceId = action.deviceId
             const displayName = action.displayName
 
             const device = devices.filter((d) => d.id === deviceId)[0]
-            console.log('Device Display Name:')
-            console.log(device)
             device.display_name = displayName
             console.log(`Setting display name: '${displayName}' for device: ${deviceId}`);
             updatedState.device_types[deviceId] = device
@@ -72,13 +68,10 @@ export function StateReducer(state, action) {
         }
 
         case 'SET_QUANTITY': {
-            console.log(action)
             const deviceId = action.deviceId
             const quantity = action.quantity
 
             const device = devices.filter((d) => d.id === deviceId)[0]
-            console.log('Device Quantity:')
-            console.log(device)
             device.quantity = quantity
             console.log(`Setting quantity: ${quantity} for device: ${deviceId}`);
             updatedState.device_types[deviceId] = device
@@ -94,7 +87,6 @@ export function StateReducer(state, action) {
             console.log(`Setting base weight: ${baseWeight} for device: ${deviceId}`);
             updatedState.device_types[deviceId] = device
             break;
-
         }
 
         case 'SET_EVENT_SIZE': {
@@ -107,7 +99,17 @@ export function StateReducer(state, action) {
             console.log(`Setting event size: ${eventSize} for device: ${deviceId}`);
             updatedState.device_types[deviceId] = device
             break;
+        }
 
+        case 'APPLY_FILTER': {
+            const newFilterString = action.filterString
+            currentState.filter_string = newFilterString
+            if (!newFilterString) {
+                console.log(`Clearing filter string...`);
+            } else {
+                console.log(`Applying filter string: '${newFilterString}'`);
+            }
+            break;
         }
 
         default:
@@ -127,6 +129,7 @@ export const useCustomState = (defaultState = ContextData) => {
             setQuantity: (deviceId, quantity) => dispatch({type: 'SET_QUANTITY', deviceId, quantity }),
             setBaseWeight: (deviceId, baseWeight) => dispatch({type: 'SET_BASE_WEIGHT', deviceId, baseWeight }),
             setEventSize: (deviceId, eventSize) => dispatch({type: 'SET_EVENT_SIZE', deviceId, eventSize }),
+            applyFilterString: (filterString) => dispatch({type: 'APPLY_FILTER', filterString }),
         },
     };
 };

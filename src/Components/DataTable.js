@@ -7,7 +7,7 @@ import {useStateStore} from '../Model/Context';
 
 
 function TableRow({device}) {
-    const {devices, actions: {setQuantity}} = useStateStore();
+    const {state, actions: {setQuantity}} = useStateStore();
     return (
         <tr key={device.id}>
             <td>
@@ -56,7 +56,7 @@ function CategoryTable({table_item, columns}) {
 
     return (
         <div>
-            <Table className= 'align-left'>
+            <Table className='align-left'>
                 <thead>
                 <tr>
                     {columns.map(column => (
@@ -87,10 +87,8 @@ export default function DataTable() {
         const interfaceData = data.interface_data
         const categoryData = interfaceData.categories
         const deviceTypes = data.device_types
-        console.log('Device Types:')
-        console.log(deviceTypes)
+
         for (const category of categoryData) {
-            console.log(category)
             const categoryDevices = []
 
             for (let device of deviceTypes) {
@@ -104,48 +102,83 @@ export default function DataTable() {
                 category_id: category.category_id,
                 device_types: categoryDevices
             }
-            console.log(`Building devices for: '${category.display_name}'`)
             tableItems.push(tableItem)
         }
 
         return tableItems
     }
 
-    const contextData = useStateStore()
-    console.log('Data:')
-    console.log(contextData.state)
-    const table_items = buildTables(contextData.state)
-    const columnNames = contextData.state.interface_data.table_columns
-    return (
-        <div>
+    const {state, actions} = useStateStore()
+    const currentState = state.current_state
+    const columnNames = state.interface_data.table_columns
+    const deviceTypes = state.device_types
+    const filterString = currentState.filter_string
 
-            {table_items.map(table_item => (
-                // don't show the table if there are no entries
-                table_item.device_types.length > 0 ? (
-                    <Accordion
-                        alwaysOpen
-                        key={table_item.category_id}
-                    >
-                        <Accordion.Item
-                            eventKey={table_item.category_id}
+    if (filterString) {
+        const filteredDevices = deviceTypes.filter((device) =>
+            device.name.toLowerCase().includes(filterString) | device.display_name.toLowerCase().includes(filterString)
+        )
+        console.log(filteredDevices)
+        const filteredTableItem = {
+
+            device_types: filteredDevices,
+        }
+        return (
+            <div>
+                <Accordion alwaysOpen>
+                    <Accordion.Item>
+                        <Accordion.Header>
+                            Results:
+                        </Accordion.Header>
+                        <Accordion.Body>
+                            <CategoryTable
+                                table_item={filteredTableItem}
+                                columns={columnNames}
+                            >
+                                {filteredDevices.map(device => (
+                                    <TableRow
+                                        key={device.id}
+                                        device={device}
+                                    />
+                                ))}
+                            </CategoryTable>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion>
+            </div>
+        )
+    } else {
+        const table_items = buildTables(state)
+        return (
+            <div>
+                {table_items.map(table_item => (
+                    // don't show the table if there are no entries
+                    table_item.device_types.length > 0 ? (
+                        <Accordion
+                            alwaysOpen
+                            key={table_item.category_id}
                         >
-                            <Accordion.Header>
-                                {table_item.display_name}
-                            </Accordion.Header>
-                            <Accordion.Body>
-                                <CategoryTable
-                                    key={table_item.category_id}
-                                    table_item={table_item}
-                                    columns={columnNames}
-                                />
+                            <Accordion.Item
+                                eventKey={table_item.category_id}
+                            >
+                                <Accordion.Header>
+                                    {table_item.display_name}
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                    <CategoryTable
+                                        key={table_item.category_id}
+                                        table_item={table_item}
+                                        columns={columnNames}
+                                    />
 
-                            </Accordion.Body>
-                        </Accordion.Item>
-                    </Accordion>
-                ):(
-                    <></>
-                )
-            ))}
-        </div>
-    )
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                    ) : (
+                        <></>
+                    )
+                ))}
+            </div>
+        )
+    }
 }

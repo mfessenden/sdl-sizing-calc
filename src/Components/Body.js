@@ -4,10 +4,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import DataTable from './DataTable';
 import ResultComponent from './Result';
+import {useStateStore} from "../Model/Context";
 
 
 
 export default function Body() {
+    const {state, actions} = useStateStore()
+    const currentState = state.current_state
+
     return (
         <Container fluid>
             <Row>

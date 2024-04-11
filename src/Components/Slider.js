@@ -6,7 +6,7 @@ import {useStateStore} from "../Model/Context";
 
 
 function RangeSlider({device}) {
-    const {devices, actions: {setQuantity}} = useStateStore();
+    const {state, actions: {setQuantity}} = useStateStore();
 
 
     return (

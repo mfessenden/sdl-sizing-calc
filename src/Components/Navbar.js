@@ -10,11 +10,8 @@ import {useStateStore} from "../Model/Context";
 
 export function TopNavbar() {
 
-    const searchFilterUpdated = (e) => {
-        console.log(`Search filter updated: '${e.target.value}'`)
-    };
-
-    const contextData = useStateStore()
+    const {state, actions: {applyFilterString}} = useStateStore();
+    const stateData = state.current_state
     return (
         <Navbar expand='lg' className='bg-body-tertiary mb-3'>
             <Container fluid>
@@ -57,7 +54,7 @@ export function TopNavbar() {
                                 placeholder='Filter'
                                 className='me-2'
                                 aria-label='filter'
-                                onChange={searchFilterUpdated}
+                                onChange={e => applyFilterString(e.target.value.toLowerCase())}
                             />
                         </Form>
                     </Offcanvas.Body>
