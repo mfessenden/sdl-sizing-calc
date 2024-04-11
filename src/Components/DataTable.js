@@ -7,6 +7,13 @@ import {useStateStore} from '../Model/Context';
 
 
 function TableRow({device}) {
+    const handleQuantityChanged = (e) => {
+        console.log(device)
+
+        device.quantity = e.target.value
+        console.log(`Device '${device.name}' quantity changed: '${device.quantity}'`)
+    };
+
     return (
         <tr key={device.id}>
             <td>
@@ -22,7 +29,7 @@ function TableRow({device}) {
                     className='text-center'
                     size='sm'
                     type='number'
-                    // onChange={() => toggleShow(true)}
+                    onChange={handleQuantityChanged}
                     value={device.quantity}
                 />
             </td>
