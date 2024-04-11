@@ -112,6 +112,27 @@ export function StateReducer(state, action) {
             break;
         }
 
+        case 'SET_RETENTION_PERIOD': {
+            currentState.retention_period_id = action.value
+            break;
+        }
+
+        case 'SET_RETENTION_VALUE': {
+            currentState.retention_period_value = action.value
+            break;
+        }
+
+        case 'SET_EMPLOYEE_COUNT': {
+            currentState.employee_count = action.value
+            break;
+        }
+
+        case 'SET_SEAT_COUNT': {
+            currentState.soar_seats = action.value
+            break;
+        }
+
+
         default:
             console.log(`Error: ${action.type} not caught by State reducer`);
     }
@@ -130,6 +151,10 @@ export const useCustomState = (defaultState = ContextData) => {
             setBaseWeight: (deviceId, baseWeight) => dispatch({type: 'SET_BASE_WEIGHT', deviceId, baseWeight }),
             setEventSize: (deviceId, eventSize) => dispatch({type: 'SET_EVENT_SIZE', deviceId, eventSize }),
             applyFilterString: (filterString) => dispatch({type: 'APPLY_FILTER', filterString }),
+            setRetentionPeriod: (value) => dispatch({type: 'SET_RETENTION_PERIOD', value }),
+            setRetentionValue: (value) => dispatch({type: 'SET_RETENTION_VALUE', value }),
+            setEmployeeCount: (value) => dispatch({type: 'SET_EMPLOYEE_COUNT', value }),
+            setSeatCount: (value) => dispatch({type: 'SET_SEAT_COUNT', value }),
         },
     };
 };

@@ -1,4 +1,5 @@
-import {useState, React} from 'react';
+import {useState} from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
@@ -21,7 +22,7 @@ import {useStateStore} from '../Model/Context';
  *
  * @return Formatted string.
  */
-function humanFileSize(bytes, si=false, dp=1) {
+function humanFileSize(bytes, si = false, dp = 1) {
     const thresh = si ? 1000 : 1024;
 
     if (Math.abs(bytes) < thresh) {
@@ -32,7 +33,7 @@ function humanFileSize(bytes, si=false, dp=1) {
         ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
         : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
     let u = -1;
-    const r = 10**dp;
+    const r = 10 ** dp;
 
     do {
         bytes /= thresh;
@@ -46,10 +47,9 @@ function humanFileSize(bytes, si=false, dp=1) {
 
 // form group for the given tab
 function TabbedResultOutput() {
-
-    const handleValueChanged = (e) => {
-        console.log(`Value changed: '${e.target.value}'`)
-    };
+    const {state, actions: {setRetentionValue, setEmployeeCount, setSeatCount}} = useStateStore();
+    const currentState = state.current_state
+    const retentionPeriodId = currentState.retention_period_id
 
     return (
         <div>
@@ -58,18 +58,18 @@ function TabbedResultOutput() {
                     <Form.Label>Data Retention Period</Form.Label>
                     <Form.Control
                         size='sm'
-                        value='1'
+                        value={currentState.retention_period_value}
                         className='text-center'
-                        onChange={handleValueChanged}
+                        onChange={setRetentionValue}
                     />
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>No. of Employees</Form.Label>
                     <Form.Control
                         size='sm'
-                        value='1'
+                        value={currentState.employee_count}
                         className='text-center'
-                        onChange={handleValueChanged}
+                        onChange={setEmployeeCount}
                     />
                 </Form.Group>
                 <Form.Group>
@@ -78,7 +78,7 @@ function TabbedResultOutput() {
                         size='sm'
                         value='0'
                         className='text-center'
-                        onChange={handleValueChanged}
+                        onChange={setSeatCount}
                     />
                 </Form.Group>
             </Form>

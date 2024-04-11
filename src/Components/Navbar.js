@@ -7,7 +7,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import {useStateStore} from '../Model/Context';
 
 
-
+// See flex usage: https://getbootstrap.com/docs/5.1/utilities/flex/
 export function TopNavbar({debugMode = false}) {
 
     const {state, actions: {applyFilterString}} = useStateStore();
