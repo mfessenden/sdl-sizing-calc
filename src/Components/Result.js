@@ -16,7 +16,7 @@ import {humanFileSize} from "../Utils";
 
 // form group for the given tab
 function TabbedResultOutput({retentionPeriodId}) {
-    const {state, actions: {setRetentionValue, setEmployeeCount, setSeatCount}} = useStateStore();
+    const {state, actions: {setRetentionValue}} = useStateStore();
     const currentState = state.current_state
 
     return (
@@ -31,24 +31,6 @@ function TabbedResultOutput({retentionPeriodId}) {
                         onChange={e => setRetentionValue(parseInt(e.target.value))}
                     />
 
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>No. of Employees</Form.Label>
-                    <Form.Control
-                        size='sm'
-                        value={currentState.employee_count}
-                        className='text-center'
-                        onChange={e => setEmployeeCount(parseInt(e.target.value))}
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>SOAR Seats</Form.Label>
-                    <Form.Control
-                        size='sm'
-                        value={currentState.soar_seats}
-                        className='text-center'
-                        onChange={e => setSeatCount(parseInt(e.target.value))}
-                    />
                 </Form.Group>
             </Form>
         </div>

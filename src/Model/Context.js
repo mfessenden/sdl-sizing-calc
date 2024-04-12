@@ -136,17 +136,6 @@ export function StateReducer(state, action) {
             break;
         }
 
-        case 'SET_EMPLOYEE_COUNT': {
-            currentState.employee_count = action.value
-            break;
-        }
-
-        case 'SET_SEAT_COUNT': {
-            currentState.soar_seats = action.value
-            break;
-        }
-
-
         default:
             console.log(`Error: ${action.type} not caught by State reducer`);
     }
@@ -169,8 +158,6 @@ export const useCustomState = (defaultState = ContextData) => {
             applyActiveFilter: (value) => dispatch({type: 'APPLY_ACTIVE_FILTER', value }),
             setRetentionPeriod: (value) => dispatch({type: 'SET_RETENTION_PERIOD', value }),
             setRetentionValue: (value) => dispatch({type: 'SET_RETENTION_VALUE', value }),
-            setEmployeeCount: (value) => dispatch({type: 'SET_EMPLOYEE_COUNT', value }),
-            setSeatCount: (value) => dispatch({type: 'SET_SEAT_COUNT', value }),
         },
     };
 };
