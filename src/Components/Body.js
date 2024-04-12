@@ -13,7 +13,7 @@ export default function Body() {
     const currentState = state.current_state
 
     return (
-        <Container fluid>
+        <Container fluid className='d-grid gap-3'>
             <Row>
                 <Col md={8}>
                     <DataTable/>
