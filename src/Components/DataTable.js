@@ -3,12 +3,17 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import RangeSlider from './Slider';
-import '../index.css';
 import {useStateStore} from '../Model/Context';
+import {bytesToGigs, calculateDeviceUsage, numberToString} from "../Utils";
 
 
 function TableRow({device}) {
     const {state, actions: {setQuantity}} = useStateStore();
+
+    const eventsPerSecond = parseFloat(device.quantity).toFixed(2) * parseFloat(device.base_weight).toFixed(2)
+    const bytesPerDay = calculateDeviceUsage(device)
+    const gigsPerDay = bytesToGigs(bytesPerDay)
+
     return (
         <tr key={device.id}>
             <td>
@@ -34,7 +39,7 @@ function TableRow({device}) {
                     // style={{width: '100px'}}
                     type='number'
                 >
-                    {device.quantity}
+                    {numberToString(eventsPerSecond)}
                 </Form.Text>
             </td>
             <td className='text-center'>
@@ -42,7 +47,7 @@ function TableRow({device}) {
                     key={device.id}
                     type='number'
                 >
-                    {device.quantity}
+                    {numberToString(gigsPerDay)}
                 </Form.Text>
             </td>
         </tr>
@@ -51,7 +56,7 @@ function TableRow({device}) {
 
 
 // renders the rows & columns of one table, currently broken out by category
-function CategoryTable({table_item, columns}) {
+function CategoryTable({table_item, columnData}) {
     // query the devices associated with this category
     const devices = table_item.device_types
 
@@ -60,8 +65,11 @@ function CategoryTable({table_item, columns}) {
             <Table key={table_item.category_id}>
                 <thead>
                 <tr>
-                    {columns.map(column => (
-                        <th key={column}>{column}</th>
+                    {columnData.map(column => (
+                        <th
+                            key={column.id}
+                            title={column.description}
+                        >{column.display_name}</th>
                     ))}
                 </tr>
                 </thead>
@@ -111,7 +119,7 @@ export default function DataTable() {
 
     const {state, actions} = useStateStore()
     const currentState = state.current_state
-    const columnNames = state.interface_data.table_columns
+    const columnData = state.interface_data.table_columns
     const deviceTypes = state.device_types
     const filterString = currentState.filter_string
     const filterActive = currentState.filter_active
@@ -146,7 +154,7 @@ export default function DataTable() {
                     <Accordion.Item eventKey='filtered'>
                         <Accordion.Header>{filterDescription}</Accordion.Header>
                         <Accordion.Body>
-                            <CategoryTable table_item={filteredTableItem} columns={columnNames}>
+                            <CategoryTable table_item={filteredTableItem} columnData={columnData}>
                                 {filteredDevices.map(device => (
                                     <TableRow key={device.id} device={device}/>
                                 ))}
@@ -170,7 +178,7 @@ export default function DataTable() {
                                     <CategoryTable
                                         key={`category-table-${table_item.category_id}`}
                                         table_item={table_item}
-                                        columns={columnNames}
+                                        columnData={columnData}
                                     />
 
                                 </Accordion.Body>

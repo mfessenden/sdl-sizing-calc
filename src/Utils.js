@@ -1,0 +1,75 @@
+import {BYTES_TO_GB, SECONDS_PER_DAY} from "./Constants";
+
+/**
+ * Format bytes as human-readable text.
+ *
+ * @param bytes Number of bytes.
+ * @param si True to use metric (SI) units, aka powers of 1000. False to use
+ *           binary (IEC), aka powers of 1024.
+ * @param dp Number of decimal places to display.
+ *
+ * @return Formatted string.
+ */
+function humanFileSize(bytes: number, si: boolean = false, dp: number = 1) {
+    const thresh = si ? 1000 : 1024;
+
+    if (Math.abs(bytes) < thresh) {
+        return bytes + ' GB';
+    }
+
+    const units = si
+        ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+        : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+    let u = -1;
+    const r = 10 ** dp;
+
+    do {
+        bytes /= thresh;
+        ++u;
+    } while (Math.round(Math.abs(bytes) * r) / r >= thresh && u < units.length - 1);
+
+    return bytes.toFixed(dp) + ' ' + units[u];
+}
+
+
+function numberToString(value) {
+    value = parseFloat(value)
+    if (value === 0) {
+        return '0'
+    } else if (value < 0.1) {
+        return '0.1'
+    } else {
+        const valueString = value.toFixed(1)
+        if (valueString.endsWith('.0')) {
+            return value.toFixed()
+        } else {
+            return valueString
+        }
+    }
+}
+
+
+/**
+ * Calculates the device usage in bytes per day based on the given device information.
+ *
+ * @param device - The device information object.
+ * @return {number} - The device usage in bytes per day.
+ */
+function calculateDeviceUsage(device) {
+    const eventsPerSecond = parseFloat(device.quantity) * device.base_weight
+    const bytesPerSecond = eventsPerSecond * device.event_size
+    return bytesPerSecond * SECONDS_PER_DAY
+}
+
+
+function bytesToGigs(bytes: number) {
+    return bytes * BYTES_TO_GB
+}
+
+
+export {
+    bytesToGigs,
+    calculateDeviceUsage,
+    humanFileSize,
+    numberToString
+}

@@ -14,8 +14,8 @@ export default function FilterInput() {
     const isFilteringActive = state.current_state.filter_active
     const activeButtonText = (isFilteringActive) ? 'Active: On' : 'Active: Off'
     return (
-        <Nav className='ml-auto'>
-            <Container>
+        <Nav className="justify-content-end">
+            <Container className='d-flex justify-content-end'>
                 <Row>
                     <Col>
                         <Form>

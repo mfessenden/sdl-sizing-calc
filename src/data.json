@@ -1,10 +1,24 @@
 {
     "interface_data": {
         "table_columns": [
-            "Device Type",
-            "Quantity",
-            "EPS",
-            "GB/Day"
+            {
+                "id": 0,
+                "display_name": "Device Type"
+            },
+            {
+                "id": 1,
+                "display_name": "Quantity",
+                "description": "Number of Devices"
+            },
+            {
+                "id": 2,
+                "display_name": "EPS",
+                "description": "Events per Second"
+            },
+            {
+                "id": 3,
+                "display_name": "GB/Day"
+            }
         ],
         "input_menu_data": {
             "industry": [
@@ -169,22 +183,26 @@
             {
                 "id": 0,
                 "name": "daily",
-                "display_name": "Daily"
+                "display_name": "Daily",
+                "multiplier": 1
             },
             {
                 "id": 1,
                 "name": "weekly",
-                "display_name": "Weekly"
+                "display_name": "Weekly",
+                "multiplier": 7
             },
             {
                 "id": 2,
                 "name": "monthly",
-                "display_name": "Monthly"
+                "display_name": "Monthly",
+                "multiplier": 30
             },
             {
                 "id": 3,
                 "name": "yearly",
-                "display_name": "Yearly"
+                "display_name": "Yearly",
+                "multiplier": 365
             }
         ]
     },

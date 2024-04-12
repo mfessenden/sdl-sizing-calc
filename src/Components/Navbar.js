@@ -28,10 +28,9 @@ export function TopNavbar({debugMode = false}) {
                 <Offcanvas.Body>
 
                     {debugMode &&
-                        // <Nav className='flex-grow-1 pe-3'>
-                        <Nav>
-                            <Nav.Link href='/data'>Edit Data</Nav.Link>
-                            <Nav.Link href='/settings'>Settings</Nav.Link>
+                        <Nav className='flex-grow-1 pe-3'>
+                            <Nav.Link disabled href='/data'>Edit Data</Nav.Link>
+                            <Nav.Link disabled href='/settings'>Settings</Nav.Link>
                             <NavDropdown
                                 title='Actions'
                                 id='offcanvasNavbarDropdown-expand-lg'
@@ -40,7 +39,6 @@ export function TopNavbar({debugMode = false}) {
                                 <NavDropdown.Item href='#resetstate'>Reset State</NavDropdown.Item>
                                 <NavDropdown.Item href='#savestate'>Save State</NavDropdown.Item>
                             </NavDropdown>
-                            <FilterInput/>
                         </Nav>
                     }
                     <FilterInput/>
