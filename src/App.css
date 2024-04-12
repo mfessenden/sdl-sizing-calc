@@ -1,7 +1,3 @@
-.App {
-  text-align: center;
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -68,11 +64,7 @@ input[type=number]::-webkit-outer-spin-button {
   font-weight: bolder;
 }
 
-tr {
-  text-align: left;
-}
-
-/* Result widget */
+/* Result widget size overrides */
 
 .result-lg{
   font-size: 1.5em;
@@ -81,25 +73,4 @@ tr {
 .result-xl{
   font-size: 2.5em;
   font-weight: bolder;
-}
-
-/* spacing for top navbar item placement */
-.navbar{
-  /*left: -30px;*/
-}
-
-.md {
-  margin-left: -100px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.div.container {
-  max-width: 1600px;
 }
