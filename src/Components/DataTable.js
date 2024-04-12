@@ -1,4 +1,5 @@
 import Accordion from 'react-bootstrap/Accordion';
+import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import RangeSlider from './Slider';
@@ -56,7 +57,7 @@ function CategoryTable({table_item, columns}) {
 
     return (
         <div>
-            <Table className='align-left'>
+            <Table key={table_item.category_id}>
                 <thead>
                 <tr>
                     {columns.map(column => (
