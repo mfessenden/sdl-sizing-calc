@@ -113,60 +113,61 @@ export default function DataTable() {
     const columnNames = state.interface_data.table_columns
     const deviceTypes = state.device_types
     const filterString = currentState.filter_string
+    const filterActive = currentState.filter_active
+    let filteredDevices = []
+    let filterDescription = 'Result:'
 
-    if (filterString) {
-        const filteredDevices = deviceTypes.filter((device) =>
+    if (filterActive) {
+        console.log('Filtering active devices...')
+        filterDescription = 'Active Devices:'
+        filteredDevices = deviceTypes.filter((device) => device.quantity > 0)
+
+        if (!filteredDevices.length) {
+            // alert('No active items')
+        }
+
+
+    } else if (filterString) {
+        console.log('Filtering items matching.')
+        filteredDevices = deviceTypes.filter((device) =>
             device.name.toLowerCase().includes(filterString) | device.display_name.toLowerCase().includes(filterString)
         )
-        console.log(filteredDevices)
-        const filteredTableItem = {
+    }
 
+
+    if (filteredDevices.length) {
+        const filteredTableItem = {
             device_types: filteredDevices,
         }
         return (
-            <div>
-                <Accordion alwaysOpen>
-                    <Accordion.Item>
-                        <Accordion.Header>
-                            Results:
-                        </Accordion.Header>
+            <Container fluid className='d-grid gap-3'>
+                <Accordion alwaysOpen key='accordion-filtered' defaultActiveKey='filtered'>
+                    <Accordion.Item eventKey='filtered'>
+                        <Accordion.Header>{filterDescription}</Accordion.Header>
                         <Accordion.Body>
-                            <CategoryTable
-                                table_item={filteredTableItem}
-                                columns={columnNames}
-                            >
+                            <CategoryTable table_item={filteredTableItem} columns={columnNames}>
                                 {filteredDevices.map(device => (
-                                    <TableRow
-                                        key={device.id}
-                                        device={device}
-                                    />
+                                    <TableRow key={device.id} device={device}/>
                                 ))}
                             </CategoryTable>
                         </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>
-            </div>
+            </Container>
         )
     } else {
         const table_items = buildTables(state)
         return (
-            <div>
+            <Container fluid className='d-grid gap-3'>
                 {table_items.map(table_item => (
                     // don't show the table if there are no entries
                     table_item.device_types.length > 0 ? (
-                        <Accordion
-                            alwaysOpen
-                            key={table_item.category_id}
-                        >
-                            <Accordion.Item
-                                eventKey={table_item.category_id}
-                            >
-                                <Accordion.Header>
-                                    {table_item.display_name}
-                                </Accordion.Header>
+                        <Accordion alwaysOpen>
+                            <Accordion.Item eventKey={table_item.category_id} id={table_item.category_id}>
+                                <Accordion.Header>{table_item.display_name}</Accordion.Header>
                                 <Accordion.Body>
                                     <CategoryTable
-                                        key={table_item.category_id}
+                                        key={`category-table-${table_item.category_id}`}
                                         table_item={table_item}
                                         columns={columnNames}
                                     />
@@ -178,7 +179,7 @@ export default function DataTable() {
                         <></>
                     )
                 ))}
-            </div>
+            </Container>
         )
     }
 }

@@ -102,7 +102,7 @@ export function StateReducer(state, action) {
             break;
         }
 
-        case 'APPLY_FILTER': {
+        case 'APPLY_FILTER_STRING': {
             const newFilterString = action.filterString
             currentState.filter_string = newFilterString
             if (!newFilterString) {
@@ -110,6 +110,13 @@ export function StateReducer(state, action) {
             } else {
                 console.log(`Applying filter string: '${newFilterString}'`);
             }
+            break;
+        }
+
+        case 'APPLY_ACTIVE_FILTER': {
+            currentState.filter_active = action.value
+            const filterDescription = (currentState.filter_active) ? 'on' : 'off'
+            console.log(`Filter active items is ${filterDescription}`);
             break;
         }
 
@@ -154,7 +161,8 @@ export const useCustomState = (defaultState = ContextData) => {
             setQuantity: (deviceId, quantity) => dispatch({type: 'SET_QUANTITY', deviceId, quantity }),
             setBaseWeight: (deviceId, baseWeight) => dispatch({type: 'SET_BASE_WEIGHT', deviceId, baseWeight }),
             setEventSize: (deviceId, eventSize) => dispatch({type: 'SET_EVENT_SIZE', deviceId, eventSize }),
-            applyFilterString: (filterString) => dispatch({type: 'APPLY_FILTER', filterString }),
+            applyFilterString: (filterString) => dispatch({type: 'APPLY_FILTER_STRING', filterString }),
+            applyActiveFilter: (value) => dispatch({type: 'APPLY_ACTIVE_FILTER', value }),
             setRetentionPeriod: (value) => dispatch({type: 'SET_RETENTION_PERIOD', value }),
             setRetentionValue: (value) => dispatch({type: 'SET_RETENTION_VALUE', value }),
             setEmployeeCount: (value) => dispatch({type: 'SET_EMPLOYEE_COUNT', value }),

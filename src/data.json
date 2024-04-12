@@ -203,6 +203,7 @@
         "expanded_table_items": [],
         "data_source": "../data.json",
         "filter_string": null,
+        "filter_active": false,
         "data_sources": []
     },
     "device_types": [
