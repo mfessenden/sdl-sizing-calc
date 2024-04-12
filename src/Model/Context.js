@@ -52,7 +52,6 @@ export function StateReducer(state, action) {
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.name = deviceName
 
-            console.log(`Setting name: '${deviceName}' for device: ${deviceId}`);
             updatedState.device_types[deviceId] = device
             break;
         }
@@ -63,7 +62,6 @@ export function StateReducer(state, action) {
 
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.display_name = displayName
-            console.log(`Setting display name: '${displayName}' for device: ${deviceId}`);
             updatedState.device_types[deviceId] = device
             break;
         }
@@ -71,7 +69,6 @@ export function StateReducer(state, action) {
         case 'SET_CATEGORY': {
             const deviceId = action.deviceId
             const categoryId = action.categoryId
-            console.log(`Setting category: ${categoryId} for device: ${deviceId}`);
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.category_id = categoryId
             updatedState.device_types[deviceId] = device
@@ -84,7 +81,6 @@ export function StateReducer(state, action) {
 
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.quantity = quantity
-            console.log(`Setting quantity: ${quantity} for device: ${deviceId}`);
             updatedState.device_types[deviceId] = device
             break;
         }
@@ -95,7 +91,6 @@ export function StateReducer(state, action) {
 
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.base_weight = baseWeight
-            console.log(`Setting base weight: ${baseWeight} for device: ${deviceId}`);
             updatedState.device_types[deviceId] = device
             break;
         }
@@ -107,7 +102,6 @@ export function StateReducer(state, action) {
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.event_size = eventSize
 
-            console.log(`Setting event size: ${eventSize} for device: ${deviceId}`);
             updatedState.device_types[deviceId] = device
             break;
         }
@@ -133,7 +127,6 @@ export function StateReducer(state, action) {
         case 'SET_RETENTION_PERIOD': {
             const retentionPeriods = interfaceData.retention_periods
             const retentionData = retentionPeriods.filter((d) => d.id === action.value)[0]
-            console.log(`Setting retention period: ${action.value} (${retentionData.name})`);
             currentState.retention_period_id = action.value
             break;
         }
