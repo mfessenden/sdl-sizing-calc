@@ -68,6 +68,16 @@ export function StateReducer(state, action) {
             break;
         }
 
+        case 'SET_CATEGORY': {
+            const deviceId = action.deviceId
+            const categoryId = action.categoryId
+            console.log(`Setting category: ${categoryId} for device: ${deviceId}`);
+            const device = devices.filter((d) => d.id === deviceId)[0]
+            device.category_id = categoryId
+            updatedState.device_types[deviceId] = device
+            break;
+        }
+
         case 'SET_QUANTITY': {
             const deviceId = action.deviceId
             const quantity = action.quantity
@@ -158,6 +168,7 @@ export const useCustomState = (defaultState = ContextData) => {
         actions: {
             setName: (deviceId, deviceName) => dispatch({type: 'SET_NAME', deviceId, deviceName }),
             setDisplayName: (deviceId, displayName) => dispatch({type: 'SET_DISPLAY_NAME', deviceId, displayName }),
+            setCategory: (deviceId, categoryId) => dispatch({type: 'SET_CATEGORY', deviceId, categoryId }),
             setQuantity: (deviceId, quantity) => dispatch({type: 'SET_QUANTITY', deviceId, quantity }),
             setBaseWeight: (deviceId, baseWeight) => dispatch({type: 'SET_BASE_WEIGHT', deviceId, baseWeight }),
             setEventSize: (deviceId, eventSize) => dispatch({type: 'SET_EVENT_SIZE', deviceId, eventSize }),
