@@ -16,24 +16,24 @@ function TableRow({device}) {
 
     return (
         <tr key={device.id}>
-            <td>
+            <td className='category-table-description'>
                 <RangeSlider
                     key={device.id}
                     device={device}
                     onChange={e => setQuantity(device.id, e.target.value)}
                 />
             </td>
-            <td>
+            <td className='category-table-numeric'>
                 <Form.Control
                     key={device.id}
                     className='text-center'
-                    size='sm'
+                    // size='sm'
                     type='number'
                     onChange={e => setQuantity(device.id, e.target.value)}
                     value={device.quantity}
                 />
             </td>
-            <td className='text-center'>
+            <td className='text-center category-table-numeric'>
                 <Form.Text
                     key={device.id}
                     // style={{width: '100px'}}
@@ -42,7 +42,7 @@ function TableRow({device}) {
                     {numberToString(eventsPerSecond)}
                 </Form.Text>
             </td>
-            <td className='text-center'>
+            <td className='text-center category-table-numeric'>
                 <Form.Text
                     key={device.id}
                     type='number'
