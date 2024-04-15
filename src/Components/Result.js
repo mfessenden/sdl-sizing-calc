@@ -1,17 +1,12 @@
-import {useState} from 'react';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import {useStateStore} from '../Model/Context';
-import {humanFileSize} from "../Utils";
+import {humanFileSize} from '../Utils';
 
 
 // form group for the given tab
@@ -22,12 +17,12 @@ function TabbedResultOutput({retentionPeriodId}) {
     return (
         <div>
             <Form p={3}>
-                <Form.Group className='text-center'>
+                <Form.Group className='text-center '>
                     <Form.Label>Data Retention Period</Form.Label>
                     <Form.Control
                         size='sm'
                         value={currentState.retention_period_value}
-                        className='text-center'
+                        className='text-center result-input d-flex justify-content-center'
                         onChange={e => setRetentionValue(parseInt(e.target.value))}
                     />
 

@@ -4,13 +4,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import DataTable from './DataTable';
 import ResultComponent from './Result';
-import {useStateStore} from '../Model/Context';
-
 
 
 export default function Body() {
-    const {state, actions} = useStateStore()
-    const currentState = state.current_state
 
     return (
         <Container fluid className='d-grid gap-3'>
@@ -19,7 +15,7 @@ export default function Body() {
                     <DataTable/>
                 </Col>
                 <Col md={4}>
-                    <ResultComponent useButton={false}/>
+                    <ResultComponent/>
                 </Col>
             </Row>
         </Container>

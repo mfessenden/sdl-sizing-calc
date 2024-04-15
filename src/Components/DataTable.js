@@ -4,11 +4,11 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import RangeSlider from './Slider';
 import {useStateStore} from '../Model/Context';
-import {bytesToGigs, calculateDeviceUsage, numberToString} from "../Utils";
+import {bytesToGigs, calculateDeviceUsage, numberToString} from '../Utils';
 
 
 function TableRow({device}) {
-    const {state, actions: {setQuantity}} = useStateStore();
+    const {actions: {setQuantity}} = useStateStore();
 
     const eventsPerSecond = parseFloat(device.quantity).toFixed(2) * parseFloat(device.base_weight).toFixed(2)
     const bytesPerDay = calculateDeviceUsage(device)

@@ -1,4 +1,4 @@
-import {BYTES_TO_GB, SECONDS_PER_DAY} from "./Constants";
+import {BYTES_TO_GB, SECONDS_PER_DAY} from './Constants';
 
 /**
  * Format bytes as human-readable text.

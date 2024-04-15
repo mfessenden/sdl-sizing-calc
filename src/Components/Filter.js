@@ -5,7 +5,6 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import {useStateStore} from '../Model/Context';
-import {ArrowLeftSquare} from "react-bootstrap-icons";
 
 
 // bi bi-arrow-left-square-fill
@@ -14,7 +13,7 @@ export default function FilterInput() {
     const isFilteringActive = state.current_state.filter_active
     const activeButtonText = (isFilteringActive) ? 'Active: On' : 'Active: Off'
     return (
-        <Nav className="justify-content-end">
+        <Nav className='justify-content-end'>
             <Container className='d-flex justify-content-end'>
                 <Row>
                     <Col>

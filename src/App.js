@@ -15,10 +15,9 @@ export default function App() {
     return (
         <div className='App'>
             <StateProvider>
-                <TopNavbar debugMode={false}/>
+                <TopNavbar/>
                 <Body/>
             </StateProvider>
-
         </div>
     );
 }
