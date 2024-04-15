@@ -78,37 +78,18 @@ function ResultTabs() {
 }
 
 
-
-export default function ResultComponent({useButton = true}) {
+export default function ResultComponent() {
 
     return (
-        <Card className='mx-auto my-2'>
-            <Container>
-                <Row className='align-center result-lg'>
-                    Your estimated data ingest:
-                </Row>
-                <Row className='align-center result-xl'>
-                    {humanFileSize(0)}
-                </Row>
-                <Row className='align-center'>
+        // <Card className='mx-auto'>
+        <Card className='d-flex justify-content-center'>
+            <Container className='my-8 '>
+                <Row className='result-lg'>Your estimated data ingest:</Row>
+                <Row className='result-xl'>{humanFileSize(0)}</Row>
+
+                <Row>
                     <ResultTabs/>
                 </Row>
-
-                {useButton &&
-                    <Row>
-                        <Col>
-                            <Button
-                                as='input'
-                                type='button'
-                                value='Get a Quote!'
-                                onClick={() => {
-                                    alert('You clicked me!');
-                                }}
-                            />
-                        </Col>
-                    </Row>
-                }
-
             </Container>
         </Card>
     );
