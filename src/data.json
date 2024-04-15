@@ -221,7 +221,6 @@
         "debug_mode": false,
         "retention_period_id": 0,
         "retention_period_value": 1,
-        "employee_count": 1,
         "expanded_table_items": [],
         "data_source": "../data.json",
         "filter_string": null,
