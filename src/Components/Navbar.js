@@ -9,7 +9,7 @@ import {hasSavedData, useStateStore} from '../Model/Data';
 
 
 // See flex usage: https://getbootstrap.com/docs/5.1/utilities/flex/
-export function TopNavbar({debugMode = true}) {
+export function TopNavbar({debugMode = false}) {
     const {state, actions: {clearState, resetState ,restoreState}} = useStateStore();
     const savedDataExists = hasSavedData()
     var hasActiveDevices = false
@@ -23,6 +23,9 @@ export function TopNavbar({debugMode = true}) {
 
     const handleSelect = (eventKey) => {
         if (eventKey === 'save-state') {
+            // don't save these
+            state.current_state.filter_string = null
+            state.current_state.filter_active = false
             window.localStorage.setItem('sdl-state', JSON.stringify(state));
             console.log('Saving current state....')
         } else if (eventKey === 'clear-state') {
