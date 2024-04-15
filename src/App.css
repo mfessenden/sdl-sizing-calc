@@ -75,6 +75,10 @@ input[type=number]::-webkit-outer-spin-button {
   font-weight: bolder;
 }
 
+.result-input {
+  width: 30%;
+}
+
 /* Table columns */
 
 .category-table-numeric {
