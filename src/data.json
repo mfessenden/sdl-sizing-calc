@@ -214,6 +214,7 @@
 
     },
     "current_state": {
+        "debug_mode": false,
         "retention_period_id": 0,
         "retention_period_value": 1,
         "employee_count": 1,
@@ -222,7 +223,10 @@
         "data_source": "../data.json",
         "filter_string": null,
         "filter_active": false,
-        "data_sources": []
+        "data_sources": [
+            "/Users/michael/.config/sdl-calculator/sdl-user-data.json",
+            "/Users/michael/Desktop/sdl-user-data.json"
+        ]
     },
     "device_types": [
         {
