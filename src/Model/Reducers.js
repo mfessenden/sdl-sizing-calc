@@ -108,7 +108,11 @@ export default function StateReducer(state, action) {
         // reset the ui ('reset-ui')
         case 'RESET_STATE': {
             const defaultState = {...ContextRawData }
-            updatedState.device_types = defaultState.device_types
+            // updatedState.device_types = defaultState.device_types
+            for (let device in updatedState.device_types) {
+                updatedState.device_types[device].quantity = 0
+            }
+
             updatedState.current_state.retention_period_id = defaultState.current_state.retention_period_id
             updatedState.current_state.retention_period_value = defaultState.current_state.retention_period_value
             console.log(`Resetting to default state...`);

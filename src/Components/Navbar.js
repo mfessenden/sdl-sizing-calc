@@ -9,7 +9,7 @@ import {hasSavedData, useStateStore} from '../Model/Data';
 
 
 // See flex usage: https://getbootstrap.com/docs/5.1/utilities/flex/
-export function TopNavbar({debugMode = false}) {
+export function TopNavbar({debugMode = true}) {
     const {state, actions: {clearState, resetState ,restoreState}} = useStateStore();
     const savedDataExists = hasSavedData()
     var hasActiveDevices = false
@@ -84,14 +84,10 @@ export function TopNavbar({debugMode = false}) {
                                 Clear Saved State
                             </NavDropdown.Item>
 
-                            {debugMode &&
-                                <>
-                                    <NavDropdown.Divider/>
-                                    <NavDropdown.Item eventKey='reset-ui' alt='Reset all device quantities'>
-                                        Reset UI
-                                    </NavDropdown.Item>
-                                </>
-                            }
+                                <NavDropdown.Divider/>
+                                <NavDropdown.Item eventKey='reset-ui' alt='Reset all device quantities'>
+                                    Reset UI
+                                </NavDropdown.Item>
 
                         </NavDropdown>
                     </Nav>
