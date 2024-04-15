@@ -31,7 +31,7 @@ export default function FilterInput({hasActiveDevices = false}) {
                     {hasActiveDevices &&
                         <Col>
                             <Button
-                                className='xs'
+                                className='xs bg-sentinel-one'
                                 alt='Only filter devices with current quality'
                                 onClick={() => {
                                 applyActiveFilter(!isFilteringActive)
