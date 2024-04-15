@@ -15,7 +15,7 @@ function TabbedResultOutput({tabData}) {
     const {state, actions: {setRetentionValue}} = useStateStore();
     const currentState = state.current_state
     return (
-        <Container className='my-8 text-center'>
+        <Container key={tabData.id} className='my-8 text-center'>
             <Form>
                 <Form.Group>
                     <Form.Label>Data Retention Period ({tabData.display_name})</Form.Label>
@@ -39,13 +39,14 @@ function ResultTabs() {
 
     return (
         <Tabs
-            id='controlled-tab-example'
+            key='result-tabs'
             activeKey={currentState.retention_period_id}
             onSelect={(k) => setRetentionPeriod(parseInt(k))}
             className='align-center'
         >
             {tabsData.map((tab) => (
                 <Tab
+                    key={tab.id}
                     eventKey={tab.id}
                     title={tab.display_name}
                 >
