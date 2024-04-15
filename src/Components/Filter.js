@@ -8,7 +8,7 @@ import {useStateStore} from '../Model/Context';
 
 
 // bi bi-arrow-left-square-fill
-export default function FilterInput() {
+export default function FilterInput({hasActiveDevices = false}) {
     const {state, actions: {applyFilterString, applyActiveFilter}} = useStateStore();
     const isFilteringActive = state.current_state.filter_active
     const activeButtonText = (isFilteringActive) ? 'Active: On' : 'Active: Off'
@@ -27,16 +27,21 @@ export default function FilterInput() {
                             />
                         </Form>
                     </Col>
-                    <Col>
-                        <Button
-                            className='xs' onClick={() => {
+
+                    {hasActiveDevices &&
+                        <Col>
+                            <Button
+                                className='xs'
+                                alt='Only filter devices with current quality'
+                                onClick={() => {
                                 applyActiveFilter(!isFilteringActive)
                             }}
-                        >
-                            {activeButtonText}
-                        </Button>
+                            >
+                                {activeButtonText}
+                            </Button>
 
-                    </Col>
+                        </Col>
+                    }
                 </Row>
             </Container>
         </Nav>)

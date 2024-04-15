@@ -11,6 +11,14 @@ import {useStateStore} from '../Model/Context';
 // See flex usage: https://getbootstrap.com/docs/5.1/utilities/flex/
 export function TopNavbar({debugMode = false}) {
     const {state} = useStateStore();
+    var hasActiveDevices = false
+    const devices = state.device_types
+    for (let device of devices) {
+        if (device.quantity > 0) {
+            hasActiveDevices = true;
+            break;
+        }
+    }
 
     const handleSelect = (eventKey) => {
         if (eventKey === 'save-state') {
@@ -74,7 +82,7 @@ export function TopNavbar({debugMode = false}) {
 
                         </NavDropdown>
                     </Nav>
-                    <FilterInput/>
+                    <FilterInput hasActiveDevices={hasActiveDevices}/>
                 </Offcanvas.Body>
             </Navbar.Offcanvas>
 
