@@ -36,7 +36,7 @@
 /* Michael's Additions */
 
 th {
-  text-align: left;
+  /*text-align: left;*/
 }
 
 /* remove the spin boxes for numeric form inputs */
@@ -90,4 +90,10 @@ input[type=number]::-webkit-outer-spin-button {
   max-width: 200px;
 }
 
+.category-header-center {
+  text-align: center;
+}
 
+.category-header-left {
+  text-align: left;
+}

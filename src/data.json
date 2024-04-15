@@ -3,21 +3,25 @@
         "table_columns": [
             {
                 "id": 0,
-                "display_name": "Device Type"
+                "display_name": "Device Type",
+                "align_center": false
             },
             {
                 "id": 1,
                 "display_name": "Quantity",
-                "description": "Number of Devices"
+                "description": "Number of Devices",
+                "align_center": true
             },
             {
                 "id": 2,
                 "display_name": "EPS",
-                "description": "Events per Second"
+                "description": "Events per Second",
+                "align_center": true
             },
             {
                 "id": 3,
-                "display_name": "GB/Day"
+                "display_name": "GB/Day",
+                "align_center": true
             }
         ],
         "input_menu_data": {

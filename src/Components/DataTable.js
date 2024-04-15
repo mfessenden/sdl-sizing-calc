@@ -69,7 +69,10 @@ function CategoryTable({table_item, columnData}) {
                         <th
                             key={column.id}
                             title={column.description}
-                        >{column.display_name}</th>
+                            className={column.align_center ? 'category-header-center' : 'category-header-left'}
+                        >
+                            {column.display_name}
+                        </th>
                     ))}
                 </tr>
                 </thead>
