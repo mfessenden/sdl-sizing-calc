@@ -3,10 +3,28 @@ var ContextRawData = require('../data.json');
 var ContextData = buildDataContext()
 
 
+function getSavedState() {
+    if (window.sessionStorage.getItem('sdl-state')) {
+        console.log('Restoring previously saved state....')
+        const value = window.sessionStorage.getItem('sdl-state')
+        try {
+            return JSON.parse(value);
+        } catch (e) {
+            console.log(`Error loading state: ${e}`)
+            return value;
+        }
+
+
+    } else {
+        return {...ContextRawData }
+    }
+}
+
+
 // Loads the current data from disk. Updates data for use as a data model
 export function buildDataContext() {
     // create a copy of the original
-    const contextData = { ...ContextRawData };
+    const contextData = getSavedState()
 
 
     // default property values
@@ -25,7 +43,7 @@ export function buildDataContext() {
         deviceType.base_weight = deviceType.base_weight ? deviceType.base_weight : defaultBaseWeight
         deviceType.event_size = deviceType.event_size ? deviceType.event_size : defaultEventSize
         deviceType.category_id = deviceType.category_id ? deviceType.category_id : defaultCategoryId
-        deviceType.quantity = defaultQuantity
+        deviceType.quantity = deviceType.quantity ? deviceType.quantity : defaultQuantity
     }
 
     return contextData
@@ -125,8 +143,6 @@ export function StateReducer(state, action) {
         }
 
         case 'SET_RETENTION_PERIOD': {
-            const retentionPeriods = interfaceData.retention_periods
-            const retentionData = retentionPeriods.filter((d) => d.id === action.value)[0]
             currentState.retention_period_id = action.value
             break;
         }
