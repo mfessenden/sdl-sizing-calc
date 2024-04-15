@@ -68,7 +68,6 @@ export default function ResultComponent() {
                     <Col className='mx-auto'>
                         Your estimated data ingest:
                     </Col>
-
                 </Row>
                 <Row className='result-xl'>
 
@@ -76,7 +75,6 @@ export default function ResultComponent() {
                         {humanFileSize(0)}
                     </Col>
                 </Row>
-
                 <Row>
                     <ResultTabs/>
                 </Row>

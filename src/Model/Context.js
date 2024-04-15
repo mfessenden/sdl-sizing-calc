@@ -3,6 +3,12 @@ var ContextRawData = require('../data.json');
 var ContextData = buildDataContext()
 
 
+/**
+ * Retrieves the saved data state from local storage.
+ *
+ * @returns {*|Object} The saved state. Returns the parsed JSON object if it exists in local storage.
+ *                    Otherwise, returns a shallow copy of the default JSON data object.
+ */
 function getSavedState() {
     if (window.localStorage.getItem('sdl-state')) {
         console.log('Restoring previously saved state....')
@@ -13,22 +19,22 @@ function getSavedState() {
             console.log(`Error loading state: ${e}`)
             return value;
         }
-
-
     } else {
+        // create a copy of the default data
         return {...ContextRawData }
     }
 }
 
 
-// Loads the current data from disk. Updates data for use as a data model
+/**
+ * Builds the context data for the application. Retrieves saved state data and sets default property
+ * values for device types.
+ *
+ * @return {object} The context data object containing saved state and device type information.
+ */
 export function buildDataContext() {
-
     console.log('Building context data...')
-
-    // create a copy of the original
     const contextData = getSavedState()
-
 
     // default property values
     const deviceDefaults = contextData['device_type_defaults']
@@ -63,7 +69,6 @@ export function StateReducer(state, action) {
     const devices = state.device_types
     // state values for the current session
     const currentState = state.current_state
-    const interfaceData = state.interface_data
 
     switch (action.type) {
         case 'SET_NAME': {
@@ -182,6 +187,14 @@ export const useCustomState = (defaultState = ContextData) => {
 };
 
 
+
+/**
+ * Component that provides state to the app's child components.
+ *
+ * @param {Object} props - The component props.
+ * @param {ReactNode} props.children - The children components.
+ * @returns {ReactElement} The StateProvider component.
+ */
 export const StateProvider = ({ children }: any) => {
     // state contains two items: 'devices' & 'actions'
     const state = useCustomState();
@@ -189,5 +202,7 @@ export const StateProvider = ({ children }: any) => {
 };
 
 
-// returns the context JSON data
+/**
+ * Retrieve the state store from React.
+ */
 export const useStateStore = () => useContext(StateContext);
