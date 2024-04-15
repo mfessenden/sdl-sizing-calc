@@ -25,12 +25,18 @@ export function TopNavbar({debugMode = false}) {
             window.localStorage.setItem('sdl-state', JSON.stringify(state));
         } else if (eventKey === 'reset-state') {
             window.localStorage.removeItem('sdl-state')
-
             for (let device of state.device_types) {
                 device.quantity = 0
             }
+        } else if (eventKey === 'reset-ui') {
+            let currentState = state.current_state
+            currentState.retention_period_id = 0
+            currentState.retention_period_value = 1
+            for (let device of state.device_types) {
+                device.quantity = 0
+            }
+        } else if (eventKey === 'restore-state') {
         }
-
         console.log(`Selected ${eventKey}`)
     };
 
@@ -62,7 +68,6 @@ export function TopNavbar({debugMode = false}) {
                         </Nav>
                     }
 
-
                     <Nav
                         className='flex-grow-1 pe-3'
                         onSelect={(selectedKey) => handleSelect(selectedKey)}
@@ -72,12 +77,24 @@ export function TopNavbar({debugMode = false}) {
                             id='offcanvasNavbarDropdown-expand-lg'
                         >
                             {/* these will call functions, not routes */}
-                            <NavDropdown.Item eventKey='save-state'>
+                            <NavDropdown.Item eventKey='save-state' alt='Save current application data to local storage'>
                                 Save State
                             </NavDropdown.Item>
 
-                            <NavDropdown.Item eventKey='reset-state'>
+
+                            <NavDropdown.Item eventKey='restore-state' alt='Restore previously saved data'>
+                                Load Saved State...
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider/>
+
+
+                            <NavDropdown.Item eventKey='reset-state' alt='Remove saved state data'>
                                 Reset State
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider/>
+
+                            <NavDropdown.Item eventKey='reset-ui' alt='Reset all device quantities'>
+                                Reset UI
                             </NavDropdown.Item>
 
                         </NavDropdown>

@@ -58,6 +58,7 @@ function ResultTabs() {
 }
 
 
+
 export default function ResultComponent() {
     const {state} = useStateStore();
     const currentState = state.current_state
