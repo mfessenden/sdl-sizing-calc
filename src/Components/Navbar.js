@@ -5,12 +5,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import FilterInput from './Filter';
-import {useStateStore} from '../Model/Data';
+import {hasSavedData, useStateStore} from '../Model/Data';
 
 
 // See flex usage: https://getbootstrap.com/docs/5.1/utilities/flex/
 export function TopNavbar({debugMode = false}) {
-    const {state} = useStateStore();
+    const {state, actions: {clearState, resetState ,restoreState}} = useStateStore();
+    const savedDataExists = hasSavedData()
     var hasActiveDevices = false
     const devices = state.device_types
     for (let device of devices) {
@@ -23,21 +24,14 @@ export function TopNavbar({debugMode = false}) {
     const handleSelect = (eventKey) => {
         if (eventKey === 'save-state') {
             window.localStorage.setItem('sdl-state', JSON.stringify(state));
-        } else if (eventKey === 'reset-state') {
-            window.localStorage.removeItem('sdl-state')
-            for (let device of state.device_types) {
-                device.quantity = 0
-            }
+            console.log('Saving current state....')
+        } else if (eventKey === 'clear-state') {
+            clearState()
         } else if (eventKey === 'reset-ui') {
-            let currentState = state.current_state
-            currentState.retention_period_id = 0
-            currentState.retention_period_value = 1
-            for (let device of state.device_types) {
-                device.quantity = 0
-            }
+            resetState()
         } else if (eventKey === 'restore-state') {
+            restoreState()
         }
-        console.log(`Selected ${eventKey}`)
     };
 
     return (
@@ -81,21 +75,23 @@ export function TopNavbar({debugMode = false}) {
                                 Save State
                             </NavDropdown.Item>
 
-
-                            <NavDropdown.Item eventKey='restore-state' alt='Restore previously saved data'>
+                            <NavDropdown.Divider/>
+                            <NavDropdown.Item disabled={!savedDataExists} eventKey='restore-state' alt='Restore previously saved data'>
                                 Load Saved State...
                             </NavDropdown.Item>
-                            <NavDropdown.Divider/>
 
-
-                            <NavDropdown.Item eventKey='reset-state' alt='Remove saved state data'>
-                                Reset State
+                            <NavDropdown.Item disabled={!savedDataExists} eventKey='clear-state' alt='Remove saved state data'>
+                                Clear Saved State
                             </NavDropdown.Item>
-                            <NavDropdown.Divider/>
 
-                            <NavDropdown.Item eventKey='reset-ui' alt='Reset all device quantities'>
-                                Reset UI
-                            </NavDropdown.Item>
+                            {debugMode &&
+                                <>
+                                    <NavDropdown.Divider/>
+                                    <NavDropdown.Item eventKey='reset-ui' alt='Reset all device quantities'>
+                                        Reset UI
+                                    </NavDropdown.Item>
+                                </>
+                            }
 
                         </NavDropdown>
                     </Nav>

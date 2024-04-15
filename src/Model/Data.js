@@ -4,26 +4,29 @@ var ContextRawData = require('../data.json');
 var ContextData = buildDataContext()
 
 
+export function hasSavedData() {
+    return !!window.localStorage.getItem('sdl-state');
+}
+
 /**
  * Retrieves the saved data state from local storage.
  *
  * @returns {*|Object} The saved state. Returns the parsed JSON object if it exists in local storage.
  *                    Otherwise, returns a shallow copy of the default JSON data object.
  */
-function getSavedState() {
+export function getSavedState() {
     if (window.localStorage.getItem('sdl-state')) {
-        console.log('Restoring previously saved state....')
         const value = window.localStorage.getItem('sdl-state')
         try {
+            console.log('Restoring previously saved state....')
             return JSON.parse(value);
         } catch (e) {
             console.log(`Error loading state: ${e}`)
             return value;
         }
-    } else {
-        // create a copy of the default data
-        return {...ContextRawData }
     }
+    console.log('No saved data found....')
+    return null
 }
 
 
@@ -35,8 +38,7 @@ function getSavedState() {
  */
 export function buildDataContext() {
     console.log('Building context data...')
-    const contextData = getSavedState()
-
+    var contextData = getSavedState() ?? {...ContextRawData }
     // default property values
     const deviceDefaults = contextData['device_type_defaults']
     const defaultBaseWeight = deviceDefaults['base_weight']
@@ -78,6 +80,9 @@ export const useCustomState = (defaultState = ContextData) => {
             applyActiveFilter: (value) => dispatch({type: 'APPLY_ACTIVE_FILTER', value }),
             setRetentionPeriod: (value) => dispatch({type: 'SET_RETENTION_PERIOD', value }),
             setRetentionValue: (value) => dispatch({type: 'SET_RETENTION_VALUE', value }),
+            clearState: () => dispatch({type: 'CLEAR_STATE'}),
+            resetState: () => dispatch({type: 'RESET_STATE'}),
+            restoreState: () => dispatch({type: 'RESTORE_STATE'}),
         },
     };
 };

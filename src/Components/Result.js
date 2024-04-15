@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
-import Col from "react-bootstrap/Col";
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
@@ -79,7 +79,6 @@ export default function ResultComponent() {
     for (let period of retentionPeriodData) {
         if (period.id === retentionPeriodId) {
             multiplier = period.multiplier
-            console.log(`Setting multiplier to ${multiplier} `);
         }
     }
 

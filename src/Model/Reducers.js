@@ -1,3 +1,6 @@
+import {getSavedState} from './Data';
+const ContextRawData = require('../data.json');
+
 
 export default function StateReducer(state, action) {
     // 'state' is an array of devices
@@ -80,21 +83,50 @@ export default function StateReducer(state, action) {
         }
 
         case 'APPLY_ACTIVE_FILTER': {
-            currentState.filter_active = action.value
-            const filterDescription = (currentState.filter_active) ? 'on' : 'off'
+            updatedState.current_state.filter_active = action.value
+            const filterDescription = (updatedState.current_state.filter_active) ? 'on' : 'off'
             console.log(`Filter active items is ${filterDescription}`);
             break;
         }
 
         case 'SET_RETENTION_PERIOD': {
-            currentState.retention_period_id = action.value
+            updatedState.current_state.retention_period_id = action.value
             break;
         }
 
         case 'SET_RETENTION_VALUE': {
-            currentState.retention_period_value = action.value
+            updatedState.current_state.retention_period_value = action.value
             break;
         }
+
+        case 'CLEAR_STATE': {
+            window.localStorage.removeItem('sdl-state')
+            console.log(`Clearing saved data...`);
+            break;
+        }
+
+        // reset the ui ('reset-ui')
+        case 'RESET_STATE': {
+            const defaultState = {...ContextRawData }
+            updatedState.device_types = defaultState.device_types
+            updatedState.current_state.retention_period_id = defaultState.current_state.retention_period_id
+            updatedState.current_state.retention_period_value = defaultState.current_state.retention_period_value
+            console.log(`Resetting to default state...`);
+            break;
+        }
+        // restore saved state ('restore-state')
+        case 'RESTORE_STATE': {
+            const savedState = getSavedState();
+            if (savedState) {
+                updatedState.device_types = savedState.device_types;
+                updatedState.current_state = savedState.current_state
+                console.log(`Restoring saved state...`);
+            } else {
+                console.log(`Error: No saved state found...`);
+            }
+            break;
+        }
+
 
         default:
             console.log(`Error: ${action.type} not caught by State reducer`);
