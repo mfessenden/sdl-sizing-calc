@@ -18,14 +18,12 @@ function TableRow({device}) {
         <tr key={device.id}>
             <td className='category-table-description'>
                 <RangeSlider
-                    key={device.id}
                     device={device}
                     onChange={e => setQuantity(device.id, e.target.value)}
                 />
             </td>
             <td className='category-table-numeric'>
                 <Form.Control
-                    key={device.id}
                     className='text-center'
                     // size='sm'
                     type='number'
@@ -120,7 +118,7 @@ export default function DataTable() {
         return tableItems
     }
 
-    const {state, actions} = useStateStore()
+    const {state} = useStateStore()
     const currentState = state.current_state
     const columnData = state.interface_data.table_columns
     const deviceTypes = state.device_types
@@ -133,11 +131,6 @@ export default function DataTable() {
         console.log('Filtering active devices...')
         filterDescription = 'Active Devices:'
         filteredDevices = deviceTypes.filter((device) => device.quantity > 0)
-
-        if (!filteredDevices.length) {
-            // alert('No active items')
-        }
-
 
     } else if (filterString) {
         console.log('Filtering items matching.')
@@ -175,7 +168,7 @@ export default function DataTable() {
                     // don't show the table if there are no entries
                     table_item.device_types.length > 0 ? (
                         <Accordion alwaysOpen>
-                            <Accordion.Item eventKey={table_item.category_id} id={table_item.category_id}>
+                            <Accordion.Item eventKey={table_item.category_id}>
                                 <Accordion.Header>{table_item.display_name}</Accordion.Header>
                                 <Accordion.Body>
                                     <CategoryTable
