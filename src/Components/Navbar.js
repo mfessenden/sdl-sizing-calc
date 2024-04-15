@@ -4,16 +4,37 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import FilterInput from './Filter';
+import {useStateStore} from '../Model/Context';
+
 
 
 // See flex usage: https://getbootstrap.com/docs/5.1/utilities/flex/
 export function TopNavbar({debugMode = false}) {
+    const {state} = useStateStore();
+
+    const handleSelect = (eventKey) => {
+        if (eventKey === 'save-state') {
+            window.sessionStorage.setItem('sdl-state', JSON.stringify(state));
+        } else if (eventKey === 'reset-state') {
+            window.sessionStorage.removeItem('sdl-state')
+
+            for (let device of state.device_types) {
+                device.quantity = 0
+            }
+        }
+
+        console.log(`Selected ${eventKey}`)
+    };
 
     return (
         <Navbar expand='lg' className='bg-body-tertiary mb-3'>
+
+            {/* Logo */}
             <Navbar.Brand href='#home'>
                 <Image src='images/sdl-header.svg' width='278' height='48'/>
             </Navbar.Brand>
+
+            {/* Collapsable Items */}
             <Navbar.Toggle aria-controls='offcanvasNavbar-expand-lg'/>
             <Navbar.Offcanvas
                 id='offcanvasNavbar-expand-lg'
@@ -21,29 +42,42 @@ export function TopNavbar({debugMode = false}) {
                 placement='end'
             >
                 <Offcanvas.Header closeButton>
-                    <Offcanvas.Title id='offcanvasNavbarLabel-expand-lg'>
-                        SDL Calculator
-                    </Offcanvas.Title>
+                    <Offcanvas.Title id='offcanvasNavbarLabel-expand-lg'>SDL Calculator</Offcanvas.Title>
                 </Offcanvas.Header>
+
                 <Offcanvas.Body>
 
-                    {debugMode &&
-                        <Nav className='flex-grow-1 pe-3'>
-                            <Nav.Link disabled href='/data'>Edit Data</Nav.Link>
-                            <Nav.Link disabled href='/settings'>Settings</Nav.Link>
-                            <NavDropdown
-                                title='Actions'
-                                id='offcanvasNavbarDropdown-expand-lg'
-                            >
-                                {/* these will call functions, not routes */}
-                                <NavDropdown.Item href='#resetstate'>Reset State</NavDropdown.Item>
-                                <NavDropdown.Item href='#savestate'>Save State</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
-                    }
+                        {debugMode &&
+                            <Nav>
+                                <Nav.Item><Nav.Link eventKey='/data'>Edit Data</Nav.Link></Nav.Item>
+                                <Nav.Item><Nav.Link eventKey='/settings'>Settings</Nav.Link></Nav.Item>
+                            </Nav>
+                        }
+                    <Nav
+                        className='flex-grow-1 pe-3'
+                        onSelect={(selectedKey) => handleSelect(selectedKey)}
+                    >
+                        <NavDropdown
+                            title='Actions'
+                            id='offcanvasNavbarDropdown-expand-lg'
+                        >
+                            {/* these will call functions, not routes */}
+                            <NavDropdown.Item eventKey='save-state'>
+                                Save State
+                            </NavDropdown.Item>
+
+                            <NavDropdown.Item eventKey='reset-state'>
+                                Reset State
+                            </NavDropdown.Item>
+
+                        </NavDropdown>
+                    </Nav>
+
                     <FilterInput/>
                 </Offcanvas.Body>
             </Navbar.Offcanvas>
 
-        </Navbar>)
+        </Navbar>
+    )
+
 }
