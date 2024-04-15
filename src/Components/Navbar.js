@@ -1,3 +1,4 @@
+import React, {useRef} from 'react'
 import Image from 'react-bootstrap/Image'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -5,7 +6,21 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import FilterInput from './Filter';
 import {useStateStore} from '../Model/Context';
+import {Button} from "react-bootstrap";
 
+
+const LoadButton = () => {
+    const ref = useRef()
+    const handleClick = (e) => {
+        ref.current.click()
+    }
+    return (
+        <>
+            <button type="button" className="xs btn btn-primary" onClick={handleClick}>Load Data...</button>
+            <input ref={ref} type="file"/>
+        </>
+    )
+}
 
 
 // See flex usage: https://getbootstrap.com/docs/5.1/utilities/flex/
