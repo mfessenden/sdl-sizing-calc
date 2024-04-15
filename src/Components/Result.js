@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import {useStateStore} from '../Model/Context';
-import {humanFileSize} from '../Utils';
+import {humanFileSize, calculateDeviceUsage} from '../Utils';
 
 
 // form group for the given tab
@@ -59,6 +59,31 @@ function ResultTabs() {
 
 
 export default function ResultComponent() {
+    const {state} = useStateStore();
+    const currentState = state.current_state
+
+    // get the total in bytes per day
+    var totalBytesPerDay = 0
+    const devices = state.device_types
+    for (let device of devices) {
+        totalBytesPerDay = totalBytesPerDay + calculateDeviceUsage(device)
+    }
+
+    var totalBytes = 0
+    const retentionPeriodData = state.interface_data.retention_periods
+    const retentionPeriodId = currentState.retention_period_id ?? 0
+    const periodValue = currentState.retention_period_value ?? 1
+    var multiplier = 1
+
+    for (let period of retentionPeriodData) {
+        if (period.id === retentionPeriodId) {
+            multiplier = period.multiplier
+            console.log(`Setting multiplier to ${multiplier} `);
+        }
+    }
+
+    // calculate the total size for this ingest
+    totalBytes = totalBytesPerDay * (periodValue * multiplier)
 
     return (
         // <Card className='mx-auto'>
@@ -72,7 +97,7 @@ export default function ResultComponent() {
                 <Row className='result-xl'>
 
                     <Col className='mx-auto'>
-                        {humanFileSize(0)}
+                        {humanFileSize(totalBytes, true)}
                     </Col>
                 </Row>
                 <Row>
