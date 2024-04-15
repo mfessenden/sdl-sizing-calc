@@ -14,9 +14,9 @@ export function TopNavbar({debugMode = false}) {
 
     const handleSelect = (eventKey) => {
         if (eventKey === 'save-state') {
-            window.sessionStorage.setItem('sdl-state', JSON.stringify(state));
+            window.localStorage.setItem('sdl-state', JSON.stringify(state));
         } else if (eventKey === 'reset-state') {
-            window.sessionStorage.removeItem('sdl-state')
+            window.localStorage.removeItem('sdl-state')
 
             for (let device of state.device_types) {
                 device.quantity = 0
@@ -47,12 +47,14 @@ export function TopNavbar({debugMode = false}) {
 
                 <Offcanvas.Body>
 
-                        {debugMode &&
-                            <Nav>
-                                <Nav.Item><Nav.Link eventKey='/data'>Edit Data</Nav.Link></Nav.Item>
-                                <Nav.Item><Nav.Link eventKey='/settings'>Settings</Nav.Link></Nav.Item>
-                            </Nav>
-                        }
+                    {debugMode &&
+                        <Nav>
+                            <Nav.Item><Nav.Link eventKey='/data'>Edit Data</Nav.Link></Nav.Item>
+                            <Nav.Item><Nav.Link eventKey='/settings'>Settings</Nav.Link></Nav.Item>
+                        </Nav>
+                    }
+
+
                     <Nav
                         className='flex-grow-1 pe-3'
                         onSelect={(selectedKey) => handleSelect(selectedKey)}
@@ -72,7 +74,6 @@ export function TopNavbar({debugMode = false}) {
 
                         </NavDropdown>
                     </Nav>
-
                     <FilterInput/>
                 </Offcanvas.Body>
             </Navbar.Offcanvas>

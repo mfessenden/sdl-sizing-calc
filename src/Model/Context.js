@@ -4,9 +4,9 @@ var ContextData = buildDataContext()
 
 
 function getSavedState() {
-    if (window.sessionStorage.getItem('sdl-state')) {
+    if (window.localStorage.getItem('sdl-state')) {
         console.log('Restoring previously saved state....')
-        const value = window.sessionStorage.getItem('sdl-state')
+        const value = window.localStorage.getItem('sdl-state')
         try {
             return JSON.parse(value);
         } catch (e) {
@@ -23,6 +23,9 @@ function getSavedState() {
 
 // Loads the current data from disk. Updates data for use as a data model
 export function buildDataContext() {
+
+    console.log('Building context data...')
+
     // create a copy of the original
     const contextData = getSavedState()
 
