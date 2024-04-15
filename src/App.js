@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {TopNavbar} from './Components/Navbar';
 import Body from './Components/Body';
-import {StateProvider} from './Model/Context';
+import {StateProvider} from './Model/Data';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 

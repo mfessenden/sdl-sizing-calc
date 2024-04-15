@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import RangeSlider from './Slider';
-import {useStateStore} from '../Model/Context';
+import {useStateStore} from '../Model/Data';
 import {bytesToGigs, calculateDeviceUsage, numberToString} from '../Utils';
 
 
