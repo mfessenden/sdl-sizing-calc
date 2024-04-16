@@ -134,6 +134,11 @@ export default function stateReducer(state, action) {
             break;
         }
 
+        case 'TOGGLE_DEBUG': {
+            updatedState.current_state.debug_mode = action.value
+            console.log(`Debug mode: ${action.value ? 'On': 'Off'}`);
+            break;
+        }
 
         default:
             console.log(`Error: ${action.type} not caught by State reducer`);

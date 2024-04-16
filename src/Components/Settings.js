@@ -4,15 +4,10 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import {useStateStore} from '../Model/Data';
-import {useEffect} from "react";
 
 
 export default function SettingsBody() {
-    const {state, actions: {setCategory}} = useStateStore();
-    function toggleDebugMode() {
-        state.current_state.debug_mode = !state.current_state.debug_mode
-    }
-
+    const {state, actions: {toggleDebug}} = useStateStore();
     return (
         <Container fluid className='d-grid gap-3'>
             <Row>
@@ -26,7 +21,7 @@ export default function SettingsBody() {
                                     id='switch-debug'
                                     label='Debug Mode'
                                     value={state.current_state.debug_mode}
-                                    onChange={e => toggleDebugMode}
+                                    onChange={e => toggleDebug(e.target.value)}
                                 />
                             </Form>
                         </Card.Body>

@@ -99,6 +99,7 @@ export const useCustomState = (defaultState = ContextData) => {
             clearState: () => dispatch({type: 'CLEAR_STATE'}),
             resetState: () => dispatch({type: 'RESET_STATE'}),
             restoreState: () => dispatch({type: 'RESTORE_STATE'}),
+            toggleDebug: (value) => dispatch({type: 'TOGGLE_DEBUG', value}),
         },
     };
 };
