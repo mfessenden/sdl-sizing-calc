@@ -57,7 +57,6 @@ function TableRow({device}) {
 function CategoryTable({table_item, columnData}) {
     // query the devices associated with this category
     const devices = table_item.device_types
-
     return (
         <div>
             <Table key={table_item.category_id}>
@@ -91,6 +90,12 @@ function CategoryTable({table_item, columnData}) {
 
 export default function DataTable() {
 
+    /**
+     * Collects data about devices and build tables filtered by the device category.
+     *
+     * @param {Object} data - raw device state data.
+     * @returns {Object[]} - The built tables.
+     */
     const buildTables = (data) => {
         const tableItems = []
         // const interfaceData = data['state']
@@ -107,11 +112,12 @@ export default function DataTable() {
                 }
             }
 
-            var tableItem = {
+            const tableItem = {
+                name: category.name,
                 display_name: category.display_name,
-                category_id: category.category_id,
+                category_id: category.id,
                 device_types: categoryDevices
-            }
+            };
             tableItems.push(tableItem)
         }
 
@@ -167,7 +173,7 @@ export default function DataTable() {
                 {table_items.map(table_item => (
                     // don't show the table if there are no entries
                     table_item.device_types.length > 0 ? (
-                        <Accordion alwaysOpen>
+                        <Accordion alwaysOpen key={table_item.category_id} defaultActiveKey={0}>
                             <Accordion.Item eventKey={table_item.category_id}>
                                 <Accordion.Header>{table_item.display_name}</Accordion.Header>
                                 <Accordion.Body>
