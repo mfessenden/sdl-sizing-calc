@@ -53,6 +53,10 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+/* range thumb slider */
+input[type="range"]::-webkit-slider-thumb {
+  background: #6101FF !important;
+}
 
 .align-center{
   justify-content:center;
@@ -71,6 +75,11 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 /* Result widget size overrides */
+.result-label-sm {
+  font-size: 1.2em;
+  text-align: center;
+  font-weight: bolder;
+}
 
 .result-lg{
   font-size: 1.5em;
@@ -78,7 +87,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .result-xl{
   font-size: 2.5em;
-  font-weight: bolder;
+  font-weight: 800;
 }
 
 .result-input {
@@ -86,7 +95,6 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 /* Table columns */
-
 .category-table-numeric {
   min-width: 40px;
   max-width: 60px;
@@ -104,8 +112,13 @@ input[type=number]::-webkit-outer-spin-button {
   text-align: left;
 }
 
+/* Sentinel One color/style overrides */
 .bg-sentinel-one{
   background-color: #6101FF;
+}
+
+.bg-sentinel-one:hover {
+  background-color: #824CDA;
 }
 
 .accordion-button {
@@ -128,14 +141,16 @@ input[type=number]::-webkit-outer-spin-button {
   color: #fff;
 }
 
-
-/*.form-range-thumb-bg {*/
-/*  background-color: #B385FF;*/
-
-/*}.component-active-bg{*/
-/*  background-color: #B385FF;*/
-/*}*/
-
 .nav-link {
+  font-weight: 500;
   color: #6101FF;
+}
+
+.nav-link sentintel-one {
+  font-weight: 500;
+  color: #6101FF;
+}
+
+.nav {
+  --bs-nav-link-hover-color: #824CDA;
 }

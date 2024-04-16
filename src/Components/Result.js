@@ -15,14 +15,14 @@ function TabbedResultOutput({tabData}) {
     const {state, actions: {setRetentionValue}} = useStateStore();
     const currentState = state.current_state
     return (
-        <Container key={tabData.id} className='my-8 text-center'>
+        <Container key={tabData.id} className='m-3 text-center'>
             <Form>
                 <Form.Group>
-                    <Form.Label>Data Retention Period ({tabData.display_name})</Form.Label>
+                    <Form.Label className='result-label-sm'>Data Retention Period ({tabData.display_name})</Form.Label>
                     <Form.Control
                         size='sm'
                         value={currentState.retention_period_value}
-                        className='result-input mx-auto'
+                        className='result-input mx-auto text-center'
                         onChange={e => setRetentionValue(parseInt(e.target.value))}
                     />
                 </Form.Group>
@@ -96,7 +96,6 @@ export default function ResultComponent() {
                     </Col>
                 </Row>
                 <Row className='result-xl'>
-
                     <Col className='mx-auto'>
                         {humanFileSize(totalBytes, true)}
                     </Col>
