@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {TopNavbar} from './Components/Navbar';
 import Body from './Components/Body';
 import SettingsBody from './Components/Settings';
-import {DeviceEditor} from './Components/DataEdit';
+import DeviceEditor from './Components/DataEdit';
 import {StateProvider} from './Model/Data';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
