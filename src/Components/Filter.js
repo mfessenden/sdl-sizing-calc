@@ -7,7 +7,6 @@ import Row from 'react-bootstrap/Row';
 import {useStateStore} from '../Model/Data';
 
 
-// bi bi-arrow-left-square-fill
 export default function FilterInput({hasActiveDevices = false}) {
     const {state, actions: {applyFilterString, applyActiveFilter}} = useStateStore();
     const isFilteringActive = state.current_state.filter_active

@@ -8,7 +8,6 @@ import FilterInput from './Filter';
 import {hasSavedData, useStateStore} from '../Model/Data';
 
 
-// See flex usage: https://getbootstrap.com/docs/5.1/utilities/flex/
 export function TopNavbar({debugMode = false}) {
     const {state, actions: {clearState, resetState ,restoreState}} = useStateStore();
     const savedDataExists = hasSavedData()
