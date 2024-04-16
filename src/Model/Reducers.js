@@ -3,7 +3,14 @@ import {SDL_STATE} from '../Constants';
 const ContextRawData = require('../data.json');
 
 
-export default function StateReducer(state, action) {
+/**
+ * Updates React context state. Receives actions from the GUI and updates accordinaly.
+ *
+ * @param {Object} state - current context state object.
+ * @param {Object} action - The action object containing the action type and other relevant data.
+ * @return {Object} - The updated state object.
+ */
+export default function stateReducer(state, action) {
     // 'state' is an array of devices
     const updatedState =  {...state};
     const devices = state.device_types

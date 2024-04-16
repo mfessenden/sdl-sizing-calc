@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import {CLEAR_STATE, RESET_UI, RESTORE_STATE, SAVE_STATE, SDL_STATE} from '../Constants';
-import FilterInput from './Filter';
+import DeviceFilteringInput from './Filter';
 import {hasSavedData, useStateStore} from '../Model/Data';
 
 
@@ -89,16 +89,15 @@ export function TopNavbar({debugMode = false}) {
 
                                 <NavDropdown.Divider/>
                                 <NavDropdown.Item eventKey={RESET_UI} alt='Reset all device quantities'>
-                                    Reset UI
+                                    Reset Calculator
                                 </NavDropdown.Item>
 
                         </NavDropdown>
                     </Nav>
-                    <FilterInput hasActiveDevices={hasActiveDevices}/>
+                    <DeviceFilteringInput hasActiveDevices={hasActiveDevices}/>
                 </Offcanvas.Body>
             </Navbar.Offcanvas>
 
         </Navbar>
     )
-
 }

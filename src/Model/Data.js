@@ -1,5 +1,5 @@
 import {createContext, useContext, useReducer} from 'react';
-import StateReducer from './Reducers';
+import stateReducer from './Reducers';
 import {SDL_STATE} from '../Constants';
 var ContextRawData = require('../data.json');
 var ContextData = setupInitialState()
@@ -74,8 +74,15 @@ export function setupInitialState() {
 export const StateContext = createContext(ContextData);
 
 
+/**
+ * Creates a custom state using a reducer and provides actions to manipulate the state.
+ *
+ * @param {Object} defaultState - default state to initialize the custom state with.
+ * @returns {Object} An object containing the custom state and actions to manipulate the state.
+ */
 export const useCustomState = (defaultState = ContextData) => {
-    const [state, dispatch] = useReducer(StateReducer, defaultState);
+    // user our reducer to handle actions
+    const [state, dispatch] = useReducer(stateReducer, defaultState);
     return {
         state,
         actions: {
@@ -113,6 +120,9 @@ export const StateProvider = ({ children }: any) => {
 
 
 /**
- * Retrieve the state store from React.
+ * Retrieves the state store from the context using the React `useContext` hook.
+ *
+ * @function useStateStore
+ * @returns {Object} The state store retrieved from the context.
  */
 export const useStateStore = () => useContext(StateContext);

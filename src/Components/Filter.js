@@ -7,7 +7,19 @@ import Row from 'react-bootstrap/Row';
 import {useStateStore} from '../Model/Data';
 
 
-export default function FilterInput({hasActiveDevices = false}) {
+/**
+ * Draws a filter form input allowing the user to filter devices in the app calculator by name, description or simply
+ * devices with a quantity set:
+ *
+ *   +------------------+ +-------------+
+ *   |Filter            | | Active: On  |
+ *   +------------------+ +-------------+
+ *
+ * @param {boolean} hasActiveDevices - Indicates there are active devices in the application.
+ *
+ * @return {Element} -  filtered input component.
+ */
+export default function DeviceFilteringInput({hasActiveDevices = false}) {
     const {state, actions: {applyFilterString, applyActiveFilter}} = useStateStore();
     const isFilteringActive = state.current_state.filter_active
     const activeButtonText = (isFilteringActive) ? 'Active: On' : 'Active: Off'

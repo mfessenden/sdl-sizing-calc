@@ -7,6 +7,13 @@ import {useStateStore} from '../Model/Data';
 import {bytesToGigs, calculateDeviceUsage, numberToString} from '../Utils';
 
 
+/**
+ * Renders a table row component for a device.
+ *
+ * @param {object} device - The device object.
+ *
+ * @returns {JSX.Element} - The rendered table row.
+ */
 function TableRow({device}) {
     const {actions: {setQuantity}} = useStateStore();
 
@@ -53,7 +60,14 @@ function TableRow({device}) {
 }
 
 
-// renders the rows & columns of one table, currently broken out by category
+/**
+ * Renders a table for a given category & associated devices.
+ *
+ * @param {Object} table_item - The category object containing category_id and device_types.
+ * @param {Array} columnData - Column header values.
+ *
+ * @return {JSX.Element} The rendered table for the category.
+ */
 function CategoryTable({table_item, columnData}) {
     // query the devices associated with this category
     const devices = table_item.device_types
@@ -88,15 +102,19 @@ function CategoryTable({table_item, columnData}) {
 }
 
 
-export default function DataTable() {
+/**
+ * This component draws the App's calculator interface.
+ *
+ */
+export default function CalculatorBody() {
 
     /**
-     * Collects data about devices and build tables filtered by the device category.
+     * Collects device data and build tables filtered by the device category.
      *
      * @param {Object} data - raw device state data.
      * @returns {Object[]} - The built tables.
      */
-    const buildTables = (data) => {
+    const buildCategoryTables = (data) => {
         const tableItems = []
         // const interfaceData = data['state']
         const interfaceData = data.interface_data
@@ -126,10 +144,13 @@ export default function DataTable() {
 
     const {state} = useStateStore()
     const currentState = state.current_state
-    const columnData = state.interface_data.table_columns
-    const deviceTypes = state.device_types
     const filterString = currentState.filter_string
     const filterActive = currentState.filter_active
+
+    const columnData = state.interface_data.table_columns
+    const deviceTypes = state.device_types
+
+    // filtering logic
     let filteredDevices = []
     let filterDescription = 'Result:'
 
@@ -145,7 +166,7 @@ export default function DataTable() {
         )
     }
 
-
+    // if we're filtering items, draw one table only
     if (filteredDevices.length) {
         const filteredTableItem = {
             device_types: filteredDevices,
@@ -166,8 +187,10 @@ export default function DataTable() {
                 </Accordion>
             </Container>
         )
+
+    // build table items from the current state
     } else {
-        const table_items = buildTables(state)
+        const table_items = buildCategoryTables(state)
         return (
             <Container fluid className='d-grid gap-3'>
                 {table_items.map(table_item => (

@@ -9,6 +9,10 @@ import {useStateStore} from '../Model/Data';
  * Component that takes device data and renders a single row label (device `display_name`) and a slider representing
  * the device's quantity. This is used as the first column in the calculator tables.
  *
+ *     +-------------------------.---------------+
+ *    |Generic Data Source     ( )------------  |
+ *    +-------------------------'---------------+
+ *
  * @param {Object} device - the current device being rendered.
  *
  * @return {JSX.Element} - The rendered component.

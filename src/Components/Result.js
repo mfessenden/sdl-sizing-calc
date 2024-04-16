@@ -11,7 +11,7 @@ import {humanFileSize, calculateDeviceUsage} from '../Utils';
 
 
 // form group for the given tab
-function TabbedResultOutput({tabData}) {
+function DataRetentionInput({tabData}) {
     const {state, actions: {setRetentionValue}} = useStateStore();
     const currentState = state.current_state
     return (
@@ -32,7 +32,17 @@ function TabbedResultOutput({tabData}) {
 }
 
 
-function ResultTabs() {
+/**
+ * Tabbed component for selection data retention periods.
+ *
+ *
+ *    +---------+---------+---------+---------+
+ *    |  Daily  | Weekly  | Monthly | Yearly  |
+ *    +---------+---------+---------+---------+
+ *
+ * @returns {jsx} Formatted result displaying the estimated data ingest
+ */
+function RetentionPeriodTabs() {
     const {state, actions: {setRetentionPeriod}} = useStateStore();
     const currentState = state.current_state
     const tabsData = state.interface_data.retention_periods
@@ -50,17 +60,40 @@ function ResultTabs() {
                     eventKey={tab.id}
                     title={tab.display_name}
                 >
-                    <TabbedResultOutput tabData={tab}/>
+                    <DataRetentionInput tabData={tab}/>
                 </Tab>
             ))}
-
         </Tabs>
     );
 }
 
 
 
-export default function ResultComponent() {
+/**
+ * Calculates the estimated data ingest based on the current state & devices quantities.
+ * The result if formatted a formatted card:
+ *
+ *
+ *     +------------------------------------------------+
+ *     |           Your estimated data ingest:          |
+ *     |                                                |
+ *     |                      0 GB                      |
+ *     |                                                |
+ *     |   +---------+---------+---------+---------+    |
+ *     |   |  Daily  | Weekly  | Monthly | Yearly  |    |
+ *     |   +---------+---------+---------+---------+    |
+ *     |                                                |
+ *     |           Data Retention Period (Daily)        |
+ *     |                                                |
+ *     |             +--------------------+             |
+ *     |             |         1          |             |
+ *     |             +--------------------+             |
+ *     +------------------------------------------------+
+ *
+ *
+ * @returns {jsx} Formatted result displaying the estimated data ingest
+ */
+export default function ResultBody() {
     const {state} = useStateStore();
     const currentState = state.current_state
 
@@ -71,6 +104,7 @@ export default function ResultComponent() {
         totalBytesPerDay = totalBytesPerDay + calculateDeviceUsage(device)
     }
 
+    // calculate bytes per day * retention period
     var totalBytes = 0
     const retentionPeriodData = state.interface_data.retention_periods
     const retentionPeriodId = currentState.retention_period_id ?? 0
@@ -101,7 +135,7 @@ export default function ResultComponent() {
                     </Col>
                 </Row>
                 <Row>
-                    <ResultTabs/>
+                    <RetentionPeriodTabs/>
                 </Row>
             </Container>
         </Card>
