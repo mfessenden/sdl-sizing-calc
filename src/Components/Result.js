@@ -121,23 +121,26 @@ export default function ResultBody() {
     totalBytes = totalBytesPerDay * (periodValue * multiplier)
 
     return (
-        // <Card className='mx-auto'>
-        <Card className='m-2 p-3'>
-            <Container className='my-8 text-center'>
-                <Row className='result-lg'>
-                    <Col className='mx-auto'>
-                        Your estimated data ingest:
-                    </Col>
-                </Row>
-                <Row className='result-xl'>
-                    <Col className='mx-auto'>
-                        {humanFileSize(totalBytes, true)}
-                    </Col>
-                </Row>
-                <Row>
-                    <RetentionPeriodTabs/>
-                </Row>
+        <div className='sticky-top result-sticky'>
+            <Container>
+                <Card className='m-2 p-3'>
+                    <Container className='my-8 text-center'>
+                        <Row className='result-lg'>
+                            <Col className='mx-auto'>
+                                Your estimated data ingest:
+                            </Col>
+                        </Row>
+                        <Row className='result-xl'>
+                            <Col className='mx-auto'>
+                                {humanFileSize(totalBytes, true)}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <RetentionPeriodTabs/>
+                        </Row>
+                    </Container>
+                </Card>
             </Container>
-        </Card>
+        </div>
     );
 }

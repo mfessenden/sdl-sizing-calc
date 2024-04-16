@@ -38,10 +38,10 @@ export function TopNavbar({debugMode = false}) {
     };
 
     return (
-        <Navbar expand='lg' className='bg-body-tertiary mb-3'>
+        <Navbar sticky='top' expand='lg' className='bg-body-tertiary mb-3'>
 
             {/* Logo */}
-            <Navbar.Brand href='#home'>
+            <Navbar.Brand href='/'>
                 <Image src='images/sdl-header.svg' width='278' height='48'/>
             </Navbar.Brand>
 
