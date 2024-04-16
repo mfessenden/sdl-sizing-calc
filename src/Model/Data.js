@@ -1,5 +1,6 @@
 import {createContext, useContext, useReducer} from 'react';
 import StateReducer from './Reducers';
+import {SDL_STATE} from '../Constants';
 var ContextRawData = require('../data.json');
 var ContextData = setupInitialState()
 
@@ -10,7 +11,7 @@ var ContextData = setupInitialState()
  * @returns {boolean} SDL calculator data exists
  */
 export function hasSavedData() {
-    return !!window.localStorage.getItem('sdl-state');
+    return !!window.localStorage.getItem(SDL_STATE);
 }
 
 
@@ -23,8 +24,8 @@ export function hasSavedData() {
  * shallow copy of the default JSON data object.
  */
 export function getSavedState() {
-    if (window.localStorage.getItem('sdl-state')) {
-        const value = window.localStorage.getItem('sdl-state')
+    if (window.localStorage.getItem(SDL_STATE)) {
+        const value = window.localStorage.getItem(SDL_STATE)
         try {
             console.log('Restoring previously saved state....')
             return JSON.parse(value);

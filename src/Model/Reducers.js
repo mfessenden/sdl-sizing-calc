@@ -1,4 +1,5 @@
 import {getSavedState} from './Data';
+import {SDL_STATE} from '../Constants';
 const ContextRawData = require('../data.json');
 
 
@@ -95,7 +96,7 @@ export default function StateReducer(state, action) {
         }
 
         case 'CLEAR_STATE': {
-            window.localStorage.removeItem('sdl-state')
+            window.localStorage.removeItem(SDL_STATE)
             console.log(`Clearing saved data...`);
             break;
         }
