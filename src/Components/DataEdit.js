@@ -77,16 +77,67 @@ function DeviceEditor() {
     const {state, actions} = useStateStore();
     const devices = state.device_types
 
+    return (
+
+        <Container fluid className='d-grid gap-3'>
+            <Row>
+                <Col md={8}>
+                    <Container expand='lg' className='my-5'>
+
+                        {devices.map(device =>
+                            // <Row className='d-flex justify-content-center'>
+                            <Row>
+                                <DeviceEditForm device={device}/>
+                            </Row>
+                        )}
+                    </Container>
+                </Col>
+            </Row>
+        </Container>
+    )
+}
+
+
+export default function SettingsBody() {
 
     return (
-        <Container expand='lg' className='my-5'>
+        <Container fluid className='d-grid gap-3'>
+            <Row>
+                <Col md={8}>
+                    <Card className='m-2 p-3'>
+                        <Card.Title>Settings</Card.Title>
+                        <Card.Body className='m-1'>
+                            <Form>
+                                <Form.Check // prettier-ignore
+                                    type='switch'
+                                    id='switch-debug'
+                                    label='Debug Mode'
+                                />
+                            </Form>
+                        </Card.Body>
+                        <Card.Title>Data Sources</Card.Title>
+                        <Card.Body className='m-1'>
+                            <Form>
+                                <Form.Control
+                                    as='select'
+                                    custom
+                                >
+                                    <option value='black'>Black</option>
+                                    <option value='amber'>Amber</option>
+                                    <option value='purple'>Purple</option>
+                                    <option value='magenta'>Magenta</option>
+                                    <option value='white'>White</option>
+                                </Form.Control>
 
-            {devices.map(device =>
-                // <Row className='d-flex justify-content-center'>
-                <Row>
-                    <DeviceEditForm device={device}/>
-                </Row>
-            )}
+                            </Form>
+
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={4}>
+
+                </Col>
+            </Row>
         </Container>
     )
 }

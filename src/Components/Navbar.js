@@ -9,7 +9,7 @@ import DeviceFilteringInput from './Filter';
 import {hasSavedData, useStateStore} from '../Model/Data';
 
 
-export function TopNavbar({debugMode = false}) {
+export function TopNavbar({debugMode = true}) {
     const {state, actions: {clearState, resetState ,restoreState}} = useStateStore();
     const savedDataExists = hasSavedData()
     var hasActiveDevices = false
@@ -60,8 +60,8 @@ export function TopNavbar({debugMode = false}) {
 
                     {debugMode &&
                         <Nav>
-                            <Nav.Item><Nav.Link eventKey='/data'>Edit Data</Nav.Link></Nav.Item>
-                            <Nav.Item><Nav.Link eventKey='/settings'>Settings</Nav.Link></Nav.Item>
+                            <Nav.Item><Nav.Link href='/data-edit'>Edit Data</Nav.Link></Nav.Item>
+                            <Nav.Item><Nav.Link href='/settings'>Settings</Nav.Link></Nav.Item>
                         </Nav>
                     }
 
