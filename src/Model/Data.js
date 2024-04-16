@@ -1,18 +1,26 @@
 import {createContext, useContext, useReducer} from 'react';
 import StateReducer from './Reducers';
 var ContextRawData = require('../data.json');
-var ContextData = buildDataContext()
+var ContextData = setupInitialState()
 
 
+/**
+ * Returns true if the app has data in local storage.
+ *
+ * @returns {boolean} SDL calculator data exists
+ */
 export function hasSavedData() {
     return !!window.localStorage.getItem('sdl-state');
 }
 
+
 /**
  * Retrieves the saved data state from local storage.
  *
- * @returns {*|Object} The saved state. Returns the parsed JSON object if it exists in local storage.
- *                    Otherwise, returns a shallow copy of the default JSON data object.
+ * @returns {*|Object} Saved state.
+ *
+ * Returns the parsed JSON object if it exists in local storage. Otherwise, returns a
+ * shallow copy of the default JSON data object.
  */
 export function getSavedState() {
     if (window.localStorage.getItem('sdl-state')) {
@@ -36,7 +44,7 @@ export function getSavedState() {
  *
  * @return {object} The context data object containing saved state and device type information.
  */
-export function buildDataContext() {
+export function setupInitialState() {
     console.log('Building context data...')
     var contextData = getSavedState() ?? {...ContextRawData }
     // default property values

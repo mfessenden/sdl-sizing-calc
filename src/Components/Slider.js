@@ -5,8 +5,16 @@ import Col from 'react-bootstrap/Col';
 import {useStateStore} from '../Model/Data';
 
 
-function RangeSlider({device}) {
-    const {state, actions: {setQuantity}} = useStateStore();
+/**
+ * Component that takes device data and renders a single row label (device `display_name`) and a slider representing
+ * the device's quantity. This is used as the first column in the calculator tables.
+ *
+ * @param {Object} device - the current device being rendered.
+ *
+ * @return {JSX.Element} - The rendered component.
+ */
+export default function RangeSlider({device}) {
+    const {actions: {setQuantity}} = useStateStore();
     return (
         <Container>
             <Row>
@@ -26,6 +34,3 @@ function RangeSlider({device}) {
         </Container>
     );
 }
-
-
-export default RangeSlider;

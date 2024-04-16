@@ -10,7 +10,7 @@ import {BYTES_TO_GB, SECONDS_PER_DAY} from './Constants';
  *
  * @return Formatted string.
  */
-function humanFileSize(bytes: number, si: boolean = false, dp: number = 1) {
+export function humanFileSize(bytes: number, si: boolean = false, dp: number = 1) {
     const thresh = si ? 1000 : 1024;
 
     if (Math.abs(bytes) < thresh) {
@@ -32,7 +32,13 @@ function humanFileSize(bytes: number, si: boolean = false, dp: number = 1) {
 }
 
 
-function numberToString(value) {
+/**
+ * Converts a number to a string with a fixed precision of one decimal place.
+ *
+ * @param {number} value - number to convert.
+ * @returns {string} - converted number as a string.
+ */
+export function numberToString(value) {
     value = parseFloat(value)
     if (value === 0) {
         return '0'
@@ -55,21 +61,19 @@ function numberToString(value) {
  * @param device - The device information object.
  * @return {number} - The device usage in bytes per day.
  */
-function calculateDeviceUsage(device) {
+export function calculateDeviceUsage(device) {
     const eventsPerSecond = parseFloat(device.quantity) * device.base_weight
     const bytesPerSecond = eventsPerSecond * device.event_size
     return bytesPerSecond * SECONDS_PER_DAY
 }
 
 
-function bytesToGigs(bytes: number) {
+/**
+ * Converts bytes to gigabytes.
+ *
+ * @param {number} bytes - bytes to be converted.
+ * @return {number} - the value expressed in gigabytes.
+ */
+export function bytesToGigs(bytes: number) {
     return bytes * BYTES_TO_GB
-}
-
-
-export {
-    bytesToGigs,
-    calculateDeviceUsage,
-    humanFileSize,
-    numberToString
 }
