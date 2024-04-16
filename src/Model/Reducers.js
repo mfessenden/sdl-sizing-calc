@@ -6,8 +6,6 @@ export default function StateReducer(state, action) {
     // 'state' is an array of devices
     const updatedState =  {...state};
     const devices = state.device_types
-    // state values for the current session
-    const currentState = state.current_state
 
     switch (action.type) {
         case 'SET_NAME': {
@@ -73,19 +71,16 @@ export default function StateReducer(state, action) {
 
         case 'APPLY_FILTER_STRING': {
             const newFilterString = action.filterString
-            currentState.filter_string = newFilterString
-            if (!newFilterString) {
-                console.log(`Clearing filter string...`);
-            } else {
-                console.log(`Applying filter string: '${newFilterString}'`);
-            }
+            // if we're setting a filter string, disable active filtering
+            updatedState.current_state.filter_active = false
+            state.current_state.filter_active = false
+            updatedState.current_state.filter_string = newFilterString
             break;
         }
 
         case 'APPLY_ACTIVE_FILTER': {
             updatedState.current_state.filter_active = action.value
-            const filterDescription = (updatedState.current_state.filter_active) ? 'on' : 'off'
-            console.log(`Filter active items is ${filterDescription}`);
+            updatedState.current_state.filter_string = ''
             break;
         }
 
