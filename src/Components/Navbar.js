@@ -1,4 +1,3 @@
-import React, {useRef} from 'react'
 import Image from 'react-bootstrap/Image'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -9,8 +8,14 @@ import DeviceFilteringInput from './Filter';
 import {hasSavedData, useStateStore} from '../Model/Data';
 
 
-export function TopNavbar({debugMode = false}) {
-    const {state, actions: {clearState, resetState ,restoreState}} = useStateStore();
+/**
+ * Renders the top navigation bar component.
+ *
+ * @param {boolean} debugMode - Indicates whether to enable debug/admin mode.
+ * @return {JSX.Element} - The rendered top navigation bar component.
+ */
+export default function TopNavbar({debugMode = false}) {
+    const {state, actions: {clearState, resetState, restoreState}} = useStateStore();
     const savedDataExists = hasSavedData()
     var hasActiveDevices = false
     const devices = state.device_types
@@ -26,7 +31,9 @@ export function TopNavbar({debugMode = false}) {
             // don't save these
             state.current_state.filter_string = null
             state.current_state.filter_active = false
-            window.localStorage.setItem(SDL_STATE, JSON.stringify(state));
+
+            // set localstorage value
+            window.localStorage.setItem(SDL_STATE, JSON.stringify(state));  // TODO: persistence via Firebase?
             console.log('Saving current state....')
         } else if (eventKey === CLEAR_STATE) {
             clearState()

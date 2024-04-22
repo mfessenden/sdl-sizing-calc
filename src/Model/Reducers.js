@@ -81,7 +81,7 @@ export default function stateReducer(state, action) {
             const newFilterString = action.filterString
             // if we're setting a filter string, disable active filtering
             updatedState.current_state.filter_active = false
-            state.current_state.filter_active = false
+            // state.current_state.filter_active = false
             updatedState.current_state.filter_string = newFilterString
             break;
         }

@@ -2,6 +2,8 @@ import {useEffect} from 'react';
 import {TopNavbar} from './Components/Navbar';
 import Body from './Components/Body';
 import {StateProvider} from './Model/Data';
+import TopNavbar from './Components/Navbar';
+import {SDL_TITLE} from "./Constants";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -9,7 +11,8 @@ import './App.css';
 export default function App() {
 
     useEffect(() => {
-        document.title = 'SDL Calculator';
+        // update browser params
+        document.title = SDL_TITLE;
     }, []);
 
     return (
