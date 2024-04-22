@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import {CLEAR_STATE, RESET_UI, RESTORE_STATE, SAVE_STATE, SDL_STATE} from '../Constants';
+import {CLEAR_STATE, RESET_UI, RESTORE_STATE, SAVE_STATE, SDL_HEADER, SDL_HEADER_HEIGHT, SDL_HEADER_WIDTH, SDL_STATE} from '../Constants';
 import DeviceFilteringInput from './Filter';
 import {hasSavedData, useStateStore} from '../Model/Data';
 
@@ -42,7 +42,7 @@ export function TopNavbar({debugMode = false}) {
 
             {/* Logo */}
             <Navbar.Brand href='/'>
-                <Image src='images/sdl-header.svg' width='278' height='48'/>
+                <Image src={SDL_HEADER} width={SDL_HEADER_WIDTH} height={SDL_HEADER_HEIGHT}/>
             </Navbar.Brand>
 
             {/* Collapsable Items */}
