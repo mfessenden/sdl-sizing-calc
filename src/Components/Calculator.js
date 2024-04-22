@@ -160,7 +160,6 @@ export default function CalculatorBody() {
         filterDescription = `Active Devices:  (${filteredDevices.length})`
 
     } else if (filterString) {
-        console.log('Filtering items matching.')
         filteredDevices = deviceTypes.filter((device) =>
             device.name.toLowerCase().includes(filterString) | device.display_name.toLowerCase().includes(filterString)
         )
