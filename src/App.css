@@ -43,6 +43,9 @@ body {
   font-family: 'Poppins', sans-serif;
 }
 
+nav {
+  box-shadow: 0 1px 2px 0 #b2b2b266;
+}
 
 /* remove the spin boxes for numeric form inputs */
 input[type=number]::-webkit-inner-spin-button,
