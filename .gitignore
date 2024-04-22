@@ -23,5 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 Notes.md
-src/Components/Test.js
-src/Reducers.js
+src/Components/Test
