@@ -14,7 +14,7 @@ import {bytesToGigs, calculateDeviceUsage, numberToString} from '../Utils';
  *
  * @returns {JSX.Element} - The rendered table row.
  */
-function TableRow({device}) {
+function CalculatorTableRow({device}) {
     const {actions: {setQuantity}} = useStateStore();
 
     const eventsPerSecond = parseFloat(device.quantity).toFixed(2) * parseFloat(device.base_weight).toFixed(2)
@@ -90,7 +90,7 @@ function CategoryTable({table_item, columnData}) {
                 <tbody>
 
                 {devices.map(device => (
-                    <TableRow
+                    <CalculatorTableRow
                         key={device.id}
                         device={device}
                     />
@@ -179,7 +179,7 @@ export default function CalculatorBody() {
                         <Accordion.Body>
                             <CategoryTable table_item={filteredTableItem} columnData={columnData}>
                                 {filteredDevices.map(device => (
-                                    <TableRow key={device.id} device={device}/>
+                                    <CalculatorTableRow key={device.id} device={device}/>
                                 ))}
                             </CategoryTable>
                         </Accordion.Body>
