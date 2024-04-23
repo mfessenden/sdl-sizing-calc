@@ -6,6 +6,11 @@ import CalculatorBody from './Calculator';
 import ResultBody from './Result';
 
 
+/**
+ * Renders the body of the calculator page.
+ *
+ * @returns {JSX.Element} JSX element representing the calculator body.
+ */
 export default function Body() {
 
     return (

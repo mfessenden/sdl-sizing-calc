@@ -3,7 +3,17 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import {CLEAR_STATE, RESET_UI, RESTORE_STATE, SAVE_STATE, SDL_HEADER, SDL_HEADER_HEIGHT, SDL_HEADER_WIDTH, SDL_STATE} from '../Constants';
+import {
+    ADMIN_PANEL_NAME,
+    CLEAR_STATE,
+    RESET_UI,
+    RESTORE_STATE,
+    SAVE_STATE,
+    SDL_HEADER,
+    SDL_HEADER_HEIGHT,
+    SDL_HEADER_WIDTH,
+    SDL_STATE
+} from '../Constants';
 import DeviceFilteringInput from './Filter';
 import {hasSavedData, useStateStore} from '../Model/Data';
 
@@ -67,7 +77,7 @@ export default function TopNavbar({adminMode = false}) {
 
                     {adminMode &&
                         <Nav>
-                            <Nav.Item><Nav.Link href='/data-edit'>Edit Data</Nav.Link></Nav.Item>
+                            <Nav.Item><Nav.Link href='/admin'>{ADMIN_PANEL_NAME}</Nav.Link></Nav.Item>
                             <Nav.Item><Nav.Link href='/settings'>Settings</Nav.Link></Nav.Item>
                         </Nav>
                     }
@@ -81,23 +91,26 @@ export default function TopNavbar({adminMode = false}) {
                             id='offcanvasNavbarDropdown-expand-lg'
                         >
                             {/* these will call functions, not routes */}
-                            <NavDropdown.Item eventKey={SAVE_STATE} alt='Save current application data to local storage'>
+                            <NavDropdown.Item eventKey={SAVE_STATE}
+                                              alt='Save current application data to local storage'>
                                 Save State
                             </NavDropdown.Item>
 
                             <NavDropdown.Divider/>
-                            <NavDropdown.Item disabled={!savedDataExists} eventKey={RESTORE_STATE} alt='Restore previously saved data'>
+                            <NavDropdown.Item disabled={!savedDataExists} eventKey={RESTORE_STATE}
+                                              alt='Restore previously saved data'>
                                 Load Saved State...
                             </NavDropdown.Item>
 
-                            <NavDropdown.Item disabled={!savedDataExists} eventKey={CLEAR_STATE} alt='Remove saved state data'>
+                            <NavDropdown.Item disabled={!savedDataExists} eventKey={CLEAR_STATE}
+                                              alt='Remove saved state data'>
                                 Clear Saved State
                             </NavDropdown.Item>
 
-                                <NavDropdown.Divider/>
-                                <NavDropdown.Item eventKey={RESET_UI} alt='Reset all device quantities'>
-                                    Reset Calculator
-                                </NavDropdown.Item>
+                            <NavDropdown.Divider/>
+                            <NavDropdown.Item eventKey={RESET_UI} alt='Reset all device quantities'>
+                                Reset Calculator
+                            </NavDropdown.Item>
 
                         </NavDropdown>
                     </Nav>
