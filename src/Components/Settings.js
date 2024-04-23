@@ -1,11 +1,12 @@
-import {Card} from 'react-bootstrap';
-import Form from 'react-bootstrap/Form';
+import React from 'react';
+import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import {useStateStore} from '../Model/Data';
 import {SETTINGS_PANEL_TITLE} from '../Constants';
-import React from 'react';
+import Button from "react-bootstrap/Button";
 
 
 /**
@@ -39,7 +40,8 @@ export default function SettingsPanel() {
                                 {SETTINGS_PANEL_TITLE}
                             </Card.Header>
                             <Card.Body>
-                                <Card.Title>Data Sources</Card.Title>
+
+                                <Card.Title className='admin-card-title'>Data Sources</Card.Title>
                                 <Row className='p-3'>
                                     <Form.Control as='select' className='input-mono'>
                                         {dataSources.map((dataSource) => (
@@ -51,7 +53,6 @@ export default function SettingsPanel() {
                                         ))}
                                     </Form.Control>
                                 </Row>
-                                {/*<Card.Title>Add Source</Card.Title>*/}
                                 <Row className='p-3'>
                                     <Form.Group className='position-relative mb-3'>
                                         <Form.Label className='data-edit-label'>Add Source</Form.Label>
@@ -68,6 +69,41 @@ export default function SettingsPanel() {
                                     </Form.Group>
                                 </Row>
 
+
+                                <Card.Title className='admin-card-title'>Quotes</Card.Title>
+                                <Row className='p-3'>
+                                    <Form.Control as='select' multiple className='input-mono'>
+                                        <>
+                                            <option>Quote 1</option>
+                                            <option>Quote 2</option>
+                                            <option>Quote 3</option>
+                                            <option>Quote 4</option>
+                                            <option>Quote 5</option>
+                                            <option>Quote 6</option>
+                                        </>
+                                    </Form.Control>
+                                </Row>
+
+                                <Row className='flex-row-reverse mx-0'>
+                                    <Button className='xs bg-sentinel-one data-edit-update'>Remove</Button>
+                                </Row>
+
+
+                                <Row className='flex-row-reverse p-3'>
+                                    <Form.Group className='position-relative mb-3'>
+                                        <Form.Label className='data-edit-label'>Load Quote</Form.Label>
+                                        <Form.Control
+                                            type='file'
+                                            required
+                                            name='file'
+                                            onChange={handleChange}
+                                            isInvalid={false}
+                                        />
+                                        <Form.Control.Feedback type='invalid' tooltip>
+
+                                        </Form.Control.Feedback>
+                                    </Form.Group>
+                                </Row>
 
                             </Card.Body>
                         </Card>
