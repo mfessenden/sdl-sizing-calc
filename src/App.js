@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Body from './Components/Body';
 import SettingsPanel from './Components/Settings';
-import DeviceEditor from './Components/DeviceEditor';
+import AdminPanel from './Components/Admin';
 import {StateProvider} from './Model/Data';
 import TopNavbar from './Components/Navbar';
 import {SDL_TITLE} from './Constants';
@@ -24,7 +24,7 @@ export default function App() {
                 <BrowserRouter>
                     <Routes>
                         <Route path='/' element={<Body/>}/>
-                        <Route path='admin' element={<DeviceEditor/>}/>
+                        <Route path='admin' element={<AdminPanel/>}/>
                         <Route path='settings' element={<SettingsPanel/>}/>
                     </Routes>
                 </BrowserRouter>
