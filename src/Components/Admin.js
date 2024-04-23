@@ -1,11 +1,11 @@
 import React from 'react';
+import Accordion from 'react-bootstrap/Accordion';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import Button from 'react-bootstrap/Button';
-import {ADMIN_PANEL_TITLE} from '../Constants';
 import {useStateStore} from '../Model/Data';
 
 
@@ -25,7 +25,7 @@ function DeviceEditor({device}) {
                             <Form.Control value={device.name}/>
                         </Form.Group>
 
-                        <Form.Group as={Col} controlId='formGridPassword'>
+                        <Form.Group as={Col} controlId='formGridDescription'>
                             <Form.Label className='data-edit-label'>Description</Form.Label>
                             <Form.Control value={device.display_name}/>
                         </Form.Group>
@@ -60,17 +60,43 @@ function DeviceEditor({device}) {
                         </Form.Group>
                     </Row>
                     <Row className='flex-row-reverse mx-0'>
-                        <Button
-                            className='xs bg-sentinel-one data-edit-update'
-                            disabled={true}
-                        >
-                            Update
+                        <Button className='xs bg-sentinel-one data-edit-update' disabled={false}>
+                            Save
                         </Button>
                     </Row>
                 </Form>
             </Card.Body>
         </Card>
     );
+}
+
+
+function CategoryEditor({category}) {
+    return (
+        <Card key={category.id}>
+            <Card.Header>{category.display_name}</Card.Header>
+            <Card.Body>
+                <Form>
+                    <Row className='mb-3 pt-3'>
+                        <Form.Group as={Col} controlId='formIdentifier'>
+                            <Form.Label className='data-edit-label'>Name</Form.Label>
+                            <Form.Control value={category.name}/>
+                        </Form.Group>
+
+                        <Form.Group as={Col} controlId='formGridDescription'>
+                            <Form.Label className='data-edit-label'>Display Name</Form.Label>
+                            <Form.Control value={category.display_name}/>
+                        </Form.Group>
+                    </Row>
+                    <Row className='flex-row-reverse mx-0'>
+                        <Button className='xs bg-sentinel-one data-edit-update' disabled={false}>
+                            Save
+                        </Button>
+                    </Row>
+                </Form>
+            </Card.Body>
+        </Card>
+    )
 }
 
 
@@ -106,7 +132,7 @@ function AddDeviceComponent() {
                                     <Form.Control/>
                                 </Form.Group>
 
-                                <Form.Group as={Col} controlId='formGridPassword'>
+                                <Form.Group as={Col} controlId='formGridDescription'>
                                     <Form.Label className='data-edit-label'>Description</Form.Label>
                                     <Form.Control/>
                                 </Form.Group>
@@ -157,26 +183,43 @@ function AddDeviceComponent() {
 export default function AdminPanel() {
     const {state} = useStateStore();
     const devices = state.device_types
+    const categories = state.interface_data.categories
 
     return (
         <Container fluid className='d-grid gap-3'>
             <Row>
                 <Col md={8}>
-                    <Card className='m-0'>
-                        <Card.Header className='admin-panel-header'>
-                            {ADMIN_PANEL_TITLE}
-                        </Card.Header>
-                        <Card.Body className='m-1'>
-                            {devices.map(device =>
-                                // <Row className='d-flex justify-content-center'>
-                                <Row key={device.id}>
-                                    <Col className='p-3'>
-                                        <DeviceEditor device={device}/>
-                                    </Col>
-                                </Row>
-                            )}
-                        </Card.Body>
-                    </Card>
+                    <Accordion alwaysOpen>
+                        <Accordion.Item eventKey='devices'>
+                            <Accordion.Header>Devices</Accordion.Header>
+                            <Accordion.Body>
+                                {devices.map(device =>
+                                    <Row key={device.id}>
+                                        <Col className='p-3'>
+                                            <DeviceEditor device={device}/>
+                                        </Col>
+                                    </Row>
+                                )}
+
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+
+                    <Accordion alwaysOpen>
+                        <Accordion.Item eventKey='categories'>
+                            <Accordion.Header>Categories</Accordion.Header>
+                            <Accordion.Body>
+                                {categories.map(category =>
+                                    <Row key={category.id}>
+                                        <Col className='p-3'>
+                                            <CategoryEditor category={category}/>
+                                        </Col>
+                                    </Row>
+                                )}
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+
                 </Col>
                 <Col md={4}>
                     <AddDeviceComponent/>
