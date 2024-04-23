@@ -68,7 +68,6 @@ function RetentionPeriodTabs() {
 }
 
 
-
 /**
  * Calculates the estimated data ingest based on the current state & devices quantities.
  * The result if formatted a formatted card:

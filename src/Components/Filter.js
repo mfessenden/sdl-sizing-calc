@@ -44,8 +44,8 @@ export default function DeviceFilteringInput({hasActiveDevices = false}) {
                                 className='xs bg-sentinel-one'
                                 alt='Only filter devices with current quality'
                                 onClick={() => {
-                                applyActiveFilter(!isFilteringActive)
-                            }}
+                                    applyActiveFilter(!isFilteringActive)
+                                }}
                             >
                                 {activeButtonText}
                             </Button>

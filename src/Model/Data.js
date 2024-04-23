@@ -1,6 +1,7 @@
 import {createContext, useContext, useReducer} from 'react';
 import stateReducer from './Reducers';
 import {SDL_STATE} from '../Constants';
+
 var ContextRawData = require('../data.json');
 var ContextData = setupInitialState()
 
@@ -47,7 +48,7 @@ export function getSavedState() {
  */
 export function setupInitialState() {
     console.log('Building context data...')
-    var contextData = getSavedState() ?? {...ContextRawData }
+    var contextData = getSavedState() ?? {...ContextRawData}
     // default property values
     const deviceDefaults = contextData['device_type_defaults']
     const defaultBaseWeight = deviceDefaults['base_weight']
@@ -86,16 +87,16 @@ export const useCustomState = (defaultState = ContextData) => {
     return {
         state,
         actions: {
-            setName: (deviceId, deviceName) => dispatch({type: 'SET_NAME', deviceId, deviceName }),
-            setDisplayName: (deviceId, displayName) => dispatch({type: 'SET_DISPLAY_NAME', deviceId, displayName }),
-            setCategory: (deviceId, categoryId) => dispatch({type: 'SET_CATEGORY', deviceId, categoryId }),
-            setQuantity: (deviceId, quantity) => dispatch({type: 'SET_QUANTITY', deviceId, quantity }),
-            setBaseWeight: (deviceId, baseWeight) => dispatch({type: 'SET_BASE_WEIGHT', deviceId, baseWeight }),
-            setEventSize: (deviceId, eventSize) => dispatch({type: 'SET_EVENT_SIZE', deviceId, eventSize }),
-            applyFilterString: (filterString) => dispatch({type: 'APPLY_FILTER_STRING', filterString }),
-            applyActiveFilter: (value) => dispatch({type: 'APPLY_ACTIVE_FILTER', value }),
-            setRetentionPeriod: (value) => dispatch({type: 'SET_RETENTION_PERIOD', value }),
-            setRetentionValue: (value) => dispatch({type: 'SET_RETENTION_VALUE', value }),
+            setName: (deviceId, deviceName) => dispatch({type: 'SET_NAME', deviceId, deviceName}),
+            setDisplayName: (deviceId, displayName) => dispatch({type: 'SET_DISPLAY_NAME', deviceId, displayName}),
+            setCategory: (deviceId, categoryId) => dispatch({type: 'SET_CATEGORY', deviceId, categoryId}),
+            setQuantity: (deviceId, quantity) => dispatch({type: 'SET_QUANTITY', deviceId, quantity}),
+            setBaseWeight: (deviceId, baseWeight) => dispatch({type: 'SET_BASE_WEIGHT', deviceId, baseWeight}),
+            setEventSize: (deviceId, eventSize) => dispatch({type: 'SET_EVENT_SIZE', deviceId, eventSize}),
+            applyFilterString: (filterString) => dispatch({type: 'APPLY_FILTER_STRING', filterString}),
+            applyActiveFilter: (value) => dispatch({type: 'APPLY_ACTIVE_FILTER', value}),
+            setRetentionPeriod: (value) => dispatch({type: 'SET_RETENTION_PERIOD', value}),
+            setRetentionValue: (value) => dispatch({type: 'SET_RETENTION_VALUE', value}),
             clearState: () => dispatch({type: 'CLEAR_STATE'}),
             resetState: () => dispatch({type: 'RESET_STATE'}),
             restoreState: () => dispatch({type: 'RESTORE_STATE'}),
@@ -105,7 +106,6 @@ export const useCustomState = (defaultState = ContextData) => {
 };
 
 
-
 /**
  * Component that provides state to the app's child components.
  *
@@ -113,7 +113,7 @@ export const useCustomState = (defaultState = ContextData) => {
  * @param {ReactNode} props.children - The children components.
  * @returns {ReactElement} The StateProvider component.
  */
-export const StateProvider = ({ children }: any) => {
+export const StateProvider = ({children}: any) => {
     // state contains two items: 'devices' & 'actions'
     const state = useCustomState();
     return <StateContext.Provider value={state}>{children}</StateContext.Provider>;

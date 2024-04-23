@@ -181,7 +181,7 @@ export default function CalculatorBody() {
             </Container>
         )
 
-    // build table items from the current state
+        // build table items from the current state
     } else {
         const table_items = buildCategoryTables(state)
         return (
