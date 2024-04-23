@@ -1,10 +1,10 @@
 import {useEffect} from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AdminPanel from './Components/Admin';
 import Body from './Components/Body';
 import SettingsPanel from './Components/Settings';
-import AdminPanel from './Components/Admin';
-import {StateProvider} from './Model/Data';
 import TopNavbar from './Components/Navbar';
+import {StateProvider} from './Model/Data';
 import {SDL_TITLE} from './Constants';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
