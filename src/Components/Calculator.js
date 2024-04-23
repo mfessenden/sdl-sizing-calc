@@ -7,6 +7,32 @@ import {useStateStore} from '../Model/Data';
 import {bytesToGigs, calculateDeviceUsage, numberToString} from '../Utils';
 
 
+const headerData = [
+    {
+        id: 0,
+        display_name: 'Device Type',
+        align_center: false
+    },
+    {
+        id: 1,
+        display_name: 'Quantity',
+        description: 'Number of Devices',
+        align_center: true
+    },
+    {
+        id: 2,
+        display_name: 'EPS',
+        description: 'Events per Second',
+        align_center: true
+    },
+    {
+        id: 3,
+        display_name: 'GB/Day',
+        align_center: true
+    }
+]
+
+
 /**
  * Renders a table row component for a device.
  *
@@ -139,7 +165,6 @@ export default function CalculatorBody() {
     const filterString = currentState.filter_string
     const filterActive = currentState.filter_active
 
-    const columnData = state.interface_data.table_columns
     const deviceTypes = state.device_types
 
     // filtering logic
@@ -170,7 +195,7 @@ export default function CalculatorBody() {
                     <Accordion.Item eventKey='filtered'>
                         <Accordion.Header>{filterDescription}</Accordion.Header>
                         <Accordion.Body>
-                            <CategoryTable table_item={filteredTableItem} columnData={columnData}>
+                            <CategoryTable table_item={filteredTableItem} columnData={headerData}>
                                 {filteredDevices.map(device => (
                                     <CalculatorTableRow key={device.id} device={device}/>
                                 ))}
@@ -196,7 +221,7 @@ export default function CalculatorBody() {
                                     <CategoryTable
                                         key={`category-table-${table_item.category_id}`}
                                         table_item={table_item}
-                                        columnData={columnData}
+                                        columnData={headerData}
                                     />
 
                                 </Accordion.Body>
