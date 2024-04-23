@@ -11,10 +11,10 @@ import {hasSavedData, useStateStore} from '../Model/Data';
 /**
  * Renders the top navigation bar component.
  *
- * @param {boolean} debugMode - Indicates whether to enable debug/admin mode.
+ * @param {boolean} adminMode - Indicates whether to enable debug/admin mode.
  * @return {JSX.Element} - The rendered top navigation bar component.
  */
-export default function TopNavbar({debugMode = false}) {
+export default function TopNavbar({adminMode = false}) {
     const {state, actions: {clearState, resetState, restoreState}} = useStateStore();
     const savedDataExists = hasSavedData()
     var hasActiveDevices = false
@@ -65,7 +65,7 @@ export default function TopNavbar({debugMode = false}) {
 
                 <Offcanvas.Body>
 
-                    {debugMode &&
+                    {adminMode &&
                         <Nav>
                             <Nav.Item><Nav.Link href='/data-edit'>Edit Data</Nav.Link></Nav.Item>
                             <Nav.Item><Nav.Link href='/settings'>Settings</Nav.Link></Nav.Item>

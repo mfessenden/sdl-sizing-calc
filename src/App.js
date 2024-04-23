@@ -20,7 +20,7 @@ export default function App() {
     return (
         <div className='App'>
             <StateProvider>
-                <TopNavbar debugMode={true}/>
+                <TopNavbar adminMode={true}/>
                 <BrowserRouter>
                     <Routes>
                         <Route path='/' element={<Body/>}/>
