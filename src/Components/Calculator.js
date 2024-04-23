@@ -32,26 +32,18 @@ function CalculatorTableRow({device}) {
             <td className='category-table-numeric'>
                 <Form.Control
                     className='text-center'
-                    // size='sm'
                     type='number'
                     onChange={e => setQuantity(device.id, e.target.value)}
                     value={device.quantity}
                 />
             </td>
             <td className='text-center category-table-numeric'>
-                <Form.Text
-                    key={device.id}
-                    // style={{width: '100px'}}
-                    type='number'
-                >
+                <Form.Text key={device.id} type='number'>
                     {numberToString(eventsPerSecond)}
                 </Form.Text>
             </td>
             <td className='text-center category-table-numeric'>
-                <Form.Text
-                    key={device.id}
-                    type='number'
-                >
+                <Form.Text key={device.id} type='number'>
                     {numberToString(gigsPerDay)}
                 </Form.Text>
             </td>
