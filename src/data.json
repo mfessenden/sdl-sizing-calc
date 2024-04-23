@@ -222,10 +222,16 @@
         "retention_period_id": 0,
         "retention_period_value": 1,
         "expanded_table_items": [],
-        "data_source": "../data.json",
         "filter_string": null,
         "filter_active": false,
-        "data_sources": []
+        "data_sources": [
+            {
+                "id": 0,
+                "path": "../data.json",
+                "date_added": null,
+                "display_name": "Default"
+            }
+        ]
     },
     "device_types": [
         {
