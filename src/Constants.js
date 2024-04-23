@@ -9,3 +9,6 @@ export const SAVE_STATE = 'save-state';
 export const CLEAR_STATE = 'clear-state';
 export const RESET_UI = 'reset-ui';
 export const RESTORE_STATE = 'restore-state';
+export const ADMIN_PANEL_TITLE = 'Edit Data';
+export const ADMIN_PANEL_NAME = 'Admin Panel';
+export const SETTINGS_PANEL_TITLE = 'Settings';
