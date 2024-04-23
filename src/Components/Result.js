@@ -137,6 +137,9 @@ export default function ResultBody() {
                         <Row>
                             <RetentionPeriodTabs/>
                         </Row>
+                        <Row>
+                        {/* TODO: add dropdowns here  */}
+                        </Row>
                     </Container>
                 </Card>
             </Container>
