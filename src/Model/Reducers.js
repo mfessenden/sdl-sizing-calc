@@ -41,8 +41,10 @@ export default function stateReducer(state, action) {
             const deviceId = action.deviceId
             const categoryId = action.categoryId
             const device = devices.filter((d) => d.id === deviceId)[0]
+            let currentCategoryId = device.category_id
             device.category_id = categoryId
             updatedState.device_types[deviceId] = device
+            console.log(`Device '${device.name}' category updated: ${currentCategoryId} -> ${categoryId}`)
             break;
         }
 
@@ -140,6 +142,18 @@ export default function stateReducer(state, action) {
             console.log(`Admin mode: ${action.value ? 'On': 'Off'}`);
             break;
         }
+
+        case 'UPDATE_DEVICE': {
+            console.log(`Updating device ${action.deviceId}`)
+            break;
+        }
+
+        case 'ADD_DEVICE': {
+            console.log('Adding device:')
+            console.log(action.payload)
+            break;
+        }
+
 
         default:
             console.log(`Error: ${action.type} not caught by State reducer`);

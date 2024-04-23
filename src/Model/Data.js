@@ -101,6 +101,8 @@ export const useCustomState = (defaultState = ContextData) => {
             resetState: () => dispatch({type: 'RESET_STATE'}),
             restoreState: () => dispatch({type: 'RESTORE_STATE'}),
             toggleAdminMode: (value) => dispatch({type: 'TOGGLE_ADMIN', value}),
+            updateDevice: (deviceId, payload) => dispatch({type: 'UPDATE_DEVICE', deviceId, payload}),
+            addDevice: (payload) => dispatch({type: 'ADD_DEVICE', payload}),
         },
     };
 };

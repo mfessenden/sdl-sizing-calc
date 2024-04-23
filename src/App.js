@@ -11,7 +11,7 @@ import './App.css';
 
 
 export default function App() {
-
+    const isAdmin = true //process.env.SDL_ADMIN === 1
     useEffect(() => {
         // update browser params
         document.title = SDL_TITLE;
@@ -20,7 +20,7 @@ export default function App() {
     return (
         <div className='App'>
             <StateProvider>
-                <TopNavbar adminMode={true}/>
+                <TopNavbar adminMode={isAdmin}/>
                 <BrowserRouter>
                     <Routes>
                         <Route path='/' element={<Body/>}/>

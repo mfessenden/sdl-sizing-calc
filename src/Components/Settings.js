@@ -9,6 +9,10 @@ import {SETTINGS_PANEL_TITLE} from '../Constants';
 import Button from "react-bootstrap/Button";
 
 
+const downloadTxtFile = () => {
+    console.log("download logic goes here")
+}
+
 /**
  * Renders a settings panel with options for administering the app.
  *
@@ -103,6 +107,10 @@ export default function SettingsPanel() {
 
                                         </Form.Control.Feedback>
                                     </Form.Group>
+                                </Row>
+
+                                <Row>
+                                    <Button className='bg-sentinel-one' style={{maxWidth: '200px'}} onClick={downloadTxtFile}>Save Quote</Button>
                                 </Row>
 
                             </Card.Body>

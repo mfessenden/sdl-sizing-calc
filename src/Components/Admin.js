@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -9,8 +9,13 @@ import Row from 'react-bootstrap/Row';
 import {useStateStore} from '../Model/Data';
 
 
+function onSelectionChanged(eventKey) {
+    console.log(`Selection changed: ${eventKey}`)
+}
+
+
 function DeviceEditor({device}) {
-    const {state, actions: {setCategory}} = useStateStore();
+    const {state, actions: {setCategory, updateDevice}} = useStateStore();
     const deviceCategoryId = device.category_id
     const categories = state.interface_data.categories
 
@@ -44,15 +49,16 @@ function DeviceEditor({device}) {
 
                         <Form.Group as={Col} controlId='formGridState'>
                             <Form.Label className='data-edit-label'>Category</Form.Label>
-                            <Form.Select defaultValue={deviceCategoryId}>
+                            <Form.Select
+                                defaultValue={deviceCategoryId}
+                                onChange={e => setCategory(device.id, e.target.value)}
+                            >
 
                                 {categories.map((category) => (
                                     <option key={category.id} value={category.id}>
                                         {category.display_name}
                                     </option>
                                 ))}
-
-                                onChange={e => setCategory(device.id, e.target.value)}
 
                             </Form.Select>
                         </Form.Group>
@@ -70,6 +76,9 @@ function DeviceEditor({device}) {
 
 
 function CategoryEditor({category}) {
+    const onSelected = (event) => {
+        console.log(`Category changed: ${event}`)
+    }
     return (
         <Card key={category.id}>
             <Card.Header>{category.display_name}</Card.Header>
@@ -78,12 +87,12 @@ function CategoryEditor({category}) {
                     <Row className='mb-3 pt-3'>
                         <Form.Group as={Col} controlId='formIdentifier'>
                             <Form.Label className='data-edit-label'>Name</Form.Label>
-                            <Form.Control value={category.name}/>
+                            <Form.Control value={category.name} onChange={e => onSelected(e.target.value)}/>
                         </Form.Group>
 
                         <Form.Group as={Col} controlId='formGridDescription'>
                             <Form.Label className='data-edit-label'>Display Name</Form.Label>
-                            <Form.Control value={category.display_name}/>
+                            <Form.Control value={category.display_name} onChange={e => onSelected(e.target.value)}/>
                         </Form.Group>
                     </Row>
                     <Row className='flex-row-reverse mx-0'>
@@ -104,17 +113,21 @@ function CategoryEditor({category}) {
  * @return {JSX.Element} The rendered React component.
  */
 function AddDeviceComponent() {
-    const {state} = useStateStore();
+    const {state, actions: {addDevice}} = useStateStore();
     const categories = state.interface_data.categories
+    const deviceDefaults = state.device_type_defaults
+    const [validated, setValidated] = useState(false);
 
-    const handleChange = (event) => {
+    const handleSubmit = (event) => {
         const form = event.currentTarget;
+        console.log('New device was added:')
+        console.log(form)
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         }
-
-        // setValidated(true);
+        addDevice(event)
+        setValidated(true);
     };
 
     return (
@@ -123,33 +136,41 @@ function AddDeviceComponent() {
                 <Card>
                     <Card.Header>Add Device</Card.Header>
                     <Card.Body>
-                        <Form>
+                        <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             <Row className='mb-3 pt-3'>
                                 <Form.Group as={Col} controlId='formIdentifier'>
                                     <Form.Label className='data-edit-label'>Device Identifier</Form.Label>
-                                    <Form.Control/>
+                                    <Form.Control type='text' pattern='^[a-z_]*$' required/>
+                                    <Form.Control.Feedback type='invalid'>
+                                        Please provide a device name (no spaces allowed)
+                                    </Form.Control.Feedback>
                                 </Form.Group>
 
-                                <Form.Group as={Col} controlId='formGridDescription'>
+                                <Form.Group as={Col} controlId='formDescription'>
                                     <Form.Label className='data-edit-label'>Description</Form.Label>
-                                    <Form.Control/>
+                                    <Form.Control type='text' required/>
+                                    <Form.Control.Feedback type='invalid'>
+                                        Please provide a device description
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Row>
 
                             <Row className='mb-3'>
                                 <Form.Group as={Col} controlId='formBaseWeight'>
                                     <Form.Label className='data-edit-label'>Base Weight</Form.Label>
-                                    <Form.Control/>
+                                    <Form.Control type='number' placeholder={deviceDefaults.base_weight}/>
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId='formEventSize'>
                                     <Form.Label className='data-edit-label'>Event Size</Form.Label>
-                                    <Form.Control/>
+                                    <Form.Control type='number' placeholder={deviceDefaults.event_size}/>
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId='formGridState'>
                                     <Form.Label className='data-edit-label'>Category</Form.Label>
-                                    <Form.Select>
+                                    <Form.Select
+                                        onChange={e => onSelectionChanged(e.target.value)}
+                                    >
                                         {categories.map((category) => (
                                             <option key={category.id} value={category.id}>
                                                 {category.display_name}
@@ -159,7 +180,7 @@ function AddDeviceComponent() {
                                 </Form.Group>
                             </Row>
                             <Row className='flex-row-reverse mx-0'>
-                                <Button className='xs bg-sentinel-one data-edit-update'>Add</Button>
+                                <Button type='submit' className='xs bg-sentinel-one data-edit-update'>Add</Button>
                             </Row>
                         </Form>
                     </Card.Body>
