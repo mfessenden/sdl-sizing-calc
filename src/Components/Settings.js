@@ -19,7 +19,7 @@ export default function SettingsBody() {
                                 <Form.Check // prettier-ignore
                                     type='switch'
                                     id='switch-debug'
-                                    label='Debug Mode'
+                                    label='Admin Mode'
                                     value={state.current_state.debug_mode}
                                     onChange={e => toggleDebug(e.target.value)}
                                 />
