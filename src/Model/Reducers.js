@@ -134,9 +134,10 @@ export default function stateReducer(state, action) {
             break;
         }
 
-        case 'TOGGLE_DEBUG': {
+        case 'TOGGLE_ADMIN': {
             updatedState.current_state.debug_mode = action.value
-            console.log(`Debug mode: ${action.value ? 'On': 'Off'}`);
+            state.current_state.debug_mode = action.value
+            console.log(`Admin mode: ${action.value ? 'On': 'Off'}`);
             break;
         }
 
