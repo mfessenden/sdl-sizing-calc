@@ -47,11 +47,9 @@ function DeviceEditor({device}) {
                             <Form.Select defaultValue={deviceCategoryId}>
 
                                 {categories.map((category) => (
-                                    <>
-                                        <option key={category.id} value={category.id}>
-                                            {category.display_name}
-                                        </option>
-                                    </>
+                                    <option key={category.id} value={category.id}>
+                                        {category.display_name}
+                                    </option>
                                 ))}
 
                                 onChange={e => setCategory(device.id, e.target.value)}
@@ -153,11 +151,9 @@ function AddDeviceComponent() {
                                     <Form.Label className='data-edit-label'>Category</Form.Label>
                                     <Form.Select>
                                         {categories.map((category) => (
-                                            <>
-                                                <option key={category.id} value={category.id}>
-                                                    {category.display_name}
-                                                </option>
-                                            </>
+                                            <option key={category.id} value={category.id}>
+                                                {category.display_name}
+                                            </option>
                                         ))}
                                     </Form.Select>
                                 </Form.Group>
