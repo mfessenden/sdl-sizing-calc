@@ -161,6 +161,10 @@ input[type="range"]::-webkit-slider-thumb {
   color: #fff;
 }
 
+.card-title.admin-card-title {
+  border-bottom: 1px solid #9494942C;
+}
+
 .nav-link {
   font-weight: 500;
   color: #6101FF;
