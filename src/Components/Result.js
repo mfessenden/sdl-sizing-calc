@@ -10,6 +10,34 @@ import {useStateStore} from '../Model/Data';
 import {humanFileSize, calculateDeviceUsage} from '../Utils';
 
 
+const retentionPeriods = [
+    {
+        id: 0,
+        name: 'daily',
+        display_name: 'Daily',
+        multiplier: 1
+    },
+    {
+        id: 1,
+        name: 'weekly',
+        display_name: 'Weekly',
+        multiplier: 7
+    },
+    {
+        id: 2,
+        name: 'monthly',
+        display_name: 'Monthly',
+        multiplier: 30
+    },
+    {
+        id: 3,
+        name: 'yearly',
+        display_name: 'Yearly',
+        multiplier: 365
+    }
+]
+
+
 // form group for the given tab
 function DataRetentionInput({tabData}) {
     const {state, actions: {setRetentionValue}} = useStateStore();
@@ -45,7 +73,6 @@ function DataRetentionInput({tabData}) {
 function RetentionPeriodTabs() {
     const {state, actions: {setRetentionPeriod}} = useStateStore();
     const currentState = state.current_state
-    const tabsData = state.interface_data.retention_periods
 
     return (
         <Tabs
@@ -54,7 +81,7 @@ function RetentionPeriodTabs() {
             onSelect={(k) => setRetentionPeriod(parseInt(k))}
             className='align-center'
         >
-            {tabsData.map((tab) => (
+            {retentionPeriods.map((tab) => (
                 <Tab
                     key={tab.id}
                     eventKey={tab.id}
@@ -105,12 +132,11 @@ export default function ResultBody() {
 
     // calculate bytes per day * retention period
     var totalBytes = 0
-    const retentionPeriodData = state.interface_data.retention_periods
     const retentionPeriodId = currentState.retention_period_id ?? 0
     const periodValue = currentState.retention_period_value ?? 1
     var multiplier = 1
 
-    for (let period of retentionPeriodData) {
+    for (let period of retentionPeriods) {
         if (period.id === retentionPeriodId) {
             multiplier = period.multiplier
         }
@@ -138,7 +164,7 @@ export default function ResultBody() {
                             <RetentionPeriodTabs/>
                         </Row>
                         <Row>
-                        {/* TODO: add dropdowns here  */}
+                            {/* TODO: add dropdowns here  */}
                         </Row>
                     </Container>
                 </Card>
