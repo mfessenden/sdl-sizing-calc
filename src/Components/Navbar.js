@@ -1,16 +1,21 @@
-import React, {useRef} from 'react'
 import Image from 'react-bootstrap/Image'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import {CLEAR_STATE, RESET_UI, RESTORE_STATE, SAVE_STATE, SDL_STATE} from '../Constants';
+import {CLEAR_STATE, RESET_UI, RESTORE_STATE, SAVE_STATE, SDL_HEADER, SDL_HEADER_HEIGHT, SDL_HEADER_WIDTH, SDL_STATE} from '../Constants';
 import DeviceFilteringInput from './Filter';
 import {hasSavedData, useStateStore} from '../Model/Data';
 
 
-export function TopNavbar({debugMode = true}) {
-    const {state, actions: {clearState, resetState ,restoreState}} = useStateStore();
+/**
+ * Renders the top navigation bar component.
+ *
+ * @param {boolean} debugMode - Indicates whether to enable debug/admin mode.
+ * @return {JSX.Element} - The rendered top navigation bar component.
+ */
+export default function TopNavbar({debugMode = false}) {
+    const {state, actions: {clearState, resetState, restoreState}} = useStateStore();
     const savedDataExists = hasSavedData()
     var hasActiveDevices = false
     const devices = state.device_types
@@ -26,7 +31,9 @@ export function TopNavbar({debugMode = true}) {
             // don't save these
             state.current_state.filter_string = null
             state.current_state.filter_active = false
-            window.localStorage.setItem(SDL_STATE, JSON.stringify(state));
+
+            // set localstorage value
+            window.localStorage.setItem(SDL_STATE, JSON.stringify(state));  // TODO: persistence via Firebase?
             console.log('Saving current state....')
         } else if (eventKey === CLEAR_STATE) {
             clearState()
@@ -42,7 +49,7 @@ export function TopNavbar({debugMode = true}) {
 
             {/* Logo */}
             <Navbar.Brand href='/'>
-                <Image src='images/sdl-header.svg' width='278' height='48'/>
+                <Image src={SDL_HEADER} width={SDL_HEADER_WIDTH} height={SDL_HEADER_HEIGHT}/>
             </Navbar.Brand>
 
             {/* Collapsable Items */}

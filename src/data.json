@@ -225,10 +225,7 @@
         "data_source": "../data.json",
         "filter_string": null,
         "filter_active": false,
-        "data_sources": [
-            "/Users/michael/.config/sdl-calculator/sdl-user-data.json",
-            "/Users/michael/Desktop/sdl-user-data.json"
-        ]
+        "data_sources": []
     },
     "device_types": [
         {

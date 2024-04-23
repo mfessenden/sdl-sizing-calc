@@ -156,14 +156,15 @@ export default function CalculatorBody() {
 
     if (filterActive) {
         console.log('Filtering active devices...')
-        filterDescription = 'Active Devices:'
         filteredDevices = deviceTypes.filter((device) => device.quantity > 0)
+        filterDescription = `Active Devices:  (${filteredDevices.length})`
 
     } else if (filterString) {
-        console.log('Filtering items matching.')
         filteredDevices = deviceTypes.filter((device) =>
             device.name.toLowerCase().includes(filterString) | device.display_name.toLowerCase().includes(filterString)
         )
+
+        filterDescription = `Filtering by '${filterString}': (${filteredDevices.length})`
     }
 
     // if we're filtering items, draw one table only

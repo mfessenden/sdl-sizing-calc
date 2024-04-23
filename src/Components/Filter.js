@@ -16,7 +16,6 @@ import {useStateStore} from '../Model/Data';
  *   +------------------+ +-------------+
  *
  * @param {boolean} hasActiveDevices - Indicates there are active devices in the application.
- *
  * @return {Element} -  filtered input component.
  */
 export default function DeviceFilteringInput({hasActiveDevices = false}) {
