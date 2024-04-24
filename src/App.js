@@ -11,7 +11,7 @@ import './App.css';
 
 
 export default function App() {
-    const isAdmin = true //process.env.SDL_ADMIN === 1
+    const isAdmin = false //process.env.SDL_ADMIN === 1  TODO: use env file
     useEffect(() => {
         // update browser params
         document.title = SDL_TITLE;
