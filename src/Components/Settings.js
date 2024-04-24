@@ -1,12 +1,13 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
+
 import {useStateStore} from '../Model/Data';
 import {SETTINGS_PANEL_TITLE} from '../Constants';
-import Button from 'react-bootstrap/Button';
 
 
 const downloadTxtFile = () => {
@@ -78,12 +79,12 @@ export default function SettingsPanel() {
                                 <Row className='p-3'>
                                     <Form.Control as='select' multiple className='input-mono'>
                                         <>
-                                            <option>Quote 1</option>
-                                            <option>Quote 2</option>
-                                            <option>Quote 3</option>
-                                            <option>Quote 4</option>
-                                            <option>Quote 5</option>
-                                            <option>Quote 6</option>
+                                            <option key='option1'>Quote 1</option>
+                                            <option key='option2'>Quote 2</option>
+                                            <option key='option3'>Quote 3</option>
+                                            <option key='option4'>Quote 4</option>
+                                            <option key='option5'>Quote 5</option>
+                                            <option key='option6'>Quote 6</option>
                                         </>
                                     </Form.Control>
                                 </Row>
