@@ -6,6 +6,16 @@ var ContextRawData = require('../data.json');
 var ContextData = setupInitialState()
 
 
+const DefaultState = {
+    "admin_mode": false,
+    "retention_period_id": 0,
+    "retention_period_value": 1,
+    "expanded_table_items": [],
+    "filter_string": null,
+    "filter_active": false
+}
+
+
 /**
  * Returns true if the app has data in local storage.
  *
