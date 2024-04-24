@@ -43,7 +43,7 @@ const headerData = [
 function CalculatorTableRow({device}) {
     const {actions: {setQuantity}} = useStateStore();
 
-    const eventsPerSecond = parseFloat(device.quantity).toFixed(2) * parseFloat(device.base_weight).toFixed(2)
+    const eventsPerSecond = device.quantity * device.base_weight
     const bytesPerDay = calculateDeviceUsage(device)
     const gigsPerDay = bytesToGigs(bytesPerDay)
 
