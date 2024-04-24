@@ -1,19 +1,10 @@
 import {createContext, useContext, useReducer} from 'react';
+import {AppState} from '../types/State';
 import stateReducer from './Reducers';
 import {SDL_STATE} from '../Constants';
 
 var ContextRawData = require('../data.json');
 var ContextData = setupInitialState()
-
-
-const DefaultState = {
-    "admin_mode": false,
-    "retention_period_id": 0,
-    "retention_period_value": 1,
-    "expanded_table_items": [],
-    "filter_string": null,
-    "filter_active": false
-}
 
 
 /**
@@ -58,17 +49,24 @@ export function getSavedState() {
  */
 export function setupInitialState() {
     console.log('Building context data...')
-    var contextData = getSavedState() ?? {...ContextRawData}
+    let contextData = getSavedState() ?? {...ContextRawData}
+
     // default property values
-    const deviceDefaults = contextData['device_type_defaults']
+    const calculatorData = contextData.calculator
+
+    // devices
+    const devicesData = calculatorData.devices
+    const deviceDefaults = devicesData['device_defaults']
     const defaultBaseWeight = deviceDefaults['base_weight']
     const defaultEventSize = deviceDefaults['event_size']
     const defaultCategoryId = deviceDefaults['category_id']
     const defaultQuantity = deviceDefaults['quantity']
 
+    console.log('Setting up state:')
 
     // devices
-    const deviceTypes = contextData['device_types']
+    const deviceTypes = devicesData['device_items']
+
 
     // set defaults if not present
     for (const deviceType of deviceTypes) {
@@ -78,6 +76,8 @@ export function setupInitialState() {
         deviceType.quantity = deviceType.quantity ? deviceType.quantity : defaultQuantity
     }
 
+    // add app state TODO: separate context?
+    contextData['current_state'] = AppState
     return contextData
 }
 
@@ -91,7 +91,7 @@ export const StateContext = createContext(ContextData);
  * @param {Object} defaultState - default state to initialize the custom state with.
  * @returns {Object} An object containing the custom state and actions to manipulate the state.
  */
-export const useCustomState = (defaultState = ContextData) => {
+export const useCustomState = (defaultState = setupInitialState()) => {
     // user our reducer to handle actions
     const [state, dispatch] = useReducer(stateReducer, defaultState);
     return {

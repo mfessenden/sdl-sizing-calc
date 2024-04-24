@@ -1,5 +1,6 @@
 import {getSavedState} from './Data';
 import {SDL_STATE} from '../Constants';
+import {AppState} from '../types/State';
 const ContextRawData = require('../data.json');
 
 
@@ -13,7 +14,7 @@ const ContextRawData = require('../data.json');
 export default function stateReducer(state, action) {
     // 'state' is an array of devices
     const updatedState =  {...state};
-    const devices = updatedState.device_types
+    const devices = updatedState.calculator.devices.device_items
 
     switch (action.type) {
         case 'SET_NAME': {
@@ -23,7 +24,7 @@ export default function stateReducer(state, action) {
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.name = deviceName
 
-            updatedState.device_types[deviceId] = device
+            updatedState.calculator.devices.device_items[deviceId] = device
             break;
         }
 
@@ -33,7 +34,7 @@ export default function stateReducer(state, action) {
 
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.display_name = displayName
-            updatedState.device_types[deviceId] = device
+            updatedState.calculator.devices.device_items[deviceId] = device
             break;
         }
 
@@ -43,7 +44,7 @@ export default function stateReducer(state, action) {
             const device = devices.filter((d) => d.id === deviceId)[0]
             let currentCategoryId = device.category_id
             device.category_id = categoryId
-            updatedState.device_types[deviceId] = device
+            updatedState.calculator.devices.device_items[deviceId] = device
             console.log(`Device '${device.name}' category updated: ${currentCategoryId} -> ${categoryId}`)
             break;
         }
@@ -53,7 +54,7 @@ export default function stateReducer(state, action) {
             const quantity = Number(action.quantity)
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.quantity = quantity
-            updatedState.device_types[deviceId] = device
+            updatedState.calculator.devices.device_items[deviceId] = device
             break;
         }
 
@@ -63,7 +64,7 @@ export default function stateReducer(state, action) {
 
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.base_weight = baseWeight
-            updatedState.device_types[deviceId] = device
+            updatedState.calculator.devices.device_items[deviceId] = device
             break;
         }
 
@@ -73,8 +74,7 @@ export default function stateReducer(state, action) {
 
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.event_size = eventSize
-
-            updatedState.device_types[deviceId] = device
+            updatedState.calculator.devices.device_items[deviceId] = device
             break;
         }
 
@@ -112,21 +112,20 @@ export default function stateReducer(state, action) {
         // reset the ui ('reset-ui')
         case 'RESET_STATE': {
             const defaultState = {...ContextRawData }
-            // updatedState.device_types = defaultState.device_types
-            for (let device in updatedState.device_types) {
-                updatedState.device_types[device].quantity = 0
+            defaultState.current_state = AppState
+            // updatedState.calculator.devices.device_items = defaultState.device_types
+            for (let device in updatedState.calculator.devices.device_items) {
+                updatedState.calculator.devices.device_items[device].quantity = 0
             }
-
-            updatedState.current_state.retention_period_id = defaultState.current_state.retention_period_id
-            updatedState.current_state.retention_period_value = defaultState.current_state.retention_period_value
-            console.log(`Resetting to default state...`);
+            updatedState.current_state.retention_period_id = AppState.retention_period_id
+            updatedState.current_state.retention_period_value = AppState.retention_period_value
             break;
         }
         // restore saved state ('restore-state')
         case 'RESTORE_STATE': {
             const savedState = getSavedState();
             if (savedState) {
-                updatedState.device_types = savedState.device_types;
+                updatedState.calculator.devices.device_items = savedState.calculator.devices.device_items;
                 updatedState.current_state = savedState.current_state
                 console.log(`Restoring saved state...`);
             } else {

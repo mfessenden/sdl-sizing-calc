@@ -60,7 +60,7 @@ function CalculatorTableRow({device}) {
                     className='text-center'
                     type='number'
                     onChange={e => setQuantity(device.id, e.target.value)}
-                    value={device.quantity}
+                    value={Number(device.quantity)}
                 />
             </td>
             <td className='text-center category-table-numeric'>
@@ -134,10 +134,10 @@ export default function CalculatorBody() {
      */
     const buildCategoryTables = (data) => {
         const tableItems = []
-        // const interfaceData = data['state']
-        const interfaceData = data.interface_data
-        const categoryData = interfaceData.categories
-        const deviceTypes = data.device_types
+        // const interfaceData = data.interface_data
+        const devicesData = data.calculator.devices
+        const categoryData = devicesData.device_categories
+        const deviceTypes = devicesData.device_items
 
         for (const category of categoryData) {
             const categoryDevices = []
@@ -165,23 +165,22 @@ export default function CalculatorBody() {
     const filterString = currentState.filter_string
     const filterActive = currentState.filter_active
 
-    const deviceTypes = state.device_types
+    const deviceTypes = state.calculator.devices['device_items']
 
     // filtering logic
     let filteredDevices = []
     let filterDescription = 'Result:'
 
     if (filterActive) {
-        console.log('Filtering active devices...')
         filteredDevices = deviceTypes.filter((device) => device.quantity > 0)
-        filterDescription = `Active Devices:  (${filteredDevices.length})`
+        filterDescription = `Active Devices  (${filteredDevices.length})`
 
     } else if (filterString) {
         filteredDevices = deviceTypes.filter((device) =>
             device.name.toLowerCase().includes(filterString) | device.display_name.toLowerCase().includes(filterString)
         )
 
-        filterDescription = `Filtering by '${filterString}': (${filteredDevices.length})`
+        filterDescription = `Filtering by '${filterString}' (${filteredDevices.length} items)`
     }
 
     // if we're filtering items, draw one table only

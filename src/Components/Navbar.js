@@ -28,7 +28,7 @@ export default function TopNavbar({adminMode = false}) {
     const {state, actions: {clearState, resetState, restoreState}} = useStateStore();
     const savedDataExists = hasSavedData()
     var hasActiveDevices = false
-    const devices = state.device_types
+    const devices = state.calculator.devices.device_items
     for (let device of devices) {
         if (device.quantity > 0) {
             hasActiveDevices = true;

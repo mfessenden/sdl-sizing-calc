@@ -95,6 +95,19 @@ function RetentionPeriodTabs() {
 }
 
 
+function ResultDropdowns() {
+    const {state} = useStateStore();
+
+    return (
+        <Container className='input-item'>
+                <Row>
+
+                </Row>
+        </Container>
+    )
+}
+
+
 /**
  * Calculates the estimated data ingest based on the current state & devices quantities.
  * The result if formatted a formatted card:
@@ -125,7 +138,7 @@ export default function ResultBody() {
 
     // get the total in bytes per day
     var totalBytesPerDay = 0
-    const devices = state.device_types
+    const devices = state.calculator.devices.device_items
     for (let device of devices) {
         totalBytesPerDay = totalBytesPerDay + calculateDeviceUsage(device)
     }
@@ -164,7 +177,7 @@ export default function ResultBody() {
                             <RetentionPeriodTabs/>
                         </Row>
                         <Row>
-                            {/* TODO: add dropdowns here  */}
+                            <ResultDropdowns/>
                         </Row>
                     </Container>
                 </Card>
