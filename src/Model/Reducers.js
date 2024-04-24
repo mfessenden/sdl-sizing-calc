@@ -13,7 +13,7 @@ const ContextRawData = require('../data.json');
 export default function stateReducer(state, action) {
     // 'state' is an array of devices
     const updatedState =  {...state};
-    const devices = state.device_types
+    const devices = updatedState.device_types
 
     switch (action.type) {
         case 'SET_NAME': {
@@ -50,8 +50,7 @@ export default function stateReducer(state, action) {
 
         case 'SET_QUANTITY': {
             const deviceId = action.deviceId
-            const quantity = action.quantity
-
+            const quantity = Number(action.quantity)
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.quantity = quantity
             updatedState.device_types[deviceId] = device

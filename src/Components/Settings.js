@@ -6,11 +6,11 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import {useStateStore} from '../Model/Data';
 import {SETTINGS_PANEL_TITLE} from '../Constants';
-import Button from "react-bootstrap/Button";
+import Button from 'react-bootstrap/Button';
 
 
 const downloadTxtFile = () => {
-    console.log("download logic goes here")
+    console.log('download logic goes here')
 }
 
 /**
