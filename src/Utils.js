@@ -38,7 +38,7 @@ export function humanFileSize(bytes: number, si: boolean = false, dp: number = 1
  * @param {number} value - number to convert.
  * @returns {string} - converted number as a string.
  */
-export function numberToString(value) {
+export function numberToString(value: number): string {
     value = parseFloat(value)
     if (value === 0) {
         return '0'

@@ -32,7 +32,7 @@ export function getSavedState() {
             return JSON.parse(value);
         } catch (e) {
             console.log(`Error loading state: ${e}`)
-            return value;
+            return null;
         }
     }
     console.log('No saved data found....')
