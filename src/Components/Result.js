@@ -10,6 +10,7 @@ import {useStateStore} from '../Model/Data';
 import {humanFileSize, calculateDeviceUsage} from '../Utils';
 
 
+// data for the retention period tabs
 const retentionPeriods = [
     {
         id: 0,
@@ -96,13 +97,72 @@ function RetentionPeriodTabs() {
 
 
 function ResultDropdowns() {
+
+
+    const buildInputDropdowns = (data) => {
+        const dropdownMenus = []
+
+        // dropdown input options
+        const inputsData = data.calculator.inputs
+
+        // dropdown categories
+        const inputsCategories = data.calculator.inputs.input_categories
+        const inputDefaults = data.calculator.inputs.input_defaults
+
+        // data for the menu items
+        const inputItems = inputsData.input_items
+
+        for (const category of inputsCategories) {
+            const categoryItems = []
+
+            for (const inputItem of inputItems) {
+                if (inputItem.input_id === category.id) {
+
+                    // use specified weight, or the default
+                    inputItem.weight = inputItem.weight ?? inputDefaults.weight
+                    categoryItems.push(inputItem)
+                }
+            }
+
+            // represents a dropdown menu, broken out by category
+            const DropdownMenu = {
+                name: category.name,
+                display_name: category.display_name,
+                input_id: category.id,
+                dropdown_items: categoryItems
+            };
+
+            dropdownMenus.push(DropdownMenu)
+        }
+        return dropdownMenus
+    }
+
+
     const {state} = useStateStore();
+    let dropdownMenus = buildInputDropdowns(state)
 
     return (
         <Container className='input-item'>
-                <Row>
+            <Form>
+                {dropdownMenus.map(dropdownMenu => (
+                    <Row className='text-end p-1' key={`row-${dropdownMenu.input_id}`}>
+                        <Col key={`col-${dropdownMenu.input_id}`}>
+                            <Form.Label className='result-input-label' key={dropdownMenu.input_id}>
+                                {dropdownMenu.display_name}
+                            </Form.Label>
+                        </Col>
+                        <Col>
+                            <Form.Control as='select'>
+                                <option>---</option>
+                                {dropdownMenu.dropdown_items.map(dropdownItem => (
+                                    <option value={dropdownItem.weight} key={dropdownItem.id}>{dropdownItem.display_name}</option>
+                                ))}
+                            </Form.Control>
+                        </Col>
+                    </Row>
 
-                </Row>
+                ))}
+            </Form>
         </Container>
     )
 }
