@@ -12,3 +12,32 @@ export const RESTORE_STATE = 'restore-state';
 export const ADMIN_PANEL_NAME = 'Admin Panel';
 export const SETTINGS_PANEL_TITLE = 'Settings';
 export const DEFAULT_CATEGORY_ID = 3;
+
+
+// data for the retention period tabs
+export const RetentionPeriodData = [
+    {
+        id: 0,
+        name: 'daily',
+        display_name: 'Daily',
+        multiplier: 1
+    },
+    {
+        id: 1,
+        name: 'weekly',
+        display_name: 'Weekly',
+        multiplier: 7
+    },
+    {
+        id: 2,
+        name: 'monthly',
+        display_name: 'Monthly',
+        multiplier: 30
+    },
+    {
+        id: 3,
+        name: 'yearly',
+        display_name: 'Yearly',
+        multiplier: 365
+    }
+]

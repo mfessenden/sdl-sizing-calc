@@ -8,35 +8,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import {useStateStore} from '../Model/Data';
 import {humanFileSize, calculateDeviceUsage} from '../Utils';
-
-
-// data for the retention period tabs
-const retentionPeriods = [
-    {
-        id: 0,
-        name: 'daily',
-        display_name: 'Daily',
-        multiplier: 1
-    },
-    {
-        id: 1,
-        name: 'weekly',
-        display_name: 'Weekly',
-        multiplier: 7
-    },
-    {
-        id: 2,
-        name: 'monthly',
-        display_name: 'Monthly',
-        multiplier: 30
-    },
-    {
-        id: 3,
-        name: 'yearly',
-        display_name: 'Yearly',
-        multiplier: 365
-    }
-]
+import {RetentionPeriodData} from '../Constants';
 
 
 // form group for the given tab
@@ -82,13 +54,13 @@ function RetentionPeriodTabs() {
             onSelect={(k) => setRetentionPeriod(parseInt(k))}
             className='align-center'
         >
-            {retentionPeriods.map((tab) => (
+            {RetentionPeriodData.map((period) => (
                 <Tab
-                    key={tab.id}
-                    eventKey={tab.id}
-                    title={tab.display_name}
+                    key={period.id}
+                    eventKey={period.multiplier}
+                    title={period.display_name}
                 >
-                    <DataRetentionInput tabData={tab}/>
+                    <DataRetentionInput tabData={period}/>
                 </Tab>
             ))}
         </Tabs>
