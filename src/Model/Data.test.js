@@ -33,8 +33,8 @@ test('calculates quote correctly', () => {
 
 
 test('calculate device usage', () => {
-    const result = calculateDeviceUsage(TestDevices[0])
-    // ((1 x 0.5) * 508) * 86400
-    const expectedDeviceSize: number = 21945600
+    const result = calculateDeviceUsage(TestDevices[0], 1)
+    // 0.5 * 508
+    const expectedDeviceSize: number = 254
     expect(result).toBe(expectedDeviceSize)
 });
