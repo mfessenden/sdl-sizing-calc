@@ -6,8 +6,8 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import {useStateStore} from '../Model/Data';
-import {humanFileSize, calculateDeviceUsage} from '../Utils';
+import {useStateStore, calculateCurrentQuote} from '../Model/Data';
+import {humanFileSize} from '../Utils';
 import {RetentionPeriodData} from '../Constants';
 
 
@@ -166,29 +166,12 @@ function ResultDropdowns() {
  */
 export default function ResultBody() {
     const {state} = useStateStore();
-    const currentState = state.current_state
 
-    // get the total in bytes per day
-    var totalBytesPerDay = 0
-    const devices = state.calculator.devices.device_items
-    for (let device of devices) {
-        totalBytesPerDay = totalBytesPerDay + calculateDeviceUsage(device)
-    }
+    const devices: Array<any> = state.calculator.devices.device_items
+    const rententionPeriodMultiplier: number = state.current_state.retention_multiplier ?? 1
+    const retentionPeriodValue: number = state.current_state.retention_periods ?? 1
 
-    // calculate bytes per day * retention period
-    var totalBytes = 0
-    const retentionPeriodId = currentState.retention_period_id ?? 0
-    const periodValue = currentState.retention_period_value ?? 1
-    var multiplier = 1
-
-    for (let period of retentionPeriods) {
-        if (period.id === retentionPeriodId) {
-            multiplier = period.multiplier
-        }
-    }
-
-    // calculate the total size for this ingest
-    totalBytes = totalBytesPerDay * (periodValue * multiplier)
+    const totalBytes: number = calculateCurrentQuote(devices, retentionPeriodValue  , rententionPeriodMultiplier)
 
     return (
         <div className='sticky-top result-sticky'>

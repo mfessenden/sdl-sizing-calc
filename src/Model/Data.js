@@ -119,6 +119,35 @@ export const useCustomState = (defaultState = setupInitialState()) => {
 
 
 /**
+ * Calculates the current ingest quote based on the given devices, retention period, and retention multiplier.
+ *
+ * @param {Array<object>} devices - current calculator devices.
+ * @param {number} retention_periods - data retention period quantity (from the result period input).
+ * @param {number} retention_multiplier - data retention multiplier (days, weeks, etc.)
+ *
+ * @return {number} total bytes of current quote.
+ */
+export function calculateCurrentQuote(devices, retention_periods: number = 1, retention_multiplier: number = 1): number {
+
+    // get the total in bytes per day
+    let totalBytesPerDay = 0
+    let activeDevices = 0
+    for (let device of devices) {
+        totalBytesPerDay = totalBytesPerDay + calculateDeviceUsage(device)
+        if (device.quantity) {
+            activeDevices += 1;
+        }
+    }
+
+    // calculate bytes per day * retention period
+    // calculate the total size for this ingest
+    const totalBytes: number = totalBytesPerDay * (retention_periods * retention_multiplier)
+    console.log(`Calculating ${activeDevices} devices -> ${totalBytes}`)
+    return totalBytes
+}
+
+
+/**
  * Component that provides state to the app's child components.
  *
  * @param {Object} props - The component props.
