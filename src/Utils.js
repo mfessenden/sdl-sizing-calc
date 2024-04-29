@@ -77,6 +77,6 @@ export function calculateDeviceUsage(device, seconds = null): number {
  * @param {number} bytes - bytes to be converted.
  * @return {number} - the value expressed in gigabytes.
  */
-export function bytesToGigs(bytes: number) {
+export function bytesToGigs(bytes: number): number {
     return bytes * BYTES_TO_GB
 }
