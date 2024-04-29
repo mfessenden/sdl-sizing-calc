@@ -13,7 +13,7 @@ import {RetentionPeriodData} from '../Constants';
 
 // form group for the given tab
 function DataRetentionInput({tabData}) {
-    const {state, actions: {setRetentionValue}} = useStateStore();
+    const {state, actions: {setRetentionPeriods}} = useStateStore();
     const currentState = state.current_state
     return (
         <Container key={tabData.id} className='m-3 text-center'>
@@ -22,9 +22,9 @@ function DataRetentionInput({tabData}) {
                     <Form.Label className='result-label-sm'>Data Retention Period ({tabData.display_name})</Form.Label>
                     <Form.Control
                         size='sm'
-                        value={currentState.retention_period_value}
+                        value={currentState.retention_periods}
                         className='result-input mx-auto text-center'
-                        onChange={e => setRetentionValue(parseInt(e.target.value))}
+                        onChange={e => setRetentionPeriods(parseInt(e.target.value))}
                     />
                 </Form.Group>
             </Form>
@@ -44,14 +44,14 @@ function DataRetentionInput({tabData}) {
  * @returns {jsx} Formatted result displaying the estimated data ingest
  */
 function RetentionPeriodTabs() {
-    const {state, actions: {setRetentionPeriod}} = useStateStore();
+    const {state, actions: {setRetentionMultiplier}} = useStateStore();
     const currentState = state.current_state
 
     return (
         <Tabs
             key='result-tabs'
-            activeKey={currentState.retention_period_id}
-            onSelect={(k) => setRetentionPeriod(parseInt(k))}
+            activeKey={currentState.retention_multiplier}
+            onSelect={(k) => setRetentionMultiplier(parseInt(k))}
             className='align-center'
         >
             {RetentionPeriodData.map((period) => (
