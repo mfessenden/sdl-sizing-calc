@@ -4,14 +4,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import {
     ADMIN_PANEL_NAME,
-    CLEAR_STATE,
-    RESET_UI,
-    RESTORE_STATE,
-    SAVE_STATE,
     SDL_HEADER,
     SDL_HEADER_HEIGHT,
     SDL_HEADER_WIDTH,
-    SDL_STATE
 } from '../Constants';
 import ActionMenu from './ActionMenu';
 import DeviceFilteringInput from './Filter';
@@ -34,24 +29,6 @@ export default function TopNavbar({adminMode = false}) {
             break;
         }
     }
-
-    const handleSelect = (eventKey) => {
-        if (eventKey === SAVE_STATE) {
-            // don't save these
-            state.current_state.filter_string = null
-            state.current_state.filter_active = false
-
-            // set localstorage value
-            window.localStorage.setItem(SDL_STATE, JSON.stringify(state));  // TODO: persistence via Firebase?
-            console.log('Saving current state....')
-        } else if (eventKey === CLEAR_STATE) {
-            clearState()
-        } else if (eventKey === RESET_UI) {
-            resetState()
-        } else if (eventKey === RESTORE_STATE) {
-            restoreState()
-        }
-    };
 
     return (
         <Navbar sticky='top' expand='lg' className='bg-body-tertiary align-middle mb-3'>
@@ -81,13 +58,7 @@ export default function TopNavbar({adminMode = false}) {
                         </Nav>
                     }
 
-                    <Nav
-                        className='flex-grow-1 pe-3'
-                        onSelect={(selectedKey) => handleSelect(selectedKey)}
-                    >
-                        <ActionMenu/>
-
-                    </Nav>
+                    <ActionMenu/>
                     <DeviceFilteringInput hasActiveDevices={hasActiveDevices}/>
                 </Offcanvas.Body>
             </Navbar.Offcanvas>

@@ -2,7 +2,7 @@ import {createContext, useContext, useReducer} from 'react';
 import {AppState} from '../types/State';
 import stateReducer from './Reducers';
 import {SDL_STATE} from '../Constants';
-import {calculateDeviceUsage} from '../Utils';
+import {calculateDeviceUsage, humanFileSize} from '../Utils';
 
 var ContextRawData = require('../data.json');
 var ContextData = setupInitialState()
@@ -146,7 +146,11 @@ export function calculateCurrentQuote(devices, retention_periods: number = 1, re
     // calculate bytes per day * retention period
     // calculate the total size for this ingest
     const totalBytes: number = totalBytesPerDay * (retention_periods * retention_multiplier)
-    console.log(`Calculating ${activeDevices} devices -> ${totalBytes}`)
+    var logMsg: string =  `No active devices.`
+    if (activeDevices === 0) {
+        logMsg =  `Calculating ${activeDevices} devices -> ${humanFileSize(totalBytes)}`
+    }
+    console.log(logMsg)
     return totalBytes
 }
 
