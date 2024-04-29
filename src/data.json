@@ -398,8 +398,8 @@
                 },
                 {
                     "id": 2,
-                    "name": "industry_size",
-                    "org_size": "Organization Size"
+                    "name": "org_size",
+                    "display_name": "Organization Size"
                 }
             ],
             "input_items": [
