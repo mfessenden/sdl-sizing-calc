@@ -53,7 +53,7 @@ export default function stateReducer(state, action) {
             const deviceId = action.deviceId
             const quantity = Number(action.quantity)
             const device = devices.filter((d) => d.id === deviceId)[0]
-            device.quantity = quantity
+            device.quantity = Math.round(quantity)
             updatedState.calculator.devices.device_items[deviceId] = device
             break;
         }

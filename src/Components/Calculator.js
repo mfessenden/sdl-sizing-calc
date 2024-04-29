@@ -59,6 +59,7 @@ function CalculatorTableRow({device}) {
                 <Form.Control
                     className='text-center'
                     type='number'
+                    pattern='[0-9]'
                     onChange={e => setQuantity(device.id, e.target.value)}
                     value={Number(device.quantity)}
                 />
