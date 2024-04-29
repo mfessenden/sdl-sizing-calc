@@ -55,7 +55,7 @@ export default function TopNavbar({adminMode = false}) {
     };
 
     return (
-        <Navbar sticky='top' expand='lg' className='bg-body-tertiary mb-3'>
+        <Navbar sticky='top' expand='lg' className='bg-body-tertiary align-middle mb-3'>
 
             {/* Logo */}
             <Navbar.Brand href='/'>
