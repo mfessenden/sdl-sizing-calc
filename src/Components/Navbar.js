@@ -15,7 +15,7 @@ import {
 } from '../Constants';
 import ActionMenu from './ActionMenu';
 import DeviceFilteringInput from './Filter';
-import {hasSavedData, useStateStore} from '../Model/Data';
+import {useStateStore} from '../Model/Data';
 
 
 /**
@@ -26,7 +26,6 @@ import {hasSavedData, useStateStore} from '../Model/Data';
  */
 export default function TopNavbar({adminMode = false}) {
     const {state, actions: {clearState, resetState, restoreState}} = useStateStore();
-    const savedDataExists = hasSavedData()
     var hasActiveDevices = false
     const devices = state.calculator.devices.device_items
     for (let device of devices) {

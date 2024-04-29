@@ -63,7 +63,7 @@ export function setupInitialState() {
     const defaultCategoryId = deviceDefaults['category_id']
     const defaultQuantity = deviceDefaults['quantity']
 
-    console.log('Setting up state:')
+    console.log('Building initial state...')
 
     // devices
     const deviceTypes = devicesData['device_items']
@@ -134,6 +134,8 @@ export function calculateCurrentQuote(devices, retention_periods: number = 1, re
     // get the total in bytes per day
     let totalBytesPerDay = 0
     let activeDevices = 0
+
+    // for each device, calculate the usage for a given timeframe
     for (let device of devices) {
         totalBytesPerDay = totalBytesPerDay + calculateDeviceUsage(device)
         if (device.quantity) {
