@@ -129,7 +129,7 @@ export const useCustomState = (defaultState = setupInitialState()) => {
  *
  * @return {number} total bytes of current quote.
  */
-export function calculateCurrentQuote(devices, retention_periods: number = 1, retention_multiplier: number = 1): number {
+export function calculateQuote(devices, retention_periods: number = 1, retention_multiplier: number = 1): number {
 
     // get the total in bytes per day
     let totalBytesPerDay = 0
@@ -147,8 +147,8 @@ export function calculateCurrentQuote(devices, retention_periods: number = 1, re
     // calculate the total size for this ingest
     const totalBytes: number = totalBytesPerDay * (retention_periods * retention_multiplier)
     var logMsg: string =  `No active devices.`
-    if (activeDevices === 0) {
-        logMsg =  `Calculating ${activeDevices} devices -> ${humanFileSize(totalBytes)}`
+    if (activeDevices) {
+        logMsg =  `Calculating ${activeDevices} devices: ${humanFileSize(totalBytes)}`
     }
     console.log(logMsg)
     return totalBytes

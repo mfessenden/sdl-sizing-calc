@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import {useStateStore, calculateCurrentQuote} from '../Model/Data';
+import {useStateStore, calculateQuote} from '../Model/Data';
 import {humanFileSize} from '../Utils';
 import {RetentionPeriodData} from '../Constants';
 
@@ -171,7 +171,7 @@ export default function ResultBody() {
     const rententionPeriodMultiplier: number = state.current_state.retention_multiplier ?? 1
     const retentionPeriodValue: number = state.current_state.retention_periods ?? 1
 
-    const totalBytes: number = calculateCurrentQuote(devices, retentionPeriodValue  , rententionPeriodMultiplier)
+    const totalBytes: number = calculateQuote(devices, retentionPeriodValue  , rententionPeriodMultiplier)
 
     return (
         <div className='sticky-top result-sticky'>
