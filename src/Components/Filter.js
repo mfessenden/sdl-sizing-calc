@@ -34,7 +34,7 @@ export default function DeviceFilteringInput({hasActiveDevices = false}) {
                                 className='me-2'
                                 aria-label='filter'
                                 onChange={e => applyFilterString(e.target.value.toLowerCase())}
-                                value={state.current_state.filter_string}
+                                value={state.current_state.filter_string ?? ''}
                             />
                         </Form>
                     </Col>
