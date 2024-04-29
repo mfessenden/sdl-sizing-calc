@@ -5,7 +5,7 @@ const ContextRawData = require('../data.json');
 
 
 /**
- * Updates React context state. Receives actions from the GUI and updates accordinaly.
+ * Updates React context state. Receives actions from the GUI and updates accordingly.
  *
  * @param {Object} state - current context state object.
  * @param {Object} action - The action object containing the action type and other relevant data.
@@ -93,13 +93,14 @@ export default function stateReducer(state, action) {
             break;
         }
 
-        case 'SET_RETENTION_PERIOD': {
-            updatedState.current_state.retention_period_id = action.value
+        case 'SET_RETENTION_MULTIPLIER': {  // TODO: rename SET_RETENTION_MULTIPLIER
+            updatedState.current_state.retention_multiplier = action.value
+            console.log(`Setting retention period: ${updatedState.current_state.retention_multiplier}`);
             break;
         }
 
-        case 'SET_RETENTION_VALUE': {
-            updatedState.current_state.retention_period_value = action.value
+        case 'SET_RETENTION_PERIODS': {
+            updatedState.current_state.retention_periods = action.value
             break;
         }
 
@@ -117,8 +118,8 @@ export default function stateReducer(state, action) {
             for (let device in updatedState.calculator.devices.device_items) {
                 updatedState.calculator.devices.device_items[device].quantity = 0
             }
-            updatedState.current_state.retention_period_id = AppState.retention_period_id
-            updatedState.current_state.retention_period_value = AppState.retention_period_value
+            updatedState.current_state.retention_multiplier = AppState.retention_multiplier
+            updatedState.current_state.retention_periods = AppState.retention_periods
             break;
         }
         // restore saved state ('restore-state')

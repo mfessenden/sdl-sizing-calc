@@ -573,8 +573,8 @@
             }
         },
         "data_retention": {
-            "data_retention_period": 1,
-            "data_retention_multiplier": 1
+            "retention_multiplier": 1,
+            "retention_periods": 1
         }
     }
 }
