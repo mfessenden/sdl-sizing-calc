@@ -1,7 +1,6 @@
 import Image from 'react-bootstrap/Image'
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import {
     ADMIN_PANEL_NAME,
@@ -14,6 +13,7 @@ import {
     SDL_HEADER_WIDTH,
     SDL_STATE
 } from '../Constants';
+import ActionMenu from './ActionMenu';
 import DeviceFilteringInput from './Filter';
 import {hasSavedData, useStateStore} from '../Model/Data';
 
@@ -86,33 +86,8 @@ export default function TopNavbar({adminMode = false}) {
                         className='flex-grow-1 pe-3'
                         onSelect={(selectedKey) => handleSelect(selectedKey)}
                     >
-                        <NavDropdown
-                            title='Actions'
-                            id='offcanvasNavbarDropdown-expand-lg'
-                        >
-                            {/* these will call functions, not routes */}
-                            <NavDropdown.Item eventKey={SAVE_STATE}
-                                              alt='Save current application data to local storage'>
-                                Save State
-                            </NavDropdown.Item>
+                        <ActionMenu/>
 
-                            <NavDropdown.Divider/>
-                            <NavDropdown.Item disabled={!savedDataExists} eventKey={RESTORE_STATE}
-                                              alt='Restore previously saved data'>
-                                Load Saved State...
-                            </NavDropdown.Item>
-
-                            <NavDropdown.Item disabled={!savedDataExists} eventKey={CLEAR_STATE}
-                                              alt='Remove saved state data'>
-                                Clear Saved State
-                            </NavDropdown.Item>
-
-                            <NavDropdown.Divider/>
-                            <NavDropdown.Item eventKey={RESET_UI} alt='Reset all device quantities'>
-                                Reset Calculator
-                            </NavDropdown.Item>
-
-                        </NavDropdown>
                     </Nav>
                     <DeviceFilteringInput hasActiveDevices={hasActiveDevices}/>
                 </Offcanvas.Body>
