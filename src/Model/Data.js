@@ -2,6 +2,7 @@ import {createContext, useContext, useReducer} from 'react';
 import {AppState} from '../types/State';
 import stateReducer from './Reducers';
 import {SDL_STATE} from '../Constants';
+import {calculateDeviceUsage} from '../Utils';
 
 var ContextRawData = require('../data.json');
 var ContextData = setupInitialState()
@@ -78,6 +79,7 @@ export function setupInitialState() {
 
     // add app state TODO: separate context?
     contextData['current_state'] = AppState
+    contextData.current_state.has_saved_data = hasSavedData()
     return contextData
 }
 

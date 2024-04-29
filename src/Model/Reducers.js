@@ -107,6 +107,7 @@ export default function stateReducer(state, action) {
         case 'CLEAR_STATE': {
             window.localStorage.removeItem(SDL_STATE)
             console.log(`Clearing saved data...`);
+            updatedState.current_state.has_saved_data = false
             break;
         }
 
@@ -125,6 +126,7 @@ export default function stateReducer(state, action) {
         // restore saved state ('restore-state')
         case 'RESTORE_STATE': {
             const savedState = getSavedState();
+            updatedState.current_state.has_saved_data = savedState
             if (savedState) {
                 updatedState.calculator.devices.device_items = savedState.calculator.devices.device_items;
                 updatedState.current_state = savedState.current_state
