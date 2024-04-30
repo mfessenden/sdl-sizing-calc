@@ -109,12 +109,17 @@ function ResultDropdowns() {
         return dropdownMenus
     }
 
+    const handleChange = (item) => {
+        console.log(`Menu item changed: ${item.value}`)
+    }
+
 
     const {state} = useStateStore();
     let dropdownMenus = buildInputDropdowns(state)
 
     return (
-        <Container className='input-item'>
+        <Container>
+            {/*<Row className='result-label-sm align-center'>Variables</Row>*/}
             <Form>
                 {dropdownMenus.map(dropdownMenu => (
                     <Row className='text-end p-1' key={`row-${dropdownMenu.input_id}`}>
@@ -124,7 +129,7 @@ function ResultDropdowns() {
                             </Form.Label>
                         </Col>
                         <Col>
-                            <Form.Control as='select'>
+                            <Form.Control as='select' onChange={e => handleChange(e.target)}>
                                 <option>---</option>
                                 {dropdownMenu.dropdown_items.map(dropdownItem => (
                                     <option value={dropdownItem.weight} key={dropdownItem.id}>{dropdownItem.display_name}</option>
@@ -171,7 +176,7 @@ export default function ResultBody() {
     const rententionPeriodMultiplier: number = state.current_state.retention_multiplier ?? 1
     const retentionPeriodValue: number = state.current_state.retention_periods ?? 1
 
-    const totalBytes: number = calculateQuote(devices, retentionPeriodValue  , rententionPeriodMultiplier)
+    const totalBytes: number = calculateQuote(devices, retentionPeriodValue, rententionPeriodMultiplier)
 
     return (
         <div className='sticky-top result-sticky'>
