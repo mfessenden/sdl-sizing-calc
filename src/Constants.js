@@ -1,17 +1,17 @@
-export const SECONDS_PER_DAY = 86400;
-export const BYTES_TO_GB = 0.000000001;
+export const SECONDS_PER_DAY: number = 86400;
+export const BYTES_TO_GB: number = 0.000000001;
 export const SDL_HEADER = 'sdl-header.svg';
-export const SDL_HEADER_HEIGHT = 48;
-export const SDL_HEADER_WIDTH = 278;
-export const SDL_STATE = 'sdl-state';
-export const SDL_TITLE = 'SDL Calculator';
-export const SAVE_STATE = 'save-state';
-export const CLEAR_STATE = 'clear-state';
-export const RESET_UI = 'reset-ui';
-export const RESTORE_STATE = 'restore-state';
-export const ADMIN_PANEL_NAME = 'Admin Panel';
-export const SETTINGS_PANEL_TITLE = 'Settings';
-export const DEFAULT_CATEGORY_ID = 3;
+export const SDL_HEADER_HEIGHT: number = 48;
+export const SDL_HEADER_WIDTH: number = 278;
+export const SDL_STATE: string = 'sdl-state';
+export const SDL_TITLE: string = 'SDL Calculator';
+export const SAVE_STATE: string = 'save-state';
+export const CLEAR_STATE: string = 'clear-state';
+export const RESET_UI: string = 'reset-ui';
+export const RESTORE_STATE: string = 'restore-state';
+export const ADMIN_PANEL_NAME: string = 'Admin Panel';
+export const SETTINGS_PANEL_TITLE: string = 'Settings';
+export const DEFAULT_CATEGORY_ID: number = 3;
 
 
 // data for the retention period tabs
