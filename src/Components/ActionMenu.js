@@ -42,22 +42,22 @@ export default function ActionMenu() {
                 title='Actions'
                 id='offcanvasNavbarDropdown-expand-lg'
             >
-                <NavDropdown.Item eventKey={SAVE_STATE} alt='Save current application data to local storage'>
+                <NavDropdown.Item active={false} eventKey={SAVE_STATE} alt='Save current application data to local storage'>
                     Save State
                 </NavDropdown.Item>
 
                 <NavDropdown.Divider/>
-                <NavDropdown.Item disabled={!savedDataExists} eventKey={RESTORE_STATE}
+                <NavDropdown.Item active={false} disabled={!savedDataExists} eventKey={RESTORE_STATE}
                                   alt='Restore previously saved data'>
                     Load Saved State...
                 </NavDropdown.Item>
 
-                <NavDropdown.Item disabled={!savedDataExists} eventKey={CLEAR_STATE} alt='Remove saved state data'>
+                <NavDropdown.Item active={false} disabled={!savedDataExists} eventKey={CLEAR_STATE} alt='Remove saved state data'>
                     Clear Saved State
                 </NavDropdown.Item>
 
                 <NavDropdown.Divider/>
-                <NavDropdown.Item eventKey={RESET_UI} alt='Reset all device quantities'>
+                <NavDropdown.Item active={false} eventKey={RESET_UI} alt='Reset all device quantities'>
                     Reset Calculator
                 </NavDropdown.Item>
 
