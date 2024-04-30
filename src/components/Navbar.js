@@ -10,7 +10,7 @@ import {
 } from '../Constants';
 import ActionMenu from './ActionMenu';
 import DeviceFilteringInput from './Filter';
-import {useStateStore} from '../Model/Data';
+import {useStateStore} from '../model/Data';
 
 
 /**

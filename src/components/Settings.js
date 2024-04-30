@@ -6,7 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 
-import {useStateStore} from '../Model/Data';
+import {useStateStore} from '../model/Data';
 import {SETTINGS_PANEL_TITLE} from '../Constants';
 
 

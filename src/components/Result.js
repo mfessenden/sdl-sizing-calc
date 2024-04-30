@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import {useStateStore, calculateQuote} from '../Model/Data';
+import {useStateStore, calculateQuote} from '../model/Data';
 import {humanFileSize} from '../Utils';
 import {RetentionPeriodData} from '../Constants';
 

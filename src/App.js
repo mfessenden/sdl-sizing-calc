@@ -4,7 +4,7 @@ import AdminPanel from './components/Admin';
 import Body from './components/Body';
 import SettingsPanel from './components/Settings';
 import TopNavbar from './components/Navbar';
-import {StateProvider} from './Model/Data';
+import {StateProvider} from './model/Data';
 import {SDL_TITLE} from './Constants';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';

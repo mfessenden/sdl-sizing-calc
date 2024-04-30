@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
-import {useStateStore} from '../Model/Data';
+import {useStateStore} from '../model/Data';
 
 
 /**

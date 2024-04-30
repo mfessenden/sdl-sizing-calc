@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from 'react-bootstrap/Form';
 import {DEFAULT_CATEGORY_ID} from '../Constants';
-import {useStateStore} from '../Model/Data';
+import {useStateStore} from '../model/Data';
 
 function onSelectionChanged(eventKey) {
     console.log(`Selection changed: ${eventKey}`)

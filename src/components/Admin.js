@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
-import {useStateStore} from '../Model/Data';
+import {useStateStore} from '../model/Data';
 
 
 function onSelectionChanged(eventKey) {

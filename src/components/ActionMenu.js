@@ -1,7 +1,7 @@
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import {CLEAR_STATE, RESET_UI, RESTORE_STATE, SAVE_STATE, SDL_STATE} from '../Constants';
-import {useStateStore} from '../Model/Data';
+import {useStateStore} from '../model/Data';
 
 
 /**
