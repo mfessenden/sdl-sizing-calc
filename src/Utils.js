@@ -1,4 +1,6 @@
 import {BYTES_TO_GB, SECONDS_PER_DAY} from './Constants';
+import {Device, Quote} from './types/State';
+
 
 /**
  * Format bytes as human-readable text.
@@ -79,4 +81,28 @@ export function calculateDeviceUsage(device, seconds = null): number {
  */
 export function bytesToGigs(bytes: number): number {
     return bytes * BYTES_TO_GB
+}
+
+
+export function generateQuoteData(devices): Device[] {
+    let devicesData = []
+    for (const device of devices) {
+        if (device.quantity) {
+            // let thisDevice = new Device(device.id, device.base_weight, device.event_size, device.quantity)
+            let thisDevice = {...Device}
+            thisDevice.id = device.id
+            thisDevice.base_weight = device.base_weight
+            thisDevice.event_size = device.event_size
+            thisDevice.quantity = device.quantity
+            devicesData.push(thisDevice)
+        }
+    }
+    return devicesData
+}
+
+export function generateQuote(devices) {
+    // const {state} = useStateStore();
+    let quote = {...Quote}
+    quote.devices = generateQuoteData(devices)
+    return quote
 }

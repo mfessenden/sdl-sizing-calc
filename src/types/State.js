@@ -2,9 +2,46 @@
 export const AppState = {
     admin_mode: false,
     has_saved_data: false,
-    retention_multiplier: 1,     // time period (in days)
-    retention_periods: 1,        // number of periods
     expanded_table_items: [],
     filter_string: null,
-    filter_active: false
+    filter_active: false,
+    current_quote: null,
+    result_as_binary: true,
+    stored_quotes: []
+}
+
+
+export const QuoteMetadata = {
+    name: null,
+    date: null,
+    author: null,
+    author_email: null,
+}
+
+
+export const Device = {
+    id: null,
+    base_weight: 1.0,
+    event_size: 508,
+    quantity: 0,
+    name: null,
+    display_name: null
+}
+
+
+export const Quote = {
+    industry_id: null,
+    industry_size: null,
+    org_size: null,
+    retention_multiplier: 1,
+    retention_quantity:  1,
+    devices:  [],
+
+}
+
+
+// TODO: create this on save
+export const SerializedQuote = {
+    quote: {...Quote},
+    metadata: {...QuoteMetadata}
 }

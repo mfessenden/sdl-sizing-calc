@@ -378,30 +378,13 @@
                 }
             ],
             "device_defaults": {
-                "event_size": 508,
                 "base_weight": 1,
-                "quantity": 0,
-                "category_id": 0
+                "category_id": 0,
+                "event_size": 508,
+                "quantity": 0
             }
         },
         "inputs": {
-            "input_categories": [
-                {
-                    "id": 0,
-                    "name": "industry",
-                    "display_name": "Industry"
-                },
-                {
-                    "id": 1,
-                    "name": "industry_size",
-                    "display_name": "Industry Size"
-                },
-                {
-                    "id": 2,
-                    "name": "org_size",
-                    "display_name": "Organization Size"
-                }
-            ],
             "input_items": [
                 {
                     "id": 0,
@@ -574,7 +557,7 @@
         },
         "data_retention": {
             "retention_multiplier": 1,
-            "retention_periods": 1
+            "retention_quantity": 1
         }
     }
 }

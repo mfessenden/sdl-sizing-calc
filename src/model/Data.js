@@ -1,5 +1,5 @@
-import {createContext, useContext, useReducer, Context} from 'react';
-import {AppState} from '../types/State';
+import {createContext, useContext, useReducer} from 'react';
+import {AppState, Quote} from '../types/State';
 import stateReducer from './Reducers';
 import {SDL_STATE} from '../Constants';
 import {calculateDeviceUsage, humanFileSize} from '../Utils';
@@ -78,7 +78,9 @@ export function setupInitialState() {
     }
 
     // add app state TODO: separate context?
-    contextData['current_state'] = AppState
+    contextData['current_state'] = {...AppState}
+    contextData.current_state.current_quote = {...Quote}
+    contextData.current_state.admin_mode = process.env.SDL_ADMIN === 1
     contextData.current_state.has_saved_data = hasSavedData()
     return contextData
 }
@@ -115,6 +117,13 @@ export const useCustomState = (defaultState = setupInitialState()) => {
             toggleAdminMode: (value) => dispatch({type: 'TOGGLE_ADMIN', value}),
             updateDevice: (deviceId, payload) => dispatch({type: 'UPDATE_DEVICE', deviceId, payload}),
             addDevice: (payload) => dispatch({type: 'ADD_DEVICE', payload}),
+            generateQuote: () => dispatch({type: 'GENERATE_QUOTE'}),
+            toggleResultAsBinary: () => dispatch({type: 'TOGGLE_RESULT_BINARY'}),
+            inputWeightChanged: (inputId, inputWeight) => dispatch({
+                type: 'INPUT_WEIGHT_CHANGED',
+                inputId,
+                inputWeight
+            }),
         },
     };
 };
@@ -124,12 +133,17 @@ export const useCustomState = (defaultState = setupInitialState()) => {
  * Calculates the current ingest quote based on the given devices, retention period, and retention multiplier.
  *
  * @param {Array<object>} devices - current calculator devices.
- * @param {number} retention_periods - data retention period quantity (from the result period input).
+ * @param {number} retention_quantity - data retention period quantity (from the result period input).
  * @param {number} retention_multiplier - data retention multiplier (days, weeks, etc.)
  *
+ * @param industry_weight
+ * @param industry_size_weight
+ * @param org_size_weight
  * @return {number} total bytes of current quote.
  */
-export function calculateQuote(devices, retention_periods: number = 1, retention_multiplier: number = 1): number {
+export function calculateQuote(devices, retention_quantity: number = 1, retention_multiplier: number = 1, industry_weight: number = 1, industry_size_weight: number = 1, org_size_weight: number = 1): number {
+
+    let industryMultiplier = industry_weight * industry_size_weight * org_size_weight
 
     // get the total in bytes per day
     let totalBytesPerDay = 0
@@ -145,13 +159,24 @@ export function calculateQuote(devices, retention_periods: number = 1, retention
 
     // calculate bytes per day * retention period
     // calculate the total size for this ingest
-    const totalBytes: number = totalBytesPerDay * (retention_periods * retention_multiplier)
-    var logMsg: string =  `No active devices.`
+    let totalBytes: number = totalBytesPerDay * (retention_quantity * retention_multiplier)
+
+    // weighted industry values
+    totalBytes = totalBytes * industryMultiplier
+
+    var logMsg: string = `Calculating... No active devices.`
     if (activeDevices) {
-        logMsg =  `Calculating ${activeDevices} devices: ${humanFileSize(totalBytes)}`
+        logMsg = `Calculating ${activeDevices} devices: ${humanFileSize(totalBytes)}`
     }
+
     console.log(logMsg)
     return totalBytes
+}
+
+
+// TODO: grab input from 'AppState.current_quote'
+export function saveQuote(devices, retention_quantity: number = 1, retention_multiplier: number = 1): void {
+
 }
 
 

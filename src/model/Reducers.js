@@ -1,6 +1,8 @@
 import {getSavedState} from './Data';
 import {SDL_STATE} from '../Constants';
-import {AppState} from '../types/State';
+import {AppState, Quote} from '../types/State';
+import {generateQuote} from '../Utils';
+
 const ContextRawData = require('../data.json');
 
 
@@ -13,7 +15,7 @@ const ContextRawData = require('../data.json');
  */
 export default function stateReducer(state, action) {
     // 'state' is an array of devices
-    const updatedState =  {...state};
+    const updatedState = {...state};
     const devices = updatedState.calculator.devices.device_items
 
     switch (action.type) {
@@ -82,7 +84,6 @@ export default function stateReducer(state, action) {
             const newFilterString = action.filterString
             // if we're setting a filter string, disable active filtering
             updatedState.current_state.filter_active = false
-            // state.current_state.filter_active = false
             updatedState.current_state.filter_string = newFilterString
             break;
         }
@@ -93,14 +94,14 @@ export default function stateReducer(state, action) {
             break;
         }
 
-        case 'SET_RETENTION_MULTIPLIER': {  // TODO: rename SET_RETENTION_MULTIPLIER
-            updatedState.current_state.retention_multiplier = action.value
-            console.log(`Setting retention period: ${updatedState.current_state.retention_multiplier}`);
+        case 'SET_RETENTION_MULTIPLIER': {
+            updatedState.current_state.current_quote.retention_multiplier = action.value
+            console.log(`Setting retention period: ${updatedState.current_state.current_quote.retention_multiplier}`);
             break;
         }
 
         case 'SET_RETENTION_PERIODS': {
-            updatedState.current_state.retention_periods = action.value
+            updatedState.current_state.current_quote.retention_quantity = action.value
             break;
         }
 
@@ -113,14 +114,12 @@ export default function stateReducer(state, action) {
 
         // reset the ui ('reset-ui')
         case 'RESET_STATE': {
-            const defaultState = {...ContextRawData }
-            defaultState.current_state = AppState
-            // updatedState.calculator.devices.device_items = defaultState.device_types
+            const defaultState = {...ContextRawData}
+            defaultState.current_state = {...AppState}
             for (let device in updatedState.calculator.devices.device_items) {
                 updatedState.calculator.devices.device_items[device].quantity = 0
             }
-            updatedState.current_state.retention_multiplier = AppState.retention_multiplier
-            updatedState.current_state.retention_periods = AppState.retention_periods
+            updatedState.current_state.current_quote = {...Quote}
             break;
         }
         // restore saved state ('restore-state')
@@ -140,7 +139,7 @@ export default function stateReducer(state, action) {
         case 'TOGGLE_ADMIN': {
             updatedState.current_state.admin_mode = action.value
             state.current_state.admin_mode = action.value
-            console.log(`Admin mode: ${action.value ? 'On': 'Off'}`);
+            console.log(`Admin mode: ${action.value ? 'On' : 'Off'}`);
             break;
         }
 
@@ -150,14 +149,59 @@ export default function stateReducer(state, action) {
         }
 
         case 'ADD_DEVICE': {
-            console.log('Adding device:')
-            console.log(action.payload)
+            const newDevice = action.payload
+            console.log(`Adding device:  '${newDevice.name}'`)
+            const currentDevices = updatedState.calculator.devices.device_items
+            currentDevices.push(newDevice)
+            updatedState.calculator.devices.device_items = currentDevices
             break;
         }
 
+        case 'GENERATE_QUOTE': {
+            console.log('Generating quote...')
+            let quote = generateQuote(devices)
+            console.log(quote)
+            quote.retention_multiplier = updatedState.current_state
+            break;
+        }
+
+        case 'TOGGLE_RESULT_BINARY': {
+            const toggledValue = !updatedState.current_state.result_as_binary
+            console.log(`Changing byte mode: ${toggledValue}`)
+            updatedState.current_state.result_as_binary = toggledValue
+            break;
+        }
+
+        case 'INPUT_WEIGHT_CHANGED': {
+            const inputWeight = action.inputWeight
+            const inputId = action.inputId
+
+            switch (inputId) {
+                // industry
+                case 0: {
+                    updatedState.current_state.current_quote.industry_id = inputWeight
+                    console.log(`Setting industry id weight: ${inputWeight}`)
+                    break;
+                }
+                case 1: {
+                    updatedState.current_state.current_quote.industry_size = inputWeight
+                    console.log(`Setting industry size weight: ${inputWeight}`)
+                    break;
+                }
+                case 2: {
+                    updatedState.current_state.current_quote.org_size = inputWeight
+                    console.log(`Setting organization weight: ${inputWeight}`)
+                    break;
+                }
+                default:
+                    console.log(`Error: invalid inout id ${inputId} `);
+            }
+            break;
+        }
 
         default:
             console.log(`Error: ${action.type} not caught by State reducer`);
     }
+
     return updatedState;
 }

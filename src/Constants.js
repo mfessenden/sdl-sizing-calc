@@ -41,3 +41,21 @@ export const RetentionPeriodData = [
         multiplier: 365
     }
 ]
+
+export const IndustryDetailData = [
+    {
+        id: 0,
+        name: 'industry',
+        display_name: 'Industry'
+    },
+    {
+        id: 1,
+        name: 'industry_size',
+        display_name: 'Industry Size'
+    },
+    {
+        id: 2,
+        name: 'org_size',
+        display_name: 'Organization Size'
+    }
+]

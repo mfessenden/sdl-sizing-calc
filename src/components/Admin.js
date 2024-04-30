@@ -15,9 +15,9 @@ function onSelectionChanged(eventKey) {
 
 
 function DeviceEditor({device}) {
-    const {state, actions: {setCategory, updateDevice}} = useStateStore();
+    const {state, actions: {setCategory}} = useStateStore();
     const deviceCategoryId = device.category_id
-    const categories = state.interface_data.categories
+    const categories = state.calculator.devices.device_categories
 
     return (
         <Card key={device.id}>
@@ -114,20 +114,34 @@ function CategoryEditor({category}) {
  */
 function AddDeviceComponent() {
     const {state, actions: {addDevice}} = useStateStore();
-    const categories = state.interface_data.categories
-    const deviceDefaults = state.device_type_defaults
+    const categories = state.calculator.devices.device_categories
+    const devices = state.calculator.devices.device_items
+    const deviceDefaults = state.calculator.devices.device_defaults
     const [validated, setValidated] = useState(false);
+    console.log(`Device Count: ${devices.length}`)
+
+    let NewDevice = {
+        id: Number(devices.length),
+        name: null,
+        display_name: null,
+        base_weight: 1.0,
+        event_size: 508,
+        quantity: 0,
+    }
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
-        console.log('New device was added:')
-        console.log(form)
+
         if (form.checkValidity() === false) {
-            event.preventDefault();
+            // event.preventDefault();
             event.stopPropagation();
         }
-        addDevice(event)
+        NewDevice.name = ''
+        addDevice(NewDevice)
+        // stop the page resetting
+        event.preventDefault();
         setValidated(true);
+        console.log('New device was added:')
     };
 
     return (
@@ -199,8 +213,8 @@ function AddDeviceComponent() {
  */
 export default function AdminPanel() {
     const {state} = useStateStore();
-    const devices = state.device_types
-    const categories = state.interface_data.categories
+    const devices = state.calculator.devices.device_items
+    const categories = state.calculator.devices.device_categories
 
     return (
         <Container fluid className='d-grid gap-3'>

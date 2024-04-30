@@ -23,9 +23,9 @@ const TestDevices = [
 
 
 test('calculates quote correctly', () => {
-    const retention_periods: number = 2;
+    const retention_quantity: number = 2;
     const retention_multiplier: number = 7; // weekly
-    const result = calculateQuote(TestDevices, retention_periods, retention_multiplier)
+    const result = calculateQuote(TestDevices, retention_quantity, retention_multiplier)
 
     const expectedQuoteSize: number = 921715200
     expect(result).toBe(expectedQuoteSize)

@@ -20,10 +20,10 @@ const downloadTxtFile = () => {
  * @return {JSX.Element} rendered settings panel.
  */
 export default function SettingsPanel() {
-    const {state} = useStateStore();
-    const dataSources = state.current_state.data_sources
-    console.log('Data Sources: ')
-    console.log(dataSources)
+    const {state, actions: {toggleResultAsBinary}} = useStateStore();
+
+    const bytesMode: boolean = state.current_state.result_as_binary
+    const bytesModeCheckLabel: string = bytesMode ? 'Bytes Mode: binary' : 'Bytes Mode: metric'
 
     const handleChange = (event) => {
         const form = event.currentTarget;
@@ -33,6 +33,10 @@ export default function SettingsPanel() {
         }
 
         // setValidated(true);
+    };
+
+    const onBytesModeToggled = ({ target: { value } }) => {
+        toggleResultAsBinary()
     };
 
     return (
@@ -45,35 +49,14 @@ export default function SettingsPanel() {
                                 {SETTINGS_PANEL_TITLE}
                             </Card.Header>
                             <Card.Body>
-
-                                <Card.Title className='admin-card-title'>Data Sources</Card.Title>
-                                <Row className='p-3'>
-                                    <Form.Control as='select' className='input-mono'>
-                                        {dataSources.map((dataSource) => (
-                                            <>
-                                                <option key={dataSource.id}>
-                                                    {dataSource.path}
-                                                </option>
-                                            </>
-                                        ))}
-                                    </Form.Control>
-                                </Row>
-                                <Row className='p-3'>
-                                    <Form.Group className='position-relative mb-3'>
-                                        <Form.Label className='data-edit-label'>Add Source</Form.Label>
-                                        <Form.Control
-                                            type='file'
-                                            required
-                                            name='file'
-                                            onChange={handleChange}
-                                            isInvalid={false}
-                                        />
-                                        <Form.Control.Feedback type='invalid' tooltip>
-
-                                        </Form.Control.Feedback>
-                                    </Form.Group>
-                                </Row>
-
+                                <Card.Title className='admin-card-title'>General</Card.Title>
+                                <Form.Check // prettier-ignore
+                                    type='switch'
+                                    id='custom-switch'
+                                    label={bytesModeCheckLabel}
+                                    onChange={onBytesModeToggled}
+                                    checked={state.current_state.result_as_binary}
+                                />
 
                                 <Card.Title className='admin-card-title'>Quotes</Card.Title>
                                 <Row className='p-3'>

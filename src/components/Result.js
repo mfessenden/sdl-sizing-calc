@@ -8,13 +8,13 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import {useStateStore, calculateQuote} from '../model/Data';
 import {humanFileSize} from '../Utils';
-import {RetentionPeriodData} from '../Constants';
+import {IndustryDetailData, RetentionPeriodData} from '../Constants';
 
 
 // form group for the given tab
 function DataRetentionInput({tabData}) {
     const {state, actions: {setRetentionPeriods}} = useStateStore();
-    const currentState = state.current_state
+    const currentQuote = state.current_state.current_quote
     return (
         <Container key={tabData.id} className='m-3 text-center'>
             <Form>
@@ -22,7 +22,7 @@ function DataRetentionInput({tabData}) {
                     <Form.Label className='result-label-sm'>Data Retention Period ({tabData.display_name})</Form.Label>
                     <Form.Control
                         size='sm'
-                        value={currentState.retention_periods}
+                        value={currentQuote.retention_quantity}
                         className='result-input mx-auto text-center'
                         onChange={e => setRetentionPeriods(parseInt(e.target.value))}
                     />
@@ -69,13 +69,16 @@ function RetentionPeriodTabs() {
 
 
 function ResultMenu({dropdownMenu}) {
+    const {actions: {inputWeightChanged}} = useStateStore();
     let dropdownId = useRef(dropdownMenu.input_id);
-    const handleChange = (id, item) => {
-        console.log(`Menu item changed: ${item.value}, input category: ${id}`)
+
+    const handleChange = (input_id, weight) => {
+        console.log(`Menu item changed, weight: ${weight}, input id: ${input_id}`)
+        inputWeightChanged(input_id, Number(weight))
     }
 
     return (
-        <Form.Control as='select' onChange={e => handleChange(dropdownId.current, e.target)}>
+        <Form.Control as='select' onChange={e => handleChange(dropdownId.current, e.target.value)}>
             <option>---</option>
             {dropdownMenu.dropdown_items.map(dropdownItem => (
                 <option value={dropdownItem.weight} key={dropdownItem.id}>{dropdownItem.display_name}</option>
@@ -95,7 +98,7 @@ function ResultDropdowns() {
         const inputsData = data.calculator.inputs
 
         // dropdown categories
-        const inputsCategories = data.calculator.inputs.input_categories
+        const inputsCategories = IndustryDetailData
         const inputDefaults = data.calculator.inputs.input_defaults
 
         // data for the menu items
@@ -125,11 +128,6 @@ function ResultDropdowns() {
         }
         return dropdownMenus
     }
-
-    const handleChange = (item) => {
-        console.log(`Menu item changed: ${item.value}`)
-    }
-
 
     const {state} = useStateStore();
     let dropdownMenus = buildInputDropdowns(state)
@@ -186,10 +184,25 @@ export default function ResultBody() {
     const {state} = useStateStore();
 
     const devices: Array<any> = state.calculator.devices.device_items
-    const rententionPeriodMultiplier: number = state.current_state.retention_multiplier ?? 1
-    const retentionPeriodValue: number = state.current_state.retention_periods ?? 1
+    const rententionPeriodMultiplier: number = state.current_state.current_quote.retention_multiplier ?? 1
+    const retentionPeriodValue: number = state.current_state.current_quote.retention_quantity ?? 1
 
-    const totalBytes: number = calculateQuote(devices, retentionPeriodValue, rententionPeriodMultiplier)
+    let industryIdWeight = 1;
+    let industrySizeWeight = 1;
+    let orgSizeWeight = 1;
+    if (state.current_state.current_quote.industry_id) {
+        industryIdWeight = state.current_state.current_quote.industry_id
+    }
+
+    if (state.current_state.current_quote.industry_size) {
+        industrySizeWeight = state.current_state.current_quote.industry_size
+    }
+
+    if (state.current_state.current_quote.org_size) {
+        orgSizeWeight = state.current_state.current_quote.org_size
+    }
+
+    const totalBytes: number = calculateQuote(devices, retentionPeriodValue, rententionPeriodMultiplier, industryIdWeight, industrySizeWeight, orgSizeWeight)
 
     return (
         <div className='sticky-top result-sticky'>
