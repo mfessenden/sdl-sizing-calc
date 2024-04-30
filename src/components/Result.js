@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -68,6 +68,23 @@ function RetentionPeriodTabs() {
 }
 
 
+function ResultMenu({dropdownMenu}) {
+    let dropdownId = useRef(dropdownMenu.input_id);
+    const handleChange = (id, item) => {
+        console.log(`Menu item changed: ${item.value}, input category: ${id}`)
+    }
+
+    return (
+        <Form.Control as='select' onChange={e => handleChange(dropdownId.current, e.target)}>
+            <option>---</option>
+            {dropdownMenu.dropdown_items.map(dropdownItem => (
+                <option value={dropdownItem.weight} key={dropdownItem.id}>{dropdownItem.display_name}</option>
+            ))}
+        </Form.Control>
+    )
+}
+
+
 function ResultDropdowns() {
 
 
@@ -124,17 +141,13 @@ function ResultDropdowns() {
                 {dropdownMenus.map(dropdownMenu => (
                     <Row className='text-end p-1' key={`row-${dropdownMenu.input_id}`}>
                         <Col key={`col-${dropdownMenu.input_id}`}>
-                            <Form.Label className='result-input-label' key={dropdownMenu.input_id}>
+                            {/*<Form.Label className='result-input-label' key={dropdownMenu.input_id}>*/}
+                            <Form.Label key={dropdownMenu.input_id}>
                                 {dropdownMenu.display_name}
                             </Form.Label>
                         </Col>
                         <Col>
-                            <Form.Control as='select' onChange={e => handleChange(e.target)}>
-                                <option>---</option>
-                                {dropdownMenu.dropdown_items.map(dropdownItem => (
-                                    <option value={dropdownItem.weight} key={dropdownItem.id}>{dropdownItem.display_name}</option>
-                                ))}
-                            </Form.Control>
+                            <ResultMenu dropdownMenu={dropdownMenu}/>
                         </Col>
                     </Row>
 
