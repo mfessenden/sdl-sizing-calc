@@ -1,4 +1,4 @@
-import {createContext, useContext, useReducer} from 'react';
+import {createContext, useContext, useReducer, Context} from 'react';
 import {AppState} from '../types/State';
 import stateReducer from './Reducers';
 import {SDL_STATE} from '../Constants';
@@ -84,7 +84,7 @@ export function setupInitialState() {
 }
 
 
-export const StateContext = createContext(ContextData);
+export const StateContext: React.Context<any | Object> = createContext(ContextData);
 
 
 /**
@@ -175,4 +175,4 @@ export const StateProvider = ({children}: any) => {
  * @function useStateStore
  * @returns {Object} The state store retrieved from the context.
  */
-export const useStateStore = () => useContext(StateContext);
+export const useStateStore = (): any => useContext(StateContext);
