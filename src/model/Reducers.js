@@ -133,12 +133,13 @@ export default function stateReducer(state, action) {
             updatedState.current_state = {...AppState}
             updatedState.current_state.current_quote = {...Quote}
             updatedState.current_state.current_quote.data.retention_interval = 1
-            updatedState.current_state.current_quote.data.retention_interval = 1
+            updatedState.current_state.current_quote.data.retention_quantity = 1
             updatedState.current_state.current_quote.data.industry_id = null
             updatedState.current_state.current_quote.data.industry_size = null
             updatedState.current_state.current_quote.data.org_size = null
             break;
         }
+
         // restore saved state ('restore-state')
         case 'RESTORE_STATE': {
             const savedState = getSavedState();
