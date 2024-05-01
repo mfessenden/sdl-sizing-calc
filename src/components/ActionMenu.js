@@ -3,7 +3,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import {
     CLEAR_STATE,
     LOAD_QUOTE,
-    RESET_UI,
+    RESET_APP_STATE,
     RESTORE_STATE,
     SAVE_QUOTE_EXTERNAL,
     SAVE_QUOTE_INTERNAL,
@@ -18,7 +18,7 @@ import {useStateStore} from '../model/Data';
  * @returns {React.Component} action menu dropdown component.
  */
 export default function ActionMenu() {
-    const {state, actions: {clearState, resetState, restoreState, saveState}} = useStateStore();
+    const {state, actions: {clearState, generateQuote, resetAppState, restoreState, saveState}} = useStateStore();
 
     // check if there's currently saved local storage data
     const savedDataExists = state.current_state.has_saved_data
@@ -27,14 +27,13 @@ export default function ActionMenu() {
         if (eventKey === SAVE_STATE) {
             saveState()
         } else if (eventKey === LOAD_QUOTE) {
-            console.log('Loading previously saved quote...')
+            console.log('NYI: Loading previously saved quote...')
         } else if (eventKey === SAVE_QUOTE_INTERNAL) {
-            console.log('Saving current quote...')
-            // TODO: add current quote to stored quotes
+            generateQuote()
         } else if (eventKey === CLEAR_STATE) {
             clearState()
-        } else if (eventKey === RESET_UI) {
-            resetState()
+        } else if (eventKey === RESET_APP_STATE) {
+            resetAppState()
         } else if (eventKey === RESTORE_STATE) {
             restoreState()
         }
@@ -79,7 +78,7 @@ export default function ActionMenu() {
                 </NavDropdown.Item>
 
                 <NavDropdown.Divider/>
-                <NavDropdown.Item active={false} eventKey={RESET_UI} alt='Reset all device quantities'>
+                <NavDropdown.Item active={false} eventKey={RESET_APP_STATE} alt='Reset all device quantities'>
                     Reset Calculator
                 </NavDropdown.Item>
 

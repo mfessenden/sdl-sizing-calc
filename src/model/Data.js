@@ -77,8 +77,15 @@ export function initializeDatabase() {
     }
 
     // add app state & quote
-    contextData['current_state'] = {...AppState}
-    contextData.current_state.current_quote = {...Quote}
+    let currentState = contextData['current_state']
+    if (!currentState) {
+        console.log(`Using new state...`)
+        currentState = {...AppState}
+        currentState.current_quote = {...Quote}
+    }
+    contextData.current_state = currentState
+
+    // live updates
     contextData.current_state.admin_mode = process.env.SDL_ADMIN === 1
     contextData.current_state.has_saved_data = hasSavedData()
     return contextData
@@ -113,12 +120,12 @@ export const useCustomState = (defaultState = initializeDatabase()) => {
             saveState: () => dispatch({type: 'SAVE_STATE'}),
             loadState: () => dispatch({type: 'LOAD_STATE'}),
             clearState: () => dispatch({type: 'CLEAR_STATE'}),
-            resetState: () => dispatch({type: 'RESET_STATE'}),
+            resetAppState: () => dispatch({type: 'RESET_APP_STATE'}),
             restoreState: () => dispatch({type: 'RESTORE_STATE'}),
             toggleAdminMode: (value) => dispatch({type: 'TOGGLE_ADMIN', value}),
             updateDevice: (deviceId, payload) => dispatch({type: 'UPDATE_DEVICE', deviceId, payload}),
             addDevice: (payload) => dispatch({type: 'ADD_DEVICE', payload}),
-            generateQuote: () => dispatch({type: 'GENERATE_QUOTE'}),
+            generateQuote: () => dispatch({type: 'SAVE_QUOTE_INTERNAL'}),
             toggleResultAsBinary: () => dispatch({type: 'TOGGLE_RESULT_BINARY'}),
             inputWeightChanged: (inputId, inputWeight) => dispatch({type: 'INPUT_WEIGHT_CHANGED', inputId, inputWeight}),
         },
@@ -154,11 +161,11 @@ export const useStateStore = (): any => useContext(StateContext);
 
 
 /**
- * Calculates the current ingest quote based on the given devices, retention period, and retention multiplier.
+ * Calculates the current ingest quote based on the given devices, retention period, and retention interval.
  *
  * @param {Array<object>} devices - current calculator devices.
  * @param {number} retention_quantity - data retention period quantity (from the result period input).
- * @param {number} retention_interval - data retention multiplier (days, weeks, etc.)
+ * @param {number} retention_interval - data retention interval (days, weeks, etc.)
  *
  * @param industry_weight
  * @param industry_size_weight

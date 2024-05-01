@@ -20,7 +20,7 @@ import {useStateStore} from '../model/Data';
  * @return {JSX.Element} - The rendered top navigation bar component.
  */
 export default function TopNavbar({adminMode = false}) {
-    const {state, actions: {clearState, resetState, restoreState}} = useStateStore();
+    const {state} = useStateStore();
     var hasActiveDevices = false
     const devices = state.calculator.devices.device_items
     for (let device of devices) {

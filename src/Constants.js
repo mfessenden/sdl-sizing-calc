@@ -10,7 +10,7 @@ export const SAVE_QUOTE_INTERNAL: string = 'save-quote';
 export const SAVE_QUOTE_EXTERNAL: string = 'save-quote-ext';
 export const SAVE_STATE: string = 'save-state';
 export const CLEAR_STATE: string = 'clear-state';
-export const RESET_UI: string = 'reset-ui';
+export const RESET_APP_STATE: string = 'reset-app';
 export const RESTORE_STATE: string = 'restore-state';
 export const ADMIN_PANEL_NAME: string = 'Admin Panel';
 export const SETTINGS_PANEL_TITLE: string = 'Settings';
@@ -23,25 +23,25 @@ export const RetentionPeriodData = [
         id: 0,
         name: 'daily',
         display_name: 'Daily',
-        multiplier: 1
+        interval: 1
     },
     {
         id: 1,
         name: 'weekly',
         display_name: 'Weekly',
-        multiplier: 7
+        interval: 7
     },
     {
         id: 2,
         name: 'monthly',
         display_name: 'Monthly',
-        multiplier: 30
+        interval: 30
     },
     {
         id: 3,
         name: 'yearly',
         display_name: 'Yearly',
-        multiplier: 365
+        interval: 365
     }
 ]
 

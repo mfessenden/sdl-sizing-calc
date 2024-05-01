@@ -46,7 +46,8 @@ function DataRetentionInput({tabData}) {
 function RetentionPeriodTabs() {
     const {state, actions: {setRetentionMultiplier}} = useStateStore();
     const currentQuoteData = state.current_state.current_quote.data
-
+    const currentInterval = currentQuoteData.retention_interval
+    console.log(`Tabs: active interval: ${currentInterval}`)
     return (
         <Tabs
             key='result-tabs'
@@ -57,7 +58,7 @@ function RetentionPeriodTabs() {
             {RetentionPeriodData.map((period) => (
                 <Tab
                     key={period.id}
-                    eventKey={period.multiplier}
+                    eventKey={period.interval}
                     title={period.display_name}
                 >
                     <DataRetentionInput tabData={period}/>
@@ -68,9 +69,37 @@ function RetentionPeriodTabs() {
 }
 
 
-function ResultMenu({dropdownMenu}) {
-    const {actions: {inputWeightChanged}} = useStateStore();
+// here
+function SelectDropdown({dropdownMenu}) {
+    const {state, actions: {inputWeightChanged}} = useStateStore();
+    const currentQuote = state.current_state.current_quote.data
+
+    let selectedValue = -1
+    switch (dropdownMenu.input_id) {
+        // industry
+        case 0: {
+            selectedValue = currentQuote.industry_id
+            break;
+        }
+
+        case 1: {
+            selectedValue = currentQuote.industry_size
+            break;
+        }
+
+        case 2: {
+            selectedValue = currentQuote.org_size
+            break;
+        }
+
+        default:
+            console.log(`Error: invalid inout id ${dropdownMenu.input_id} `);
+    }
+
+    console.log(`Building industry menu: ${dropdownMenu.input_id}, weight: ${selectedValue}`)
+
     let dropdownId = useRef(dropdownMenu.input_id);
+    console.log(`Industry menu: ${dropdownId.current}`)
 
     const handleChange = (input_id, weight) => {
         console.log(`Menu item changed, weight: ${weight}, input id: ${input_id}`)
@@ -78,21 +107,32 @@ function ResultMenu({dropdownMenu}) {
     }
 
     return (
-        <Form.Control defaultValue='---' as='select' onChange={e => handleChange(dropdownId.current, e.target.value)}>
+
+        // <Form.Select aria-label="Default select example">
+        //     <option>Open this select menu</option>
+        //     <option value="1">One</option>
+        //     <option value="2">Two</option>
+        //     <option value="3">Three</option>
+        // </Form.Select>
+
+        <Form.Select defaultValue={selectedValue} onChange={e => handleChange(dropdownId.current, e.target.value)}>
             <option>---</option>
             {dropdownMenu.dropdown_items.map(dropdownItem => (
-                <option value={dropdownItem.weight} key={dropdownItem.id}>{dropdownItem.display_name}</option>
+                <option
+
+                    value={dropdownItem.weight}
+                    key={dropdownItem.id}>{dropdownItem.display_name}
+                </option>
             ))}
-        </Form.Control>
+        </Form.Select>
     )
 }
 
 
 function ResultDropdowns() {
 
-
     const buildInputDropdowns = (data) => {
-        const dropdownMenus = []
+        let dropdownMenus = []
 
         // dropdown input options
         const inputsData = data.calculator.inputs
@@ -121,7 +161,8 @@ function ResultDropdowns() {
                 name: category.name,
                 display_name: category.display_name,
                 input_id: category.id,
-                dropdown_items: categoryItems
+                dropdown_items: categoryItems,
+                current_value: null
             };
 
             dropdownMenus.push(DropdownMenu)
@@ -145,7 +186,7 @@ function ResultDropdowns() {
                             </Form.Label>
                         </Col>
                         <Col>
-                            <ResultMenu dropdownMenu={dropdownMenu}/>
+                            <SelectDropdown dropdownMenu={dropdownMenu}/>
                         </Col>
                     </Row>
 
@@ -184,8 +225,8 @@ export default function ResultBody() {
     const {state} = useStateStore();
 
     const devices = state.calculator.devices.device_items
-    const rententionPeriodMultiplier: number = state.current_state.current_quote.data.retention_interval ?? 1
-    const retentionPeriodValue: number = state.current_state.current_quote.data.retention_quantity ?? 1
+    const rententionPeriodMultiplier: number = state.current_state.current_quote.data.retention_interval
+    const retentionPeriodValue: number = state.current_state.current_quote.data.retention_quantity
 
     let industryIdWeight = 1;
     let industrySizeWeight = 1;

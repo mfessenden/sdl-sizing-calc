@@ -3,7 +3,7 @@ import {SDL_STATE} from '../Constants';
 import {AppState, Quote} from '../types/State';
 import {generateQuote} from '../Utils';
 
-const ContextRawData = require('../data.json');
+const DatabaseData = require('../data.json');
 
 
 /**
@@ -112,25 +112,31 @@ export default function stateReducer(state, action) {
 
             // set localstorage value TODO: persistence via Firebase?
             window.localStorage.setItem(SDL_STATE, JSON.stringify(updatedState));
-            updatedState.current_state.has_saved_data = true
+            // updatedState.current_state.has_saved_data = true
             break;
         }
 
         case 'CLEAR_STATE': {
             window.localStorage.removeItem(SDL_STATE)
             console.log(`Clearing saved data...`);
-            updatedState.current_state.has_saved_data = false
+            // updatedState.current_state.has_saved_data = false
             break;
         }
 
-        // reset the ui ('reset-ui')
-        case 'RESET_STATE': {
-            const defaultState = {...ContextRawData}
-            defaultState.current_state = {...AppState}
+        // reset the app ui state
+        case 'RESET_APP_STATE': {
             for (let device in updatedState.calculator.devices.device_items) {
                 updatedState.calculator.devices.device_items[device].quantity = 0
             }
+
+            console.log(`Resetting app state...`)
+            updatedState.current_state = {...AppState}
             updatedState.current_state.current_quote = {...Quote}
+            updatedState.current_state.current_quote.data.retention_interval = 1
+            updatedState.current_state.current_quote.data.retention_interval = 1
+            updatedState.current_state.current_quote.data.industry_id = null
+            updatedState.current_state.current_quote.data.industry_size = null
+            updatedState.current_state.current_quote.data.org_size = null
             break;
         }
         // restore saved state ('restore-state')
@@ -168,11 +174,11 @@ export default function stateReducer(state, action) {
             break;
         }
 
-        case 'GENERATE_QUOTE': {
+        case 'SAVE_QUOTE_INTERNAL': {
             console.log('Generating quote...')
             let quote = generateQuote(devices)
             console.log(quote)
-            quote.retention_interval = updatedState.current_state
+            //quote.retention_interval = updatedState.current_state
             break;
         }
 
@@ -190,17 +196,17 @@ export default function stateReducer(state, action) {
             switch (inputId) {
                 // industry
                 case 0: {
-                    updatedState.current_state.current_quote.industry_id = inputWeight
+                    updatedState.current_state.current_quote.data.industry_id = inputWeight
                     console.log(`Setting industry id weight: ${inputWeight}`)
                     break;
                 }
                 case 1: {
-                    updatedState.current_state.current_quote.industry_size = inputWeight
+                    updatedState.current_state.current_quote.data.industry_size = inputWeight
                     console.log(`Setting industry size weight: ${inputWeight}`)
                     break;
                 }
                 case 2: {
-                    updatedState.current_state.current_quote.org_size = inputWeight
+                    updatedState.current_state.current_quote.data.org_size = inputWeight
                     console.log(`Setting organization weight: ${inputWeight}`)
                     break;
                 }
