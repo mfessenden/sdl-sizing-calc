@@ -29,19 +29,18 @@ export const Device = {
 }
 
 
-export const Quote = {
+export const QuoteData = {
     industry_id: null,
     industry_size: null,
     org_size: null,
-    retention_multiplier: 1,
+    retention_interval: 1,
     retention_quantity:  1,
     devices:  [],
 
 }
 
 
-// TODO: create this on save
-export const SerializedQuote = {
-    quote: {...Quote},
+export const Quote = {
+    data: {...QuoteData},
     metadata: {...QuoteMetadata}
 }

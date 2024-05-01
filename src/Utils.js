@@ -88,7 +88,6 @@ export function generateQuoteData(devices): Device[] {
     let devicesData = []
     for (const device of devices) {
         if (device.quantity) {
-            // let thisDevice = new Device(device.id, device.base_weight, device.event_size, device.quantity)
             let thisDevice = {...Device}
             thisDevice.id = device.id
             thisDevice.base_weight = device.base_weight

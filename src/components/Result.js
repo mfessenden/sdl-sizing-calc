@@ -50,7 +50,7 @@ function RetentionPeriodTabs() {
     return (
         <Tabs
             key='result-tabs'
-            activeKey={currentState.retention_multiplier}
+            activeKey={currentState.retention_interval}
             onSelect={(k) => setRetentionMultiplier(parseInt(k))}
             className='align-center'
         >
@@ -78,7 +78,7 @@ function ResultMenu({dropdownMenu}) {
     }
 
     return (
-        <Form.Control as='select' onChange={e => handleChange(dropdownId.current, e.target.value)}>
+        <Form.Control defaultValue='---' as='select' onChange={e => handleChange(dropdownId.current, e.target.value)}>
             <option>---</option>
             {dropdownMenu.dropdown_items.map(dropdownItem => (
                 <option value={dropdownItem.weight} key={dropdownItem.id}>{dropdownItem.display_name}</option>
@@ -184,7 +184,7 @@ export default function ResultBody() {
     const {state} = useStateStore();
 
     const devices: Array<any> = state.calculator.devices.device_items
-    const rententionPeriodMultiplier: number = state.current_state.current_quote.retention_multiplier ?? 1
+    const rententionPeriodMultiplier: number = state.current_state.current_quote.retention_interval ?? 1
     const retentionPeriodValue: number = state.current_state.current_quote.retention_quantity ?? 1
 
     let industryIdWeight = 1;

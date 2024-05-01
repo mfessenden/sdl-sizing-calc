@@ -5,7 +5,7 @@ import {SDL_STATE} from '../Constants';
 import {calculateDeviceUsage, humanFileSize} from '../Utils';
 
 var ContextRawData = require('../data.json');
-var ContextData = setupInitialState()
+var ContextData = initializeDatabase()
 
 
 /**
@@ -48,8 +48,7 @@ export function getSavedState() {
  *
  * @return {object} The context data object containing saved state and device type information.
  */
-export function setupInitialState() {
-    console.log('Building context data...')
+export function initializeDatabase() {
     let contextData = getSavedState() ?? {...ContextRawData}
 
     // default property values
@@ -63,7 +62,7 @@ export function setupInitialState() {
     const defaultCategoryId = deviceDefaults['category_id']
     const defaultQuantity = deviceDefaults['quantity']
 
-    console.log('Building initial state...')
+    console.log('Initializing database...')
 
     // devices
     const deviceTypes = devicesData['device_items']
@@ -77,7 +76,7 @@ export function setupInitialState() {
         deviceType.quantity = deviceType.quantity ? deviceType.quantity : defaultQuantity
     }
 
-    // add app state TODO: separate context?
+    // add app state & quote
     contextData['current_state'] = {...AppState}
     contextData.current_state.current_quote = {...Quote}
     contextData.current_state.admin_mode = process.env.SDL_ADMIN === 1
@@ -95,7 +94,7 @@ export const StateContext: React.Context<any | Object> = createContext(ContextDa
  * @param {Object} defaultState - default state to initialize the custom state with.
  * @returns {Object} An object containing the custom state and actions to manipulate the state.
  */
-export const useCustomState = (defaultState = setupInitialState()) => {
+export const useCustomState = (defaultState = initializeDatabase()) => {
     // user our reducer to handle actions
     const [state, dispatch] = useReducer(stateReducer, defaultState);
     return {
@@ -111,6 +110,7 @@ export const useCustomState = (defaultState = setupInitialState()) => {
             applyActiveFilter: (value) => dispatch({type: 'APPLY_ACTIVE_FILTER', value}),
             setRetentionMultiplier: (value) => dispatch({type: 'SET_RETENTION_MULTIPLIER', value}),
             setRetentionPeriods: (value) => dispatch({type: 'SET_RETENTION_PERIODS', value}),
+            loadState: () => dispatch({type: 'LOAD_STATE'}),
             clearState: () => dispatch({type: 'CLEAR_STATE'}),
             resetState: () => dispatch({type: 'RESET_STATE'}),
             restoreState: () => dispatch({type: 'RESTORE_STATE'}),
@@ -119,65 +119,10 @@ export const useCustomState = (defaultState = setupInitialState()) => {
             addDevice: (payload) => dispatch({type: 'ADD_DEVICE', payload}),
             generateQuote: () => dispatch({type: 'GENERATE_QUOTE'}),
             toggleResultAsBinary: () => dispatch({type: 'TOGGLE_RESULT_BINARY'}),
-            inputWeightChanged: (inputId, inputWeight) => dispatch({
-                type: 'INPUT_WEIGHT_CHANGED',
-                inputId,
-                inputWeight
-            }),
+            inputWeightChanged: (inputId, inputWeight) => dispatch({type: 'INPUT_WEIGHT_CHANGED', inputId, inputWeight}),
         },
     };
 };
-
-
-/**
- * Calculates the current ingest quote based on the given devices, retention period, and retention multiplier.
- *
- * @param {Array<object>} devices - current calculator devices.
- * @param {number} retention_quantity - data retention period quantity (from the result period input).
- * @param {number} retention_multiplier - data retention multiplier (days, weeks, etc.)
- *
- * @param industry_weight
- * @param industry_size_weight
- * @param org_size_weight
- * @return {number} total bytes of current quote.
- */
-export function calculateQuote(devices, retention_quantity: number = 1, retention_multiplier: number = 1, industry_weight: number = 1, industry_size_weight: number = 1, org_size_weight: number = 1): number {
-
-    let industryMultiplier = industry_weight * industry_size_weight * org_size_weight
-
-    // get the total in bytes per day
-    let totalBytesPerDay = 0
-    let activeDevices = 0
-
-    // for each device, calculate the usage for a given timeframe
-    for (let device of devices) {
-        totalBytesPerDay = totalBytesPerDay + calculateDeviceUsage(device)
-        if (device.quantity) {
-            activeDevices += 1;
-        }
-    }
-
-    // calculate bytes per day * retention period
-    // calculate the total size for this ingest
-    let totalBytes: number = totalBytesPerDay * (retention_quantity * retention_multiplier)
-
-    // weighted industry values
-    totalBytes = totalBytes * industryMultiplier
-
-    var logMsg: string = `Calculating... No active devices.`
-    if (activeDevices) {
-        logMsg = `Calculating ${activeDevices} devices: ${humanFileSize(totalBytes)}`
-    }
-
-    console.log(logMsg)
-    return totalBytes
-}
-
-
-// TODO: grab input from 'AppState.current_quote'
-export function saveQuote(devices, retention_quantity: number = 1, retention_multiplier: number = 1): void {
-
-}
 
 
 /**
@@ -201,3 +146,58 @@ export const StateProvider = ({children}: any) => {
  * @returns {Object} The state store retrieved from the context.
  */
 export const useStateStore = (): any => useContext(StateContext);
+
+
+
+// Helper Functions
+
+
+/**
+ * Calculates the current ingest quote based on the given devices, retention period, and retention multiplier.
+ *
+ * @param {Array<object>} devices - current calculator devices.
+ * @param {number} retention_quantity - data retention period quantity (from the result period input).
+ * @param {number} retention_interval - data retention multiplier (days, weeks, etc.)
+ *
+ * @param industry_weight
+ * @param industry_size_weight
+ * @param org_size_weight
+ * @return {number} total bytes of current quote.
+ */
+export function calculateQuote(devices, retention_quantity: number = 1, retention_interval: number = 1, industry_weight: number = 1, industry_size_weight: number = 1, org_size_weight: number = 1): number {
+
+    let industryMultiplier = industry_weight * industry_size_weight * org_size_weight
+
+    // get the total in bytes per day
+    let totalBytesPerDay = 0
+    let activeDevices = 0
+
+    // for each device, calculate the usage for a given timeframe
+    for (let device of devices) {
+        totalBytesPerDay = totalBytesPerDay + calculateDeviceUsage(device)
+        if (device.quantity) {
+            activeDevices += 1;
+        }
+    }
+
+    // calculate bytes per day * retention period
+    // calculate the total size for this ingest
+    let totalBytes: number = totalBytesPerDay * (retention_quantity * retention_interval)
+
+    // weighted industry values
+    totalBytes = totalBytes * industryMultiplier
+
+    var logMsg: string = `Calculating... No active devices.`
+    if (activeDevices) {
+        logMsg = `Calculating ${activeDevices} devices: ${humanFileSize(totalBytes)}`
+    }
+
+    console.log(logMsg)
+    return totalBytes
+}
+
+
+// TODO: grab input from 'AppState.current_quote'
+export function saveQuote(devices, retention_quantity: number = 1, retention_interval: number = 1): void {
+
+}

@@ -95,13 +95,20 @@ export default function stateReducer(state, action) {
         }
 
         case 'SET_RETENTION_MULTIPLIER': {
-            updatedState.current_state.current_quote.retention_multiplier = action.value
-            console.log(`Setting retention period: ${updatedState.current_state.current_quote.retention_multiplier}`);
+            updatedState.current_state.current_quote.retention_interval = action.value
+            console.log(`Setting retention period: ${updatedState.current_state.current_quote.retention_interval}`);
             break;
         }
 
         case 'SET_RETENTION_PERIODS': {
             updatedState.current_state.current_quote.retention_quantity = action.value
+            break;
+        }
+
+        case 'SAVE_STATE': {
+            window.localStorage.removeItem(SDL_STATE)
+            console.log(`Clearing saved data...`);
+            updatedState.current_state.has_saved_data = false
             break;
         }
 
@@ -161,7 +168,7 @@ export default function stateReducer(state, action) {
             console.log('Generating quote...')
             let quote = generateQuote(devices)
             console.log(quote)
-            quote.retention_multiplier = updatedState.current_state
+            quote.retention_interval = updatedState.current_state
             break;
         }
 

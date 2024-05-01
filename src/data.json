@@ -556,7 +556,7 @@
             }
         },
         "data_retention": {
-            "retention_multiplier": 1,
+            "retention_interval": 1,
             "retention_quantity": 1
         }
     }

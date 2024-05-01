@@ -5,7 +5,9 @@ export const SDL_HEADER_HEIGHT: number = 48;
 export const SDL_HEADER_WIDTH: number = 278;
 export const SDL_STATE: string = 'sdl-state';
 export const SDL_TITLE: string = 'SDL Sizing Calculator';
-export const SAVE_STATE: string = 'save-state';
+export const LOAD_QUOTE: string = 'load-quote';
+export const SAVE_QUOTE_INTERNAL: string = 'save-quote';
+export const SAVE_QUOTE_EXTERNAL: string = 'save-quote-ext';
 export const CLEAR_STATE: string = 'clear-state';
 export const RESET_UI: string = 'reset-ui';
 export const RESTORE_STATE: string = 'restore-state';
@@ -41,6 +43,7 @@ export const RetentionPeriodData = [
         multiplier: 365
     }
 ]
+
 
 export const IndustryDetailData = [
     {
