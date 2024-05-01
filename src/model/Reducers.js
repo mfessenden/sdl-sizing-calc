@@ -94,21 +94,25 @@ export default function stateReducer(state, action) {
             break;
         }
 
-        case 'SET_RETENTION_MULTIPLIER': {
-            updatedState.current_state.current_quote.retention_interval = action.value
-            console.log(`Setting retention period: ${updatedState.current_state.current_quote.retention_interval}`);
+        case 'SET_RETENTION_INTERVAL': {
+            updatedState.current_state.current_quote.data.retention_interval = action.value
+            console.log(`Setting retention interval: ${updatedState.current_state.current_quote.data.retention_interval}`);
             break;
         }
 
         case 'SET_RETENTION_PERIODS': {
-            updatedState.current_state.current_quote.retention_quantity = action.value
+            updatedState.current_state.current_quote.data.retention_quantity = action.value
             break;
         }
 
         case 'SAVE_STATE': {
-            window.localStorage.removeItem(SDL_STATE)
             console.log(`Clearing saved data...`);
-            updatedState.current_state.has_saved_data = false
+            window.localStorage.removeItem(SDL_STATE)
+            console.log(`Saving current state...`);
+
+            // set localstorage value TODO: persistence via Firebase?
+            window.localStorage.setItem(SDL_STATE, JSON.stringify(updatedState));
+            updatedState.current_state.has_saved_data = true
             break;
         }
 

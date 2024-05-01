@@ -7,8 +7,7 @@ import {
     RESTORE_STATE,
     SAVE_QUOTE_EXTERNAL,
     SAVE_QUOTE_INTERNAL,
-    SAVE_STATE,
-    SDL_STATE
+    SAVE_STATE
 } from '../Constants';
 import {useStateStore} from '../model/Data';
 
@@ -19,25 +18,19 @@ import {useStateStore} from '../model/Data';
  * @returns {React.Component} action menu dropdown component.
  */
 export default function ActionMenu() {
-    const {state, actions: {clearState, resetState, restoreState}} = useStateStore();
+    const {state, actions: {clearState, resetState, restoreState, saveState}} = useStateStore();
 
     // check if there's currently saved local storage data
     const savedDataExists = state.current_state.has_saved_data
 
     const handleSelect = (eventKey) => {
-        if (eventKey === SDL_STATE) {
-            // // don't save these
-            state.current_state.filter_string = null
-            state.current_state.filter_active = false
-
-            // set localstorage value
-            window.localStorage.setItem(SDL_STATE, JSON.stringify(state));  // TODO: persistence via Firebase?
-            console.log('Saving current state...')
-
+        if (eventKey === SAVE_STATE) {
+            saveState()
         } else if (eventKey === LOAD_QUOTE) {
             console.log('Loading previously saved quote...')
         } else if (eventKey === SAVE_QUOTE_INTERNAL) {
             console.log('Saving current quote...')
+            // TODO: add current quote to stored quotes
         } else if (eventKey === CLEAR_STATE) {
             clearState()
         } else if (eventKey === RESET_UI) {
@@ -65,10 +58,21 @@ export default function ActionMenu() {
                 </NavDropdown.Item>
 
                 <NavDropdown.Divider/>
-                <NavDropdown.Item active={false} disabled={!savedDataExists} eventKey={RESTORE_STATE}
-                                  alt='Restore previously saved data'>
+                <NavDropdown.Item active={false} disabled={true} eventKey={LOAD_QUOTE}
+                                  alt='Load a saved quote'>
                     Load Quote...
                 </NavDropdown.Item>
+                <NavDropdown.Divider/>
+
+                <NavDropdown.Item active={false} eventKey={SAVE_STATE} alt='Remove saved state data'>
+                    Save Current State
+                </NavDropdown.Item>
+
+                <NavDropdown.Item active={false} disabled={!savedDataExists} eventKey={RESTORE_STATE}
+                                  alt='Restore previously saved data'>
+                    Load Saved State
+                </NavDropdown.Item>
+
 
                 <NavDropdown.Item active={false} disabled={!savedDataExists} eventKey={CLEAR_STATE} alt='Remove saved state data'>
                     Clear Saved State

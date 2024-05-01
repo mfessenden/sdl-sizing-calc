@@ -36,7 +36,6 @@ export const QuoteData = {
     retention_interval: 1,
     retention_quantity:  1,
     devices:  [],
-
 }
 
 

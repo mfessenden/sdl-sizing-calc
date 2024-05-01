@@ -4,8 +4,8 @@ import stateReducer from './Reducers';
 import {SDL_STATE} from '../Constants';
 import {calculateDeviceUsage, humanFileSize} from '../Utils';
 
-var ContextRawData = require('../data.json');
-var ContextData = initializeDatabase()
+let DatabaseData = require('../data.json');
+let InitializedDatabase = initializeDatabase()
 
 
 /**
@@ -49,13 +49,13 @@ export function getSavedState() {
  * @return {object} The context data object containing saved state and device type information.
  */
 export function initializeDatabase() {
-    let contextData = getSavedState() ?? {...ContextRawData}
+    let contextData = getSavedState() ?? {...DatabaseData}
 
     // default property values
-    const calculatorData = contextData.calculator
+    const calculatorData = contextData['calculator']
 
     // devices
-    const devicesData = calculatorData.devices
+    const devicesData = calculatorData['devices']
     const deviceDefaults = devicesData['device_defaults']
     const defaultBaseWeight = deviceDefaults['base_weight']
     const defaultEventSize = deviceDefaults['event_size']
@@ -85,7 +85,7 @@ export function initializeDatabase() {
 }
 
 
-export const StateContext: React.Context<any | Object> = createContext(ContextData);
+export const StateContext: React.Context<any | Object> = createContext(InitializedDatabase);
 
 
 /**
@@ -108,8 +108,9 @@ export const useCustomState = (defaultState = initializeDatabase()) => {
             setEventSize: (deviceId, eventSize) => dispatch({type: 'SET_EVENT_SIZE', deviceId, eventSize}),
             applyFilterString: (filterString) => dispatch({type: 'APPLY_FILTER_STRING', filterString}),
             applyActiveFilter: (value) => dispatch({type: 'APPLY_ACTIVE_FILTER', value}),
-            setRetentionMultiplier: (value) => dispatch({type: 'SET_RETENTION_MULTIPLIER', value}),
+            setRetentionMultiplier: (value) => dispatch({type: 'SET_RETENTION_INTERVAL', value}),
             setRetentionPeriods: (value) => dispatch({type: 'SET_RETENTION_PERIODS', value}),
+            saveState: () => dispatch({type: 'SAVE_STATE'}),
             loadState: () => dispatch({type: 'LOAD_STATE'}),
             clearState: () => dispatch({type: 'CLEAR_STATE'}),
             resetState: () => dispatch({type: 'RESET_STATE'}),

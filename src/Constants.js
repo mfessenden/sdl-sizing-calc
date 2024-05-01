@@ -8,6 +8,7 @@ export const SDL_TITLE: string = 'SDL Sizing Calculator';
 export const LOAD_QUOTE: string = 'load-quote';
 export const SAVE_QUOTE_INTERNAL: string = 'save-quote';
 export const SAVE_QUOTE_EXTERNAL: string = 'save-quote-ext';
+export const SAVE_STATE: string = 'save-state';
 export const CLEAR_STATE: string = 'clear-state';
 export const RESET_UI: string = 'reset-ui';
 export const RESTORE_STATE: string = 'restore-state';
