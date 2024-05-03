@@ -15,7 +15,7 @@ import {saveExternalQuote} from '../Utils';
 export default function stateReducer(state, action) {
     // 'state' is an array of devices
     const updatedState = {...state};
-    const devices = updatedState.calculator.devices.device_items
+    const devices = updatedState.current_state.current_quote.data.devices
 
     switch (action.type) {
         case 'SET_NAME': {
@@ -24,8 +24,6 @@ export default function stateReducer(state, action) {
 
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.name = deviceName
-
-            updatedState.calculator.devices.device_items[deviceId] = device
             break;
         }
 
@@ -35,7 +33,6 @@ export default function stateReducer(state, action) {
 
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.display_name = displayName
-            updatedState.calculator.devices.device_items[deviceId] = device
             break;
         }
 
@@ -45,7 +42,6 @@ export default function stateReducer(state, action) {
             const device = devices.filter((d) => d.id === deviceId)[0]
             let currentCategoryId = device.category_id
             device.category_id = categoryId
-            updatedState.calculator.devices.device_items[deviceId] = device
             console.log(`Device '${device.name}' category updated: ${currentCategoryId} -> ${categoryId}`)
             break;
         }
@@ -55,7 +51,6 @@ export default function stateReducer(state, action) {
             const quantity = Number(action.quantity)
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.quantity = Math.round(quantity)
-            updatedState.calculator.devices.device_items[deviceId] = device
             break;
         }
 
@@ -65,7 +60,6 @@ export default function stateReducer(state, action) {
 
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.base_weight = baseWeight
-            updatedState.calculator.devices.device_items[deviceId] = device
             break;
         }
 
@@ -75,7 +69,6 @@ export default function stateReducer(state, action) {
 
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.event_size = eventSize
-            updatedState.calculator.devices.device_items[deviceId] = device
             break;
         }
 
@@ -124,8 +117,8 @@ export default function stateReducer(state, action) {
 
         // reset the app ui state
         case 'RESET_APP_STATE': {
-            for (let device in updatedState.calculator.devices.device_items) {
-                updatedState.calculator.devices.device_items[device].quantity = 0
+            for (let device of updatedState.current_state.current_quote.data.devices) {
+                device.quantity = 0
             }
 
             console.log(`Resetting app state...`)
@@ -144,7 +137,7 @@ export default function stateReducer(state, action) {
             const savedState = getSavedState();
             updatedState.current_state.has_saved_data = savedState
             if (savedState) {
-                updatedState.calculator.devices.device_items = savedState.calculator.devices.device_items;
+                updatedState.current_state.current_quote.data.devices = savedState.current_state.current_quote.data.devices;
                 updatedState.current_state = savedState.current_state
                 console.log(`Restoring saved state...`);
             } else {
@@ -168,9 +161,9 @@ export default function stateReducer(state, action) {
         case 'ADD_DEVICE': {
             const newDevice = action.payload
             console.log(`Adding device:  '${newDevice.name}'`)
-            const currentDevices = updatedState.calculator.devices.device_items
+            const currentDevices = updatedState.current_state.current_quote.data.devices
             currentDevices.push(newDevice)
-            updatedState.calculator.devices.device_items = currentDevices
+            updatedState.current_state.current_quote.data.devices = currentDevices
             break;
         }
 

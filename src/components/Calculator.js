@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import RangeSlider from './Slider';
 import {useStateStore} from '../model/Data';
-import {bytesToGigs, calculateDeviceUsage, numberToString} from '../Utils';
+import {bytesToGigs, calculateItemUsage, numberToString} from '../Utils';
 
 
 const headerData = [
@@ -44,7 +44,7 @@ function CalculatorTableRow({device}) {
     const {actions: {setQuantity}} = useStateStore();
 
     const eventsPerSecond = device.quantity * device.base_weight
-    const bytesPerDay = calculateDeviceUsage(device)
+    const bytesPerDay = calculateItemUsage(device)
     const gigsPerDay = bytesToGigs(bytesPerDay)
 
     return (
@@ -138,7 +138,8 @@ export default function CalculatorBody() {
         // const interfaceData = data.interface_data
         const devicesData = data.calculator.devices
         const categoryData = devicesData.device_categories
-        const deviceTypes = devicesData.device_items
+        const currentState = state.current_state
+        const deviceTypes = currentState.current_quote.data.devices
 
         for (const category of categoryData) {
             const categoryDevices = []
@@ -166,7 +167,7 @@ export default function CalculatorBody() {
     const filterString = currentState.filter_string
     const filterActive = currentState.filter_active
 
-    const deviceTypes = state.calculator.devices['device_items']
+    const deviceTypes = currentState.current_quote.data.devices
 
     // filtering logic
     let filteredDevices = []

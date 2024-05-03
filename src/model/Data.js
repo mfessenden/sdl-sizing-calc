@@ -2,10 +2,10 @@ import {createContext, useContext, useReducer} from 'react';
 import {AppState, Quote} from '../types/State';
 import stateReducer from './Reducers';
 import {SDL_STATE} from '../Constants';
-import {calculateDeviceUsage, humanFileSize} from '../Utils';
+import {calculateItemUsage, humanFileSize} from '../Utils';
 
 let DatabaseData = require('../data.json');
-let InitializedDatabase = initializeDatabase()
+let InitialAppState = initializeAppState()
 
 
 /**
@@ -48,11 +48,12 @@ export function getSavedState() {
  *
  * @return {object} The context data object containing saved state and device type information.
  */
-export function initializeDatabase() {
-    let contextData = getSavedState() ?? {...DatabaseData}
+export function initializeAppState() {
+    // let contextData = getSavedState() ?? {...DatabaseData}
+    let databaseData = {...DatabaseData}
 
     // default property values
-    const calculatorData = contextData['calculator']
+    const calculatorData = databaseData['calculator']
 
     // devices
     const devicesData = calculatorData['devices']
@@ -62,7 +63,7 @@ export function initializeDatabase() {
     const defaultCategoryId = deviceDefaults['category_id']
     const defaultQuantity = deviceDefaults['quantity']
 
-    console.log('Initializing database...')
+    console.log('Initializing App state...')
 
     // devices
     const deviceTypes = devicesData['device_items']
@@ -77,22 +78,20 @@ export function initializeDatabase() {
     }
 
     // add app state & quote
-    let currentState = contextData['current_state']
-    if (!currentState) {
-        console.log(`Using new state...`)
-        currentState = {...AppState}
-        currentState.current_quote = {...Quote}
-    }
-    contextData.current_state = currentState
+    let currentState = {...AppState}
+    currentState.current_quote = {...Quote}
+    databaseData.current_state = currentState
+
+    currentState.current_quote.data.devices = deviceTypes
 
     // live updates
-    contextData.current_state.admin_mode = process.env.SDL_ADMIN === 1
-    contextData.current_state.has_saved_data = hasSavedData()
-    return contextData
+    databaseData.current_state.admin_mode = process.env.SDL_ADMIN === 1
+    databaseData.current_state.has_saved_data = hasSavedData()
+    return databaseData
 }
 
 
-export const StateContext: React.Context<any | Object> = createContext(InitializedDatabase);
+export const StateContext: React.Context<any | Object> = createContext(InitialAppState);
 
 
 /**
@@ -101,19 +100,19 @@ export const StateContext: React.Context<any | Object> = createContext(Initializ
  * @param {Object} defaultState - default state to initialize the custom state with.
  * @returns {Object} An object containing the custom state and actions to manipulate the state.
  */
-export const useCustomState = (defaultState = initializeDatabase()) => {
+export const useCustomState = (defaultState = initializeAppState()) => {
     // user our reducer to handle actions
     const [state, dispatch] = useReducer(stateReducer, defaultState);
     return {
         state,
         actions: {
-            setName: (deviceId, deviceName) => dispatch({type: 'SET_NAME', deviceId, deviceName}),
-            setDisplayName: (deviceId, displayName) => dispatch({type: 'SET_DISPLAY_NAME', deviceId, displayName}),
-            setCategory: (deviceId, categoryId) => dispatch({type: 'SET_CATEGORY', deviceId, categoryId}),
-            setQuantity: (deviceId, quantity) => dispatch({type: 'SET_QUANTITY', deviceId, quantity}),
-            setBaseWeight: (deviceId, baseWeight) => dispatch({type: 'SET_BASE_WEIGHT', deviceId, baseWeight}),
-            setEventSize: (deviceId, eventSize) => dispatch({type: 'SET_EVENT_SIZE', deviceId, eventSize}),
-            applyFilterString: (filterString) => dispatch({type: 'APPLY_FILTER_STRING', filterString}),
+            setName: (deviceId: number, deviceName) => dispatch({type: 'SET_NAME', deviceId, deviceName}),
+            setDisplayName: (deviceId: number, displayName: string) => dispatch({type: 'SET_DISPLAY_NAME', deviceId, displayName}),
+            setCategory: (deviceId: number, categoryId: number) => dispatch({type: 'SET_CATEGORY', deviceId, categoryId}),
+            setQuantity: (deviceId: number, quantity: number) => dispatch({type: 'SET_QUANTITY', deviceId, quantity}),
+            setBaseWeight: (deviceId: number, baseWeight: number) => dispatch({type: 'SET_BASE_WEIGHT', deviceId, baseWeight}),
+            setEventSize: (deviceId: number, eventSize: number) => dispatch({type: 'SET_EVENT_SIZE', deviceId, eventSize}),
+            applyFilterString: (filterString: string) => dispatch({type: 'APPLY_FILTER_STRING', filterString}),
             applyActiveFilter: (value) => dispatch({type: 'APPLY_ACTIVE_FILTER', value}),
             setRetentionMultiplier: (value) => dispatch({type: 'SET_RETENTION_INTERVAL', value}),
             setRetentionPeriods: (value) => dispatch({type: 'SET_RETENTION_PERIODS', value}),
@@ -123,8 +122,8 @@ export const useCustomState = (defaultState = initializeDatabase()) => {
             resetAppState: () => dispatch({type: 'RESET_APP_STATE'}),
             restoreState: () => dispatch({type: 'RESTORE_STATE'}),
             toggleAdminMode: (value) => dispatch({type: 'TOGGLE_ADMIN', value}),
-            updateDevice: (deviceId, payload) => dispatch({type: 'UPDATE_DEVICE', deviceId, payload}),
-            addDevice: (payload) => dispatch({type: 'ADD_DEVICE', payload}),
+            updateDevice: (deviceId, payload: {deviceId: number, payload: Object}) => dispatch({type: 'UPDATE_DEVICE', deviceId, payload}),
+            addDevice: (payload) => dispatch({type: 'ADD_DEVICE', payload: Object}),
             generateQuote: () => dispatch({type: 'SAVE_QUOTE_INTERNAL'}),
             saveQuote: () => dispatch({type: 'SAVE_QUOTE_EXTERNAL'}),
             toggleResultAsBinary: () => dispatch({type: 'TOGGLE_RESULT_BINARY'}),

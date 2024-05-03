@@ -1,5 +1,5 @@
 import {calculateQuote} from './Data';
-import {calculateDeviceUsage} from '../Utils';
+import {calculateItemUsage} from '../Utils';
 
 
 const TestDevices = [
@@ -33,7 +33,7 @@ test('calculates quote correctly', () => {
 
 
 test('calculate device usage', () => {
-    const result = calculateDeviceUsage(TestDevices[0], 1)
+    const result = calculateItemUsage(TestDevices[0], 1)
     // 0.5 * 508
     const expectedDeviceSize: number = 254
     expect(result).toBe(expectedDeviceSize)

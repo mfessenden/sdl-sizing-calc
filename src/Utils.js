@@ -60,15 +60,18 @@ export function numberToString(value: number): string {
 /**
  * Calculates the device usage in bytes per day based on the given device information.
  *
- * @param device - The device information object.
- * @param seconds - optional time multiplier (defaults to seconds in a day)
+ * @param item - The device information object.
+ * @param duration - optional duration (defaults to seconds in a day)
  * @return {number} - The device usage in bytes for a given time period.
  */
-export function calculateDeviceUsage(device, seconds = null): number {
-    const eventsPerSecond = parseFloat(device.quantity) * device.base_weight
-    const bytesPerSecond = eventsPerSecond * device.event_size
+export function calculateItemUsage(item, duration: number | null = null): number {
+    if (!item.quantity) {
+        return 0
+    }
+    const eventsPerSecond = parseFloat(item.quantity) * item.base_weight
+    const bytesPerSecond = eventsPerSecond * item.event_size
 
-    const secondsMultiplier: number = seconds ?? SECONDS_PER_DAY
+    const secondsMultiplier: number = duration ?? SECONDS_PER_DAY
     return bytesPerSecond * secondsMultiplier
 }
 

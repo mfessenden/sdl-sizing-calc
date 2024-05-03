@@ -224,7 +224,7 @@ function ResultDropdowns() {
 export default function ResultBody() {
     const {state} = useStateStore();
 
-    const devices = state.calculator.devices.device_items
+    const devices = state.current_state.current_quote.data.devices
     const rententionPeriodMultiplier: number = state.current_state.current_quote.data.retention_interval
     const retentionPeriodValue: number = state.current_state.current_quote.data.retention_quantity
 
