@@ -82,7 +82,7 @@ export function initializeAppState() {
     currentState.current_quote = {...Quote}
     databaseData.current_state = currentState
 
-    currentState.current_quote.data.devices = deviceTypes
+    // currentState.current_quote.data.devices = deviceTypes
 
     // live updates
     databaseData.current_state.admin_mode = process.env.SDL_ADMIN === 1
