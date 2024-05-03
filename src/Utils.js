@@ -106,3 +106,15 @@ export function generateQuote(devices) {
     quote.data.devices = generateQuoteData(devices)
     return quote
 }
+
+
+export function saveExternalQuote(quote) {
+    const fileData: string = JSON.stringify(quote, null, 4);
+    const blob = new Blob([fileData], { type: 'text/plain' });
+    const url: string = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    const date: Date = new Date()
+    link.download = `quote-${date.toISOString()}.json`
+    link.href = url;
+    link.click();
+}

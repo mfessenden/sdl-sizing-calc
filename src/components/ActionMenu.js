@@ -18,7 +18,7 @@ import {useStateStore} from '../model/Data';
  * @returns {React.Component} action menu dropdown component.
  */
 export default function ActionMenu() {
-    const {state, actions: {clearState, generateQuote, resetAppState, restoreState, saveState}} = useStateStore();
+    const {state, actions: {clearState, generateQuote, resetAppState, restoreState, saveState, saveQuote}} = useStateStore();
 
     // check if there's currently saved local storage data
     const savedDataExists = state.current_state.has_saved_data
@@ -30,6 +30,8 @@ export default function ActionMenu() {
             console.log('NYI: Loading previously saved quote...')
         } else if (eventKey === SAVE_QUOTE_INTERNAL) {
             generateQuote()
+        } else if (eventKey === SAVE_QUOTE_EXTERNAL) {
+            saveQuote()
         } else if (eventKey === CLEAR_STATE) {
             clearState()
         } else if (eventKey === RESET_APP_STATE) {
@@ -52,7 +54,7 @@ export default function ActionMenu() {
                     Save Quote...
                 </NavDropdown.Item>
 
-                <NavDropdown.Item disabled={true} active={false} eventKey={SAVE_QUOTE_EXTERNAL} alt='Save current quote to JSON'>
+                <NavDropdown.Item disabled={false} active={false} eventKey={SAVE_QUOTE_EXTERNAL} alt='Save current quote to JSON'>
                     Save Quote to JSON...
                 </NavDropdown.Item>
 

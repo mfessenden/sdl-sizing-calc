@@ -126,6 +126,7 @@ export const useCustomState = (defaultState = initializeDatabase()) => {
             updateDevice: (deviceId, payload) => dispatch({type: 'UPDATE_DEVICE', deviceId, payload}),
             addDevice: (payload) => dispatch({type: 'ADD_DEVICE', payload}),
             generateQuote: () => dispatch({type: 'SAVE_QUOTE_INTERNAL'}),
+            saveQuote: () => dispatch({type: 'SAVE_QUOTE_EXTERNAL'}),
             toggleResultAsBinary: () => dispatch({type: 'TOGGLE_RESULT_BINARY'}),
             inputWeightChanged: (inputId, inputWeight) => dispatch({type: 'INPUT_WEIGHT_CHANGED', inputId, inputWeight}),
         },
@@ -156,7 +157,6 @@ export const StateProvider = ({children}: any) => {
 export const useStateStore = (): any => useContext(StateContext);
 
 
-
 // Helper Functions
 
 
@@ -167,14 +167,14 @@ export const useStateStore = (): any => useContext(StateContext);
  * @param {number} retention_quantity - data retention period quantity (from the result period input).
  * @param {number} retention_interval - data retention interval (days, weeks, etc.)
  *
- * @param industry_weight
- * @param industry_size_weight
- * @param org_size_weight
+ * @param industry_id
+ * @param industry_size
+ * @param org_size
  * @return {number} total bytes of current quote.
  */
-export function calculateQuote(devices, retention_quantity: number = 1, retention_interval: number = 1, industry_weight: number = 1, industry_size_weight: number = 1, org_size_weight: number = 1): number {
+export function calculateQuote(devices, retention_quantity: number = 1, retention_interval: number = 1, industry_id: number = 1, industry_size: number = 1, org_size: number = 1): number {
 
-    let industryMultiplier = industry_weight * industry_size_weight * org_size_weight
+    let industryMultiplier = industry_id * industry_size * org_size
 
     // get the total in bytes per day
     let totalBytesPerDay = 0
@@ -182,7 +182,7 @@ export function calculateQuote(devices, retention_quantity: number = 1, retentio
 
     // for each device, calculate the usage for a given timeframe
     for (let device of devices) {
-        totalBytesPerDay = totalBytesPerDay + calculateDeviceUsage(device)
+        totalBytesPerDay = totalBytesPerDay + calculateItemUsage(device)
         if (device.quantity) {
             activeDevices += 1;
         }
@@ -202,10 +202,4 @@ export function calculateQuote(devices, retention_quantity: number = 1, retentio
 
     console.log(logMsg)
     return totalBytes
-}
-
-
-// TODO: grab input from 'AppState.current_quote'
-export function saveQuote(devices, retention_quantity: number = 1, retention_interval: number = 1): void {
-
 }

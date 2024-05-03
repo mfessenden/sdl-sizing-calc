@@ -2,8 +2,7 @@ import {getSavedState} from './Data';
 import {SDL_STATE} from '../Constants';
 import {AppState, Quote} from '../types/State';
 import {generateQuote} from '../Utils';
-
-const DatabaseData = require('../data.json');
+import {saveExternalQuote} from '../Utils';
 
 
 /**
@@ -182,6 +181,22 @@ export default function stateReducer(state, action) {
             //quote.retention_interval = updatedState.current_state
             break;
         }
+
+        case 'SAVE_QUOTE_EXTERNAL': {
+            let quote = generateQuote(devices)
+
+            // pass data from current
+            const currentQuote = updatedState.current_state.current_quote.data
+            quote.data.retention_interval = currentQuote.retention_interval
+            quote.data.retention_quantity = currentQuote.retention_quantity
+            quote.data.industry_id = currentQuote.industry_id
+            quote.data.industry_size = currentQuote.industry_size
+            quote.data.org_size = currentQuote.org_size
+            console.log('Saving current quote...')
+            saveExternalQuote(quote)
+            break;
+        }
+
 
         case 'TOGGLE_RESULT_BINARY': {
             const toggledValue = !updatedState.current_state.result_as_binary
