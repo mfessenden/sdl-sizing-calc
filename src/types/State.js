@@ -2,7 +2,6 @@
 export const AppState = {
     admin_mode: false,
     has_saved_data: false,
-    expanded_table_items: [],
     filter_string: null,
     filter_active: false,
     current_quote: null,
