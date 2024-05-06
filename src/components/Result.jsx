@@ -108,23 +108,21 @@ function SelectDropdown({dropdownMenu}) {
 
     return (
 
-        // <Form.Select aria-label="Default select example">
-        //     <option>Open this select menu</option>
-        //     <option value="1">One</option>
-        //     <option value="2">Two</option>
-        //     <option value="3">Three</option>
-        // </Form.Select>
-
-        <Form.Select defaultValue={selectedValue} onChange={e => handleChange(dropdownId.current, e.target.value)}>
-            <option>---</option>
+        <select
+            value={selectedValue.toString()}
+            className='form-select'
+            onChange={e => handleChange(dropdownId.current, e.target.value)}
+        >
+            <option value='---'>---</option>
             {dropdownMenu.dropdown_items.map(dropdownItem => (
-                <option
-
-                    value={dropdownItem.weight}
-                    key={dropdownItem.id}>{dropdownItem.display_name}
-                </option>
-            ))}
-        </Form.Select>
+                    <option
+                        value={dropdownItem.weight.toString()}
+                        key={dropdownItem.id}
+                    >
+                        {dropdownItem.display_name}
+                    </option>
+                ))}
+        </select>
     )
 }
 
@@ -175,23 +173,26 @@ function ResultDropdowns() {
 
     return (
         <Container>
+            <Row className='p-1 result-label-sm mx-auto'>
+                <Col className='mx-auto'>
+                    Industry Variables
+                </Col>
+            </Row>
             {/*<Row className='result-label-sm align-center'>Variables</Row>*/}
-            <Form>
-                {dropdownMenus.map(dropdownMenu => (
-                    <Row className='text-end p-1' key={`row-${dropdownMenu.input_id}`}>
-                        <Col key={`col-${dropdownMenu.input_id}`}>
-                            {/*<Form.Label className='result-input-label' key={dropdownMenu.input_id}>*/}
-                            <Form.Label key={dropdownMenu.input_id}>
-                                {dropdownMenu.display_name}
-                            </Form.Label>
-                        </Col>
-                        <Col>
-                            <SelectDropdown dropdownMenu={dropdownMenu}/>
-                        </Col>
-                    </Row>
+            {dropdownMenus.map(dropdownMenu => (
+                <Row className='text-end p-1' key={`row-${dropdownMenu.input_id}`}>
+                    <Col key={`col-${dropdownMenu.input_id}`}>
+                        {/*<Form.Label className='result-input-label' key={dropdownMenu.input_id}>*/}
+                        <Form.Label key={dropdownMenu.input_id}>
+                            {dropdownMenu.display_name}
+                        </Form.Label>
+                    </Col>
+                    <Col>
+                        <DropdownMenu dropdownMenu={dropdownMenu}/>
+                    </Col>
+                </Row>
 
-                ))}
-            </Form>
+            ))}
         </Container>
     )
 }
