@@ -23,4 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 Notes.md
+src/saved-state.json
 src/components/Test
