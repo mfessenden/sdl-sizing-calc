@@ -22,7 +22,7 @@ import {useStateStore} from '../model/Data';
 export default function TopNavbar({adminMode = false}) {
     const {state} = useStateStore();
     var hasActiveDevices = false
-    const devices = state.current_state.current_quote.data.devices
+    const devices = state.calculator.devices.device_items
     for (let device of devices) {
         if (device.quantity > 0) {
             hasActiveDevices = true;

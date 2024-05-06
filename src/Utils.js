@@ -106,7 +106,8 @@ export function generateQuoteData(devices): Device[] {
 export function generateQuote(devices) {
     // const {state} = useStateStore();
     let quote = {...Quote}
-    quote.data.devices = generateQuoteData(devices)
+    // TODO: this won't work in ts
+    quote['devices'] = generateQuoteData(devices)
     return quote
 }
 

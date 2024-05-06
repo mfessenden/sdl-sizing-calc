@@ -138,8 +138,7 @@ export default function CalculatorBody() {
         // const interfaceData = data.interface_data
         const devicesData = data.calculator.devices
         const categoryData = devicesData.device_categories
-        const currentState = state.current_state
-        const deviceTypes = currentState.current_quote.data.devices
+        const deviceTypes = devicesData.device_items
 
         for (const category of categoryData) {
             const categoryDevices = []
@@ -167,7 +166,7 @@ export default function CalculatorBody() {
     const filterString = currentState.filter_string
     const filterActive = currentState.filter_active
 
-    const deviceTypes = currentState.current_quote.data.devices
+    const deviceTypes = state.calculator.devices.device_items
 
     // filtering logic
     let filteredDevices = []
@@ -224,7 +223,6 @@ export default function CalculatorBody() {
                                         table_item={table_item}
                                         columnData={headerData}
                                     />
-
                                 </Accordion.Body>
                             </Accordion.Item>
                         </Accordion>

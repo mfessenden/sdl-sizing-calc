@@ -115,7 +115,7 @@ function CategoryEditor({category}) {
 function AddDeviceComponent() {
     const {state, actions: {addDevice}} = useStateStore();
     const categories = state.calculator.devices.device_categories
-    const devices = state.current_state.current_quote.data.devices
+    const devices = state.calculator.devices.device_items
     const deviceDefaults = state.calculator.devices.device_defaults
     const [validated, setValidated] = useState(false);
     console.log(`Device Count: ${devices.length}`)
@@ -213,7 +213,7 @@ function AddDeviceComponent() {
  */
 export default function AdminPanel() {
     const {state} = useStateStore();
-    const devices = state.current_state.current_quote.data.devices
+    const devices = state.calculator.devices.device_items
     const categories = state.calculator.devices.device_categories
 
     return (

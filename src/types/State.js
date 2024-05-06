@@ -28,17 +28,12 @@ export const Device = {
 }
 
 
-export const QuoteData = {
+export const Quote = {
     industry_id: null,
     industry_size: null,
     org_size: null,
     retention_interval: 1,
     retention_quantity:  1,
-    devices:  [],
-}
-
-
-export const Quote = {
-    data: {...QuoteData},
     metadata: {...QuoteMetadata}
 }
+

@@ -8,6 +8,7 @@ let DatabaseData = require('../data.json');
 let InitialAppState = initializeAppState()
 
 
+
 /**
  * Returns true if the app has data in local storage.
  *
@@ -39,6 +40,27 @@ export function getSavedState() {
     }
     console.log('No saved data found....')
     return null
+}
+
+
+/**
+ * Returns true if the app has test data saved.
+ *
+ * @returns {boolean} SDL calculator data exists
+ */
+export function hasSavedTestData() {
+    return !getSavedTestState()
+}
+
+
+export function getSavedTestState() {
+    try {
+        let savedState = require('../saved-state.json');
+        return savedState
+    } catch (ex) {
+        console.log(`Error reading test data: ${ex}`)
+        return null
+    }
 }
 
 
@@ -82,11 +104,11 @@ export function initializeAppState() {
     currentState.current_quote = {...Quote}
     databaseData.current_state = currentState
 
-    // currentState.current_quote.data.devices = deviceTypes
+    // currentState.current_quote.devices = deviceTypes
 
     // live updates
     databaseData.current_state.admin_mode = process.env.SDL_ADMIN === 1
-    databaseData.current_state.has_saved_data = hasSavedData()
+    databaseData.current_state.has_saved_data = hasSavedData()  // FIXME: this works only on load
     return databaseData
 }
 
@@ -118,6 +140,7 @@ export const useCustomState = (defaultState = initializeAppState()) => {
             setRetentionPeriods: (value) => dispatch({type: 'SET_RETENTION_PERIODS', value}),
             saveState: () => dispatch({type: 'SAVE_STATE'}),
             loadState: () => dispatch({type: 'LOAD_STATE'}),
+            loadTestState: () => dispatch({type: 'LOAD_TEST_STATE'}),
             clearState: () => dispatch({type: 'CLEAR_STATE'}),
             resetAppState: () => dispatch({type: 'RESET_APP_STATE'}),
             restoreState: () => dispatch({type: 'RESTORE_STATE'}),

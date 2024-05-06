@@ -16,11 +16,13 @@ import {useStateStore} from '../model/Data';
  *   +------------------+ +-------------+
  *
  * @param {boolean} hasActiveDevices - Indicates there are active devices in the application.
- * @return {Element} -  filtered input component.
+ * @return {Element} - filtered input component.
  */
 export default function DeviceFilteringInput({hasActiveDevices = false}) {
     const {state, actions: {applyFilterString, applyActiveFilter}} = useStateStore();
-    const isFilteringActive = state.current_state.filter_active
+    const currentState = state.current_state
+    const currentQuoteData = currentState.current_quote
+    const isFilteringActive = currentState.filter_active
     const activeButtonText = (isFilteringActive) ? 'Active: On' : 'Active: Off'
     return (
         <Nav className='justify-content-end'>
@@ -34,7 +36,7 @@ export default function DeviceFilteringInput({hasActiveDevices = false}) {
                                 className='me-2'
                                 aria-label='filter'
                                 onChange={e => applyFilterString(e.target.value.toLowerCase())}
-                                value={state.current_state.filter_string ?? ''}
+                                value={currentState.filter_string ?? ''}
                             />
                         </Form>
                     </Col>

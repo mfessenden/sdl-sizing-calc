@@ -14,7 +14,7 @@ import {IndustryDetailData, RetentionPeriodData} from '../Constants';
 // form group for the given tab
 function DataRetentionInput({tabData}) {
     const {state, actions: {setRetentionPeriods}} = useStateStore();
-    const currentQuote = state.current_state.current_quote.data
+    const currentQuote = state.current_state.current_quote
     return (
         <Container key={tabData.id} className='m-3 text-center'>
             <Form>
@@ -45,7 +45,7 @@ function DataRetentionInput({tabData}) {
  */
 function RetentionPeriodTabs() {
     const {state, actions: {setRetentionMultiplier}} = useStateStore();
-    const currentQuoteData = state.current_state.current_quote.data
+    const currentQuoteData = state.current_state.current_quote
     const currentInterval = currentQuoteData.retention_interval
     console.log(`Tabs: active interval: ${currentInterval}`)
     return (
@@ -70,40 +70,49 @@ function RetentionPeriodTabs() {
 
 
 // here
-function SelectDropdown({dropdownMenu}) {
+function DropdownMenu({dropdownMenu}) {
     const {state, actions: {inputWeightChanged}} = useStateStore();
-    const currentQuote = state.current_state.current_quote.data
+    const currentQuote = state.current_state.current_quote
+    console.log('Current Quote:')
+    console.log(currentQuote)
 
-    let selectedValue = -1
+    let selectedValue = '---'
     switch (dropdownMenu.input_id) {
         // industry
         case 0: {
-            selectedValue = currentQuote.industry_id
+            if (currentQuote.industry_id) {
+                selectedValue = currentQuote.industry_id
+            }
+            console.log(`Industry id weight: ${selectedValue}`)
             break;
         }
 
         case 1: {
-            selectedValue = currentQuote.industry_size
+            if (currentQuote.industry_size) {
+                selectedValue = currentQuote.industry_size
+            }
+            console.log(`Industry size weight: ${selectedValue}`)
             break;
         }
 
         case 2: {
-            selectedValue = currentQuote.org_size
+            if (currentQuote.org_size) {
+                selectedValue = currentQuote.org_size
+            }
+            console.log(`Org size weight: ${selectedValue}`)
+            console.log(selectedValue)
             break;
         }
 
         default:
-            console.log(`Error: invalid inout id ${dropdownMenu.input_id} `);
+            console.log(`Error: invalid input id ${dropdownMenu.input_id} `);
     }
 
-    console.log(`Building industry menu: ${dropdownMenu.input_id}, weight: ${selectedValue}`)
-
     let dropdownId = useRef(dropdownMenu.input_id);
-    console.log(`Industry menu: ${dropdownId.current}`)
 
     const handleChange = (input_id, weight) => {
-        console.log(`Menu item changed, weight: ${weight}, input id: ${input_id}`)
         inputWeightChanged(input_id, Number(weight))
+        console.log(`Menu item changed, weight: ${Number(weight)}, input id: ${input_id}`)
     }
 
     return (
@@ -225,25 +234,27 @@ function ResultDropdowns() {
 export default function ResultBody() {
     const {state} = useStateStore();
 
-    const devices = state.current_state.current_quote.data.devices
-    const rententionPeriodMultiplier: number = state.current_state.current_quote.data.retention_interval
-    const retentionPeriodValue: number = state.current_state.current_quote.data.retention_quantity
+    const devices = state.calculator.devices.device_items
+    const currentQuote = state.current_state.current_quote
+    const rententionPeriodMultiplier: number = currentQuote.retention_interval
+    const retentionPeriodValue: number = currentQuote.retention_quantity
 
     let industryIdWeight = 1;
     let industrySizeWeight = 1;
     let orgSizeWeight = 1;
-    if (state.current_state.current_quote.data.industry_id) {
-        industryIdWeight = state.current_state.current_quote.data.industry_id
+    if (state.current_state.current_quote.industry_id) {
+        industryIdWeight = state.current_state.current_quote.industry_id
     }
 
-    if (state.current_state.current_quote.data.industry_size) {
-        industrySizeWeight = state.current_state.current_quote.data.industry_size
+    if (state.current_state.current_quote.industry_size) {
+        industrySizeWeight = state.current_state.current_quote.industry_size
     }
 
-    if (state.current_state.current_quote.data.org_size) {
-        orgSizeWeight = state.current_state.current_quote.data.org_size
+    if (state.current_state.current_quote.org_size) {
+        orgSizeWeight = state.current_state.current_quote.org_size
     }
 
+    // calculate the final quote size
     const totalBytes: number = calculateQuote(devices, retentionPeriodValue, rententionPeriodMultiplier, industryIdWeight, industrySizeWeight, orgSizeWeight)
 
     return (
