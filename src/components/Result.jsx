@@ -46,8 +46,6 @@ function DataRetentionInput({tabData}) {
 function RetentionPeriodTabs() {
     const {state, actions: {setRetentionMultiplier}} = useStateStore();
     const currentQuoteData = state.current_state.current_quote
-    const currentInterval = currentQuoteData.retention_interval
-    console.log(`Tabs: active interval: ${currentInterval}`)
     return (
         <Tabs
             key='result-tabs'
@@ -73,8 +71,6 @@ function RetentionPeriodTabs() {
 function DropdownMenu({dropdownMenu}) {
     const {state, actions: {inputWeightChanged}} = useStateStore();
     const currentQuote = state.current_state.current_quote
-    console.log('Current Quote:')
-    console.log(currentQuote)
 
     let selectedValue = '---'
     switch (dropdownMenu.input_id) {
@@ -83,7 +79,6 @@ function DropdownMenu({dropdownMenu}) {
             if (currentQuote.industry_id) {
                 selectedValue = currentQuote.industry_id
             }
-            console.log(`Industry id weight: ${selectedValue}`)
             break;
         }
 
@@ -91,7 +86,6 @@ function DropdownMenu({dropdownMenu}) {
             if (currentQuote.industry_size) {
                 selectedValue = currentQuote.industry_size
             }
-            console.log(`Industry size weight: ${selectedValue}`)
             break;
         }
 
@@ -99,8 +93,6 @@ function DropdownMenu({dropdownMenu}) {
             if (currentQuote.org_size) {
                 selectedValue = currentQuote.org_size
             }
-            console.log(`Org size weight: ${selectedValue}`)
-            console.log(selectedValue)
             break;
         }
 
@@ -112,7 +104,6 @@ function DropdownMenu({dropdownMenu}) {
 
     const handleChange = (input_id, weight) => {
         inputWeightChanged(input_id, Number(weight))
-        console.log(`Menu item changed, weight: ${Number(weight)}, input id: ${input_id}`)
     }
 
     return (

@@ -1,8 +1,6 @@
 import {getSavedState} from './Data';
 import {SDL_STATE} from '../Constants';
-import {AppState, Quote} from '../types/State';
-import {generateQuote} from '../Utils';
-import {saveExternalQuote} from '../Utils';
+import {Quote} from '../types/State';
 
 
 /**
@@ -42,9 +40,7 @@ export default function stateReducer(state, action) {
             const deviceId = action.deviceId
             const categoryId = action.categoryId
             const device = devices.filter((d) => d.id === deviceId)[0]
-            let currentCategoryId = device.category_id
             device.category_id = categoryId
-            console.log(`Device '${device.name}' category updated: ${currentCategoryId} -> ${categoryId}`)
             break;
         }
 
@@ -115,9 +111,7 @@ export default function stateReducer(state, action) {
             for (let device of updatedState.calculator.devices.device_items) {
                 device.quantity = 0
             }
-
             updatedState.current_state.current_quote = {...Quote}
-            console.log(updatedState.current_state)
             break;
         }
 
@@ -142,7 +136,6 @@ export default function stateReducer(state, action) {
                 // industry
                 case 0: {
                     currentQuoteData.industry_id = inputWeight
-                    console.log(inputWeight)
                     break;
                 }
                 case 1: {

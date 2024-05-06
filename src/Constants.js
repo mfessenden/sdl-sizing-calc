@@ -10,7 +10,6 @@ export const CLEAR_STATE: string = 'clear-state';
 export const RESET_APP_STATE: string = 'reset-app';
 export const RESTORE_STATE: string = 'restore-state';
 export const ADMIN_PANEL_NAME: string = 'Admin Panel';
-export const SETTINGS_PANEL_TITLE: string = 'Settings';
 export const DEFAULT_CATEGORY_ID: number = 3;
 
 

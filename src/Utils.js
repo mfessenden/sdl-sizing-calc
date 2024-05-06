@@ -1,5 +1,4 @@
 import {BYTES_TO_GB, SECONDS_PER_DAY} from './Constants';
-import {Device, Quote} from './types/State';
 
 
 /**
@@ -84,41 +83,4 @@ export function calculateItemUsage(item, duration: number | null = null): number
  */
 export function bytesToGigs(bytes: number): number {
     return bytes * BYTES_TO_GB
-}
-
-
-export function generateQuoteData(devices): Device[] {
-    let devicesData = []
-    for (const device of devices) {
-        if (device.quantity) {
-            let thisDevice = {...Device}
-            thisDevice.id = device.id
-            thisDevice.base_weight = device.base_weight
-            thisDevice.event_size = device.event_size
-            thisDevice.quantity = device.quantity
-            devicesData.push(thisDevice)
-        }
-    }
-    return devicesData
-}
-
-
-export function generateQuote(devices) {
-    // const {state} = useStateStore();
-    let quote = {...Quote}
-    // TODO: this won't work in ts
-    quote['devices'] = generateQuoteData(devices)
-    return quote
-}
-
-
-export function saveExternalQuote(quote) {
-    const fileData: string = JSON.stringify(quote, null, 4);
-    const blob = new Blob([fileData], { type: 'text/plain' });
-    const url: string = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    const date: Date = new Date()
-    link.download = `quote-${date.toISOString()}.json`
-    link.href = url;
-    link.click();
 }

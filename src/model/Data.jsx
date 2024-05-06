@@ -2,7 +2,7 @@ import {createContext, useContext, useReducer} from 'react';
 import {AppState, Quote} from '../types/State';
 import stateReducer from './Reducers';
 import {SDL_STATE} from '../Constants';
-import {calculateItemUsage, humanFileSize} from '../Utils';
+import {calculateItemUsage} from '../Utils';
 
 let DatabaseData = require('../data.json');
 let InitialAppState = initializeAppState()
@@ -64,8 +64,6 @@ export function initializeAppState() {
     const defaultCategoryId = deviceDefaults['category_id']
     const defaultQuantity = deviceDefaults['quantity']
 
-    console.log('Initializing App state...')
-
     // devices
     const deviceTypes = devicesData['device_items']
 
@@ -87,7 +85,7 @@ export function initializeAppState() {
 
     // live updates
     databaseData.current_state.admin_mode = process.env.SDL_ADMIN === 1
-    databaseData.current_state.has_saved_data = hasSavedData()  // FIXME: this works only on load
+    databaseData.current_state.has_saved_data = hasSavedData()
     return databaseData
 }
 
@@ -175,14 +173,10 @@ export function calculateQuote(devices, retention_quantity: number = 1, retentio
 
     // get the total in bytes per day
     let totalBytesPerDay = 0
-    let activeDevices = 0
 
     // for each device, calculate the usage for a given timeframe
     for (let device of devices) {
         totalBytesPerDay = totalBytesPerDay + calculateItemUsage(device)
-        if (device.quantity) {
-            activeDevices += 1;
-        }
     }
 
     // calculate bytes per day * retention period
@@ -191,12 +185,5 @@ export function calculateQuote(devices, retention_quantity: number = 1, retentio
 
     // weighted industry values
     totalBytes = totalBytes * industryMultiplier
-
-    var logMsg: string = `Calculating... No active devices.`
-    if (activeDevices) {
-        logMsg = `Calculating ${activeDevices} devices: ${humanFileSize(totalBytes)}`
-    }
-
-    console.log(logMsg)
     return totalBytes
 }

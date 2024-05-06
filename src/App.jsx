@@ -1,8 +1,7 @@
 import {useEffect} from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import AdminPanel from './components/Admin';
 import Body from './components/Body';
-import SettingsPanel from './components/Settings';
 import TopNavbar from './components/Navbar';
 import {StateProvider} from './model/Data';
 import {SDL_TITLE} from './Constants';
@@ -25,7 +24,6 @@ export default function App() {
                     <Routes>
                         <Route path='/' element={<Body/>}/>
                         <Route path='admin' element={<AdminPanel/>}/>
-                        <Route path='settings' element={<SettingsPanel/>}/>
                     </Routes>
                 </BrowserRouter>
             </StateProvider>

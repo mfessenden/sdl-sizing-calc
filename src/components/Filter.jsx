@@ -21,7 +21,6 @@ import {useStateStore} from '../model/Data';
 export default function DeviceFilteringInput({hasActiveDevices = false}) {
     const {state, actions: {applyFilterString, applyActiveFilter}} = useStateStore();
     const currentState = state.current_state
-    const currentQuoteData = currentState.current_quote
     const isFilteringActive = currentState.filter_active
     const activeButtonText = (isFilteringActive) ? 'Active: On' : 'Active: Off'
     return (

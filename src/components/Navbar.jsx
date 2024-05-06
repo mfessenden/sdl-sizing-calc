@@ -54,7 +54,6 @@ export default function TopNavbar({adminMode = false}) {
                     {adminMode &&
                         <Nav>
                             <Nav.Item><Nav.Link href='/admin'>{ADMIN_PANEL_NAME}</Nav.Link></Nav.Item>
-                            <Nav.Item><Nav.Link href='/settings'>Settings</Nav.Link></Nav.Item>
                         </Nav>
                     }
 
