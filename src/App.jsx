@@ -11,7 +11,7 @@ import './App.css';
 
 
 export default function App() {
-    const isAdmin = true
+    const isAdmin = false
     useEffect(() => {
         // update browser params
         document.title = SDL_TITLE;

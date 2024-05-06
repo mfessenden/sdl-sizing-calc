@@ -44,27 +44,6 @@ export function getSavedState() {
 
 
 /**
- * Returns true if the app has test data saved.
- *
- * @returns {boolean} SDL calculator data exists
- */
-export function hasSavedTestData() {
-    return !getSavedTestState()
-}
-
-
-export function getSavedTestState() {
-    try {
-        let savedState = require('../saved-state.json');
-        return savedState
-    } catch (ex) {
-        console.log(`Error reading test data: ${ex}`)
-        return null
-    }
-}
-
-
-/**
  * Builds the context data for the application. Retrieves saved state data and sets default property
  * values for device types.
  *
@@ -139,16 +118,12 @@ export const useCustomState = (defaultState = initializeAppState()) => {
             setRetentionMultiplier: (value) => dispatch({type: 'SET_RETENTION_INTERVAL', value}),
             setRetentionPeriods: (value) => dispatch({type: 'SET_RETENTION_PERIODS', value}),
             saveState: () => dispatch({type: 'SAVE_STATE'}),
-            loadState: () => dispatch({type: 'LOAD_STATE'}),
-            loadTestState: () => dispatch({type: 'LOAD_TEST_STATE'}),
             clearState: () => dispatch({type: 'CLEAR_STATE'}),
             resetAppState: () => dispatch({type: 'RESET_APP_STATE'}),
             restoreState: () => dispatch({type: 'RESTORE_STATE'}),
             toggleAdminMode: (value) => dispatch({type: 'TOGGLE_ADMIN', value}),
             updateDevice: (deviceId, payload: {deviceId: number, payload: Object}) => dispatch({type: 'UPDATE_DEVICE', deviceId, payload}),
             addDevice: (payload) => dispatch({type: 'ADD_DEVICE', payload: Object}),
-            generateQuote: () => dispatch({type: 'SAVE_QUOTE_INTERNAL'}),
-            saveQuote: () => dispatch({type: 'SAVE_QUOTE_EXTERNAL'}),
             toggleResultAsBinary: () => dispatch({type: 'TOGGLE_RESULT_BINARY'}),
             inputWeightChanged: (inputId, inputWeight) => dispatch({type: 'INPUT_WEIGHT_CHANGED', inputId, inputWeight}),
         },
