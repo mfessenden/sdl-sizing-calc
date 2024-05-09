@@ -60,7 +60,7 @@ export function numberToString(value: number): string {
  * Calculates the device usage in bytes per day based on the given device information.
  *
  * @param item - The device information object.
- * @param duration - optional duration (defaults to seconds in a day)
+ * @param duration - optional duration in seconds (defaults to seconds in a day)
  * @return {number} - The device usage in bytes for a given time period.
  */
 export function calculateItemUsage(item, duration: number | null = null): number {

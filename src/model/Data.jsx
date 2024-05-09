@@ -161,7 +161,6 @@ export const useStateStore = (): any => useContext(StateContext);
  * @param {Array<object>} devices - current calculator devices.
  * @param {number} retention_quantity - data retention period quantity (from the result period input).
  * @param {number} retention_interval - data retention interval (days, weeks, etc.)
- *
  * @param industry_id
  * @param industry_size
  * @param org_size
@@ -169,7 +168,7 @@ export const useStateStore = (): any => useContext(StateContext);
  */
 export function calculateQuote(devices, retention_quantity: number = 1, retention_interval: number = 1, industry_id: number = 1, industry_size: number = 1, org_size: number = 1): number {
 
-    let industryMultiplier = industry_id * industry_size * org_size
+    let industryMultiplier: number = industry_id * industry_size * org_size
 
     // get the total in bytes per day
     let totalBytesPerDay = 0
