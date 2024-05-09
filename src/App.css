@@ -118,6 +118,10 @@ input[type="range"]::-webkit-slider-thumb {
   width: 30%;
 }
 
+.table>tbody {
+   vertical-align: middle;
+}
+
 /* Table columns */
 .category-table-numeric {
   min-width: 40px;
