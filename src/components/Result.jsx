@@ -251,7 +251,7 @@ export default function ResultBody() {
     return (
         <div className='sticky-top result-sticky'>
             <Container>
-                <Card className='m-2 p-3'>
+                <Card className='p-3'>
                     <Container className='my-8 text-center'>
                         <Row className='result-lg'>
                             <Col className='mx-auto'>
