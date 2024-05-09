@@ -201,3 +201,7 @@ textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[ty
   -webkit-box-shadow: none;
   outline: -webkit-focus-ring-color auto 5px;
 }
+
+.form-select {
+  min-width: 330px;
+}
