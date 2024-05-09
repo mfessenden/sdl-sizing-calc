@@ -69,6 +69,11 @@ input[type="range"]::-webkit-slider-thumb {
   font-weight: 600;
 }
 
+.device-desc {
+  /*!important;*/
+  /*font-weight: 600;*/
+}
+
 .admin-panel-header {
   font-size: x-large;
 }

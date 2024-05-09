@@ -23,7 +23,9 @@ export default function RangeSlider({device}) {
         <Container>
             <Row>
                 <Col md={8}>
-                    <Form.Label>
+                    <Form.Label
+                        className='device-desc'
+                    >
                         {device.display_name}
                     </Form.Label>
                 </Col>
