@@ -34,15 +34,24 @@ const headerData = [
 ]
 
 
+/**
+ * Editable text component allows the user to edit and display a numerical value. The value
+ * represents the device's **events per second** variable. Allows the user to customize the
+ * quote.
+ *
+ * @param {Object} device - The device object representing the device being edited.
+ * @return {JSX.Element} The rendered component.
+ */
 function EditableText({device}) {
     const [isEditable: boolean, setEditable] = useState(false);
+    const {state, actions: {setDeviceEPS}} = useStateStore();
     const eventsPerSecond: number = calculateItemUsage(device, 1)
     const eventsPerSecondString: string = numberToString(eventsPerSecond)
 
     const handleChange = (e) => {
         e.preventDefault();
         const value: number = Number(e.target.value)
-        device.eps = value
+        setDeviceEPS(device.id, value)
         console.log(`Value updated: ${value}`)
     }
 
