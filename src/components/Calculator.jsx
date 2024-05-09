@@ -5,6 +5,7 @@ import Table from 'react-bootstrap/Table';
 import RangeSlider from './Slider';
 import {useStateStore} from '../model/Data';
 import {bytesToGigs, calculateItemUsage, numberToString} from '../Utils';
+import {useState} from 'react';
 
 
 const headerData = [
@@ -33,6 +34,50 @@ const headerData = [
 ]
 
 
+function EditableText({device}) {
+    const [isEditable: boolean, setEditable] = useState(false);
+    const eventsPerSecond: number = calculateItemUsage(device, 1)
+    const eventsPerSecondString: string = numberToString(eventsPerSecond)
+
+    const handleChange = (e) => {
+        e.preventDefault();
+        const value: number = Number(e.target.value)
+        device.eps = value
+        console.log(`Value updated: ${value}`)
+    }
+
+    const handleBlur = (e) => {
+        e.preventDefault();
+        // if the user tabs out or clicks on another value, set 'not editable'
+        setEditable()
+    }
+
+    if (!isEditable) {
+        return (
+            <p
+                className='text-center'
+                onClick={setEditable}
+            >
+                {eventsPerSecondString}
+            </p>
+        );
+    }
+    return (
+        <>
+            <form>
+                <input
+                    type='number'
+                    value={eventsPerSecond}
+                    className='text-center form-control'
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                />
+            </form>
+        </>
+    )
+}
+
+
 /**
  * Renders a table row component for a device.
  *
@@ -43,7 +88,7 @@ const headerData = [
 function CalculatorTableRow({device}) {
     const {actions: {setQuantity}} = useStateStore();
 
-    const eventsPerSecond = device.quantity * device.base_weight
+    const eventsPerSecond = device.eps ?? device.quantity * device.base_weight
     const bytesPerDay = calculateItemUsage(device)
     const gigsPerDay = bytesToGigs(bytesPerDay)
 
@@ -65,9 +110,10 @@ function CalculatorTableRow({device}) {
                 />
             </td>
             <td className='text-center category-table-numeric'>
-                <Form.Text key={device.id} type='number'>
-                    {numberToString(eventsPerSecond)}
-                </Form.Text>
+                {/*<Form.Text key={device.id} type='number'>*/}
+                {/*    {numberToString(eventsPerSecond)}*/}
+                {/*</Form.Text>*/}
+                <EditableText device={device}/>
             </td>
             <td className='text-center category-table-numeric'>
                 <Form.Text key={device.id} type='number'>
@@ -94,26 +140,25 @@ function CategoryTable({table_item, columnData}) {
         <div>
             <Table key={table_item.category_id}>
                 <thead>
-                <tr>
-                    {columnData.map(column => (
-                        <th
-                            key={column.id}
-                            title={column.description}
-                            className={column.align_center ? 'category-header-center' : 'category-header-left'}
-                        >
-                            {column.display_name}
-                        </th>
-                    ))}
-                </tr>
+                    <tr>
+                        {columnData.map(column => (
+                            <th
+                                key={column.id}
+                                title={column.description}
+                                className={column.align_center ? 'category-header-center' : 'category-header-left'}
+                            >
+                                {column.display_name}
+                            </th>
+                        ))}
+                    </tr>
                 </thead>
                 <tbody>
-
-                {devices.map(device => (
-                    <CalculatorTableRow
-                        key={device.id}
-                        device={device}
-                    />
-                ))}
+                    {devices.map(device => (
+                        <CalculatorTableRow
+                            key={device.id}
+                            device={device}
+                        />
+                    ))}
                 </tbody>
             </Table>
         </div>
@@ -135,7 +180,7 @@ export default function CalculatorBody() {
      */
     const buildCategoryTables = (data) => {
         const tableItems = []
-        // const interfaceData = data.interface_data
+
         const devicesData = data.calculator.devices
         const categoryData = devicesData.device_categories
         const deviceTypes = devicesData.device_items

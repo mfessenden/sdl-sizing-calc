@@ -67,8 +67,13 @@ export function calculateItemUsage(item, duration: number | null = null): number
     if (!item.quantity) {
         return 0
     }
-    const eventsPerSecond = parseFloat(item.quantity) * item.base_weight
-    const bytesPerSecond = eventsPerSecond * item.event_size
+
+    let eventsPerSecond: number = parseFloat(item.quantity) * item.base_weight
+    if (item.eps) {
+        eventsPerSecond = parseFloat(item.eps) / item.event_size
+        console.log(`Item has eps value: ${eventsPerSecond}`)
+    }
+    const bytesPerSecond: number = eventsPerSecond * item.event_size
 
     const secondsMultiplier: number = duration ?? SECONDS_PER_DAY
     return bytesPerSecond * secondsMultiplier

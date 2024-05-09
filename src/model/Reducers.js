@@ -152,6 +152,11 @@ export default function stateReducer(state, action) {
             break;
         }
 
+        // user sets the device EPS manually
+        case 'UPDATE_EPS': {
+            break;
+        }
+
         default:
             console.log(`Error: ${action.type} not caught by State reducer`);
     }
