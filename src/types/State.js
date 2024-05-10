@@ -24,7 +24,8 @@ export const Device = {
     event_size: 508,
     quantity: 0,
     name: null,
-    display_name: null
+    display_name: null,
+    eps: null
 }
 
 
