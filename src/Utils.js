@@ -68,10 +68,20 @@ export function calculateItemUsage(item, duration: number | null = null): number
         return 0
     }
     const eventsPerSecond = parseFloat(item.quantity) * item.base_weight
+    if (item.eps) {
+
+    }
     const bytesPerSecond = eventsPerSecond * item.event_size
 
     const secondsMultiplier: number = duration ?? SECONDS_PER_DAY
     return bytesPerSecond * secondsMultiplier
+}
+
+
+export function calculateDeviceUsage(
+    quantity: number,
+) : number {
+
 }
 
 
