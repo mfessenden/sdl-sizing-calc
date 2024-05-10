@@ -85,6 +85,22 @@ export function calculateDeviceUsage(
 }
 
 
+export function calculateDeviceUsage(
+    quantity: number,
+    baseWeight: number,
+    eventSize: number,
+    retentionQuantity: number = 1,
+    retentionInterval: number = 1,
+    industryId: number = 1,
+    industrySize: number = 1,
+    orgSize: number = 1,
+    eventsPerSecond: number | null = null,
+
+) : number {
+
+}
+
+
 /**
  * Converts bytes to gigabytes.
  *
