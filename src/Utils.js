@@ -80,13 +80,6 @@ export function calculateItemUsage(item, duration: number | null = null): number
 
 export function calculateDeviceUsage(
     quantity: number,
-) : number {
-
-}
-
-
-export function calculateDeviceUsage(
-    quantity: number,
     baseWeight: number,
     eventSize: number,
     retentionQuantity: number = 1,
