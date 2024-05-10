@@ -15,6 +15,10 @@ import {IndustryDetailData, RetentionPeriodData} from '../Constants';
 function DataRetentionInput({tabData}) {
     const {state, actions: {setRetentionPeriods}} = useStateStore();
     const currentQuote = state.current_state.current_quote
+    let retentionQuantity = currentQuote.retention_quantity
+    if (isNaN(retentionQuantity)) {
+        retentionQuantity = 0
+    }
     return (
         <Container key={tabData.id} className='m-3 text-center'>
             <Form>
@@ -22,7 +26,8 @@ function DataRetentionInput({tabData}) {
                     <Form.Label className='result-label-sm'>Data Retention Period ({tabData.display_name})</Form.Label>
                     <Form.Control
                         size='sm'
-                        value={currentQuote.retention_quantity}
+                        pattern='[0-9]'
+                        value={retentionQuantity}
                         className='result-input mx-auto text-center'
                         onChange={e => setRetentionPeriods(parseInt(e.target.value))}
                     />
