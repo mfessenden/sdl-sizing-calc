@@ -128,6 +128,10 @@ input[type="range"]::-webkit-slider-thumb {
   max-width: 60px;
 }
 
+.category-table-numeric p {
+  margin-bottom: 0px !important;
+}
+
 .category-table-description {
   max-width: 200px;
 }
