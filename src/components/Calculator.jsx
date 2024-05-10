@@ -41,9 +41,17 @@ const headerData = [
  * @returns {JSX.Element} - The rendered table row.
  */
 function CalculatorTableRow({device}) {
-    const {actions: {setQuantity}} = useStateStore();
+    const {state, actions: {setQuantity}} = useStateStore();
+    // TODO: add function to get device eps
+    const currentQuoteData = state.current_state.current_quote
+    const industryIdMultiplier = currentQuoteData.industry_id ?? 1
+    const industrySizeMultiplier = currentQuoteData.industry_size ?? 1
+    const orgSizeMultiplier = currentQuoteData.org_size ?? 1
+    const indsutryMultiplier = industryIdMultiplier * industrySizeMultiplier * orgSizeMultiplier
+    console.log(indsutryMultiplier)
+    let eventsPerSecond = device.quantity * device.base_weight
+    eventsPerSecond = eventsPerSecond * indsutryMultiplier
 
-    const eventsPerSecond = device.quantity * device.base_weight
     const bytesPerDay = calculateItemUsage(device)
     const gigsPerDay = bytesToGigs(bytesPerDay)
 

@@ -174,8 +174,8 @@ export const useStateStore = (): any => useContext(StateContext);
  * @return {number} total bytes of current quote.
  */
 export function calculateQuote(devices, retention_quantity: number = 1, retention_interval: number = 1, industry_id: number = 1, industry_size: number = 1, org_size: number = 1): number {
-
-    let industryMultiplier = industry_id * industry_size * org_size
+    // TODO: add seconds at this level
+    let industryMultiplier: number = industry_id * industry_size * org_size
 
     // get the total in bytes per day
     let totalBytesPerDay = 0
