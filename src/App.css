@@ -123,6 +123,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 /* Table columns */
+/* TODO: check for weird jitter */
 .category-table-numeric {
   min-width: 40px;
   max-width: 60px;
