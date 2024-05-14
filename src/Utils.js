@@ -12,6 +12,9 @@ import {BYTES_TO_GB, SECONDS_PER_DAY} from './Constants';
  * @return Formatted string.
  */
 export function humanFileSize(bytes: number, si: boolean = false, dp: number = 1) {
+    if (isNaN(bytes)) {
+        return '0 GB'
+    }
     const thresh = si ? 1000 : 1024;
 
     if (Math.abs(bytes) < thresh) {

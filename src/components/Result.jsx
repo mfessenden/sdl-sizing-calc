@@ -17,7 +17,7 @@ function DataRetentionInput({tabData}) {
     const currentQuote = state.current_state.current_quote
     let retentionQuantity = currentQuote.retention_quantity
     if (isNaN(retentionQuantity)) {
-        retentionQuantity = 0
+        retentionQuantity = 1
     }
     return (
         <Container key={tabData.id} className='m-3 text-center'>
@@ -39,8 +39,8 @@ function DataRetentionInput({tabData}) {
 
 
 /**
- * Tabbed component for selection data retention periods.
- *
+ * Tabbed component for selection data retention periods. Selecting a tab updates the
+ * current quote's 'retention_interval' property.
  *
  *    +---------+---------+---------+---------+
  *    |  Daily  | Weekly  | Monthly | Yearly  |
