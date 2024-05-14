@@ -10,7 +10,7 @@ import {useStateStore} from '../model/Data';
  * @returns {React.Component} action menu dropdown component.
  */
 export default function ActionMenu() {
-    const {actions: resetAppState} = useStateStore();
+    const {actions: {resetAppState}} = useStateStore();
 
     const handleSelect = (eventKey) => {
          if (eventKey === RESET_APP_STATE) {
