@@ -31,14 +31,12 @@ export function getSavedState() {
     if (window.localStorage.getItem(SDL_STATE)) {
         const value = window.localStorage.getItem(SDL_STATE)
         try {
-            console.log('Restoring previously saved state....')
             return JSON.parse(value);
         } catch (e) {
             console.log(`Error loading state: ${e}`)
             return null;
         }
     }
-    console.log('No saved data found....')
     return null
 }
 
@@ -115,10 +113,6 @@ export const useCustomState = (defaultState = initializeAppState()) => {
             applyActiveFilter: (value) => dispatch({type: 'APPLY_ACTIVE_FILTER', value}),
             setRetentionMultiplier: (value) => dispatch({type: 'SET_RETENTION_INTERVAL', value}),
             setRetentionPeriods: (value) => dispatch({type: 'SET_RETENTION_PERIODS', value}),
-            saveState: () => dispatch({type: 'SAVE_STATE'}),
-            clearState: () => dispatch({type: 'CLEAR_STATE'}),
-            resetAppState: () => dispatch({type: 'RESET_APP_STATE'}),
-            restoreState: () => dispatch({type: 'RESTORE_STATE'}),
             toggleAdminMode: (value) => dispatch({type: 'TOGGLE_ADMIN', value}),
             updateDevice: (deviceId, payload: {deviceId: number, payload: Object}) => dispatch({type: 'UPDATE_DEVICE', deviceId, payload}),
             addDevice: (payload) => dispatch({type: 'ADD_DEVICE', payload: Object}),

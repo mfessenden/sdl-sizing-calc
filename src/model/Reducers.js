@@ -94,37 +94,12 @@ export default function stateReducer(state, action) {
             break;
         }
 
-        case 'SAVE_STATE': {
-            window.localStorage.removeItem(SDL_STATE)
-            // set localstorage value TODO: persistence via Firebase?
-            window.localStorage.setItem(SDL_STATE, JSON.stringify(updatedState));
-            break;
-        }
-
-        case 'CLEAR_STATE': {
-            window.localStorage.removeItem(SDL_STATE)
-            break;
-        }
-
         // reset the app ui state
         case 'RESET_APP_STATE': {
             for (let device of updatedState.calculator.devices.device_items) {
                 device.quantity = 0
             }
             updatedState.current_state.current_quote = {...Quote}
-            break;
-        }
-
-        // restore saved state ('restore-state')
-        case 'RESTORE_STATE': {
-            const savedState = getSavedState();
-            if (savedState) {
-                updatedState.calculator.devices.device_items = savedState.calculator.devices.device_items
-                updatedState.current_state = savedState.current_state
-                console.log(`Restoring saved state...`);
-            } else {
-                console.log(`Error: No saved state found...`);
-            }
             break;
         }
 
