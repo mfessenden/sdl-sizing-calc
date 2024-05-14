@@ -35,6 +35,7 @@ export const Quote = {
     org_size: null,
     retention_interval: 1,
     retention_quantity:  1,
+    display_name: null,
     metadata: {...QuoteMetadata}
 }
 
