@@ -1,5 +1,4 @@
-import {getSavedState} from './Data';
-import {SDL_STATE} from '../Constants';
+import {saveCurrentState} from './Data';
 import {Quote} from '../types/State';
 
 
@@ -130,6 +129,7 @@ export default function stateReducer(state, action) {
         default:
             console.log(`Error: ${action.type} not caught by State reducer`);
     }
-
+    // save the current state
+    saveCurrentState(updatedState)
     return updatedState;
 }

@@ -8,7 +8,6 @@ let DatabaseData = require('../data.json');
 let InitialAppState = initializeAppState()
 
 
-
 /**
  * Returns true if the app has data in local storage.
  *
@@ -42,14 +41,26 @@ export function getSavedState() {
 
 
 /**
+ * Saves the current state to local storage.
+ *
+ * @param {Object} state - current state to be saved.
+ * @return {void}
+ */
+export function saveCurrentState(state) {
+    window.localStorage.removeItem(SDL_STATE)
+    window.localStorage.setItem(SDL_STATE, JSON.stringify(state));
+}
+
+
+/**
  * Builds the context data for the application. Retrieves saved state data and sets default property
  * values for device types.
  *
  * @return {object} The context data object containing saved state and device type information.
  */
 export function initializeAppState() {
-    // let contextData = getSavedState() ?? {...DatabaseData}
-    let databaseData = {...DatabaseData}
+    const hasSavedState = hasSavedData()
+    let databaseData = getSavedState() ?? {...DatabaseData}
 
     // default property values
     const calculatorData = databaseData['calculator']
@@ -74,16 +85,16 @@ export function initializeAppState() {
         deviceType.quantity = deviceType.quantity ? deviceType.quantity : defaultQuantity
     }
 
-    // add app state & quote
-    let currentState = {...AppState}
-    currentState.current_quote = {...Quote}
-    databaseData.current_state = currentState
-
-    // currentState.current_quote.devices = deviceTypes
+    if (!hasSavedState) {
+        // add app state & quote
+        let currentState = {...AppState}
+        currentState.current_quote = {...Quote}
+        databaseData.current_state = currentState
+    }
 
     // live updates
     databaseData.current_state.admin_mode = process.env.SDL_ADMIN === 1
-    databaseData.current_state.has_saved_data = hasSavedData()
+    databaseData.current_state.has_saved_data = hasSavedState
     return databaseData
 }
 
