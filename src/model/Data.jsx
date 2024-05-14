@@ -1,8 +1,8 @@
 import {createContext, useContext, useReducer} from 'react';
 import {AppState, Quote} from '../types/State';
 import stateReducer from './Reducers';
-import {SDL_STATE} from '../Constants';
-import {calculateItemUsage} from '../Utils';
+import {SDL_STATE, SECONDS_PER_DAY} from '../Constants';
+import {calculateEventsPerSecond, calculateItemPerSecondUsage} from '../Utils';
 
 let DatabaseData = require('../data.json');
 let InitialAppState = initializeAppState()
@@ -182,7 +182,8 @@ export function calculateQuote(devices, retention_quantity: number = 1, retentio
 
     // for each device, calculate the usage for a given timeframe
     for (let device of devices) {
-        totalBytesPerDay = totalBytesPerDay + calculateItemUsage(device)
+        const totalBytesPerSecond: number = calculateEventsPerSecond(device, industry_id, industry_size, org_size)
+        totalBytesPerDay = totalBytesPerSecond * SECONDS_PER_DAY
     }
 
     // calculate bytes per day * retention period

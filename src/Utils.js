@@ -1,3 +1,4 @@
+import {Device} from './types/State';
 import {BYTES_TO_GB, SECONDS_PER_DAY} from './Constants';
 
 
@@ -49,7 +50,7 @@ export function numberToString(value: number): string {
     } else if (value < 0.1) {
         return '0.1'
     } else {
-        const valueString = value.toFixed(1)
+        const valueString: string = value.toFixed(1)
         if (valueString.endsWith('.0')) {
             return value.toFixed()
         } else {
@@ -63,21 +64,27 @@ export function numberToString(value: number): string {
  * Calculates the device usage in bytes per day based on the given device information.
  *
  * @param item - The device information object.
- * @param duration - optional duration (defaults to seconds in a day)
  * @return {number} - The device usage in bytes for a given time period.
  */
-export function calculateItemUsage(item, duration: number | null = null): number {
+export function calculateItemPerSecondUsage(item: Device): number {
     if (!item.quantity) {
         return 0
     }
     const eventsPerSecond = parseFloat(item.quantity) * item.base_weight
     if (item.eps) {
-
+        return Number(item.eps)
     }
-    const bytesPerSecond = eventsPerSecond * item.event_size
+    return eventsPerSecond * item.event_size
+}
 
-    const secondsMultiplier: number = duration ?? SECONDS_PER_DAY
-    return bytesPerSecond * secondsMultiplier
+
+export function calculateEventsPerSecond(item: Object, industryIdMultiplier: number = 1, industrySizeMultiplier: number = 1, orgSizeMultiplier: number = 1): number {
+    if (!item.quantity) {
+        return 0
+    }
+    const baseEventValue: number = calculateItemPerSecondUsage(item)
+    const industryMultiplier: number = industryIdMultiplier * industrySizeMultiplier * orgSizeMultiplier
+    return baseEventValue * industryMultiplier
 }
 
 
