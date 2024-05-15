@@ -48,7 +48,7 @@ const headerData = [
  * @param {Object} device - The device object representing the device being edited.
  * @return {JSX.Element} The rendered component.
  */
-function EditableEPSInput({deviceId, eventsPerSecond, hasCustomValue}) {
+function EditableEPSInput({deviceId, eventsPerSecond, hasCustomValue, hasCurrentQuantity}) {
     const {actions: {setDeviceEPS}} = useStateStore();
     const [isEditable: boolean, setEditable] = useState(false);
 
@@ -72,7 +72,7 @@ function EditableEPSInput({deviceId, eventsPerSecond, hasCustomValue}) {
         setEditable()
     }
 
-    if (!isEditable) {
+    if (!isEditable || !hasCurrentQuantity) {
         return (
             <small
                 className={smallClassName}
@@ -111,6 +111,7 @@ function CalculatorTableRow({device}) {
 
     //if this device has a custom EPS value, render the component differently
     let deviceHasCustomEPS: boolean = device.eps ?? false
+    let deviceHasQuantity: boolean = device.quantity ?? false
 
     // industry variables (or default of 1)
     let industryIdMultiplier: number = 1
@@ -151,7 +152,12 @@ function CalculatorTableRow({device}) {
                 />
             </td>
             <td className='text-center category-table-numeric'>
-                <EditableEPSInput deviceId={device.id} eventsPerSecond={eventsPerSecond} hasCustomValue={deviceHasCustomEPS}/>
+                <EditableEPSInput
+                    deviceId={device.id}
+                    eventsPerSecond={eventsPerSecond}
+                    hasCustomValue={deviceHasCustomEPS}
+                    hasCurrentQuantity={deviceHasQuantity}
+                />
             </td>
             <td className='text-center category-table-numeric'>
                 <Form.Text key={device.id} type='number'>
