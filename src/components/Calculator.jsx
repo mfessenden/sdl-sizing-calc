@@ -63,7 +63,7 @@ function CalculatorTableRow({device}) {
     if (currentQuoteData.org_size) {
         orgSizeMultiplier = Number(currentQuoteData.org_size)
     }
-    console.log(industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
+
     // let eventsPerSecond = device.quantity * device.base_weight
     let eventsPerSecond: number = calculateEventsPerSecond(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
     const bytesPerDay: number = calculateItemPerSecondUsage(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier) * SECONDS_PER_DAY
