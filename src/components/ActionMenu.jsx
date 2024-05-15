@@ -13,7 +13,7 @@ export default function ActionMenu() {
     const {actions: {resetAppState}} = useStateStore();
 
     const handleSelect = (eventKey) => {
-         if (eventKey === RESET_APP_STATE) {
+        if (eventKey === RESET_APP_STATE) {
             resetAppState()
         }
     };

@@ -23,7 +23,9 @@ function DataRetentionInput({tabData}) {
         <Container key={tabData.id} className='m-3 text-center'>
             <Form>
                 <Form.Group>
-                    <Form.Label className='result-label-sm'>Data Retention Period ({tabData.display_name})</Form.Label>
+                    <Form.Label className='result-label-sm'>
+                        Data Retention Period ({tabData.display_name})
+                    </Form.Label>
                     <Form.Control
                         size='sm'
                         pattern='[0-9]'

@@ -23,9 +23,9 @@ export const Device = {
     base_weight: 1.0,
     event_size: 508,
     quantity: 0,
+    eps: null,     // this should be an optional value (`eps?`) in ts
     name: null,
-    display_name: null,
-    eps: null
+    display_name: null
 }
 
 
@@ -38,4 +38,3 @@ export const Quote = {
     display_name: null,
     metadata: {...QuoteMetadata}
 }
-

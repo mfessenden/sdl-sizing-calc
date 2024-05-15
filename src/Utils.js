@@ -1,5 +1,5 @@
 import {Device} from './types';
-import {BYTES_TO_GB, SECONDS_PER_DAY} from './Constants';
+import {BYTES_TO_GB} from './Constants';
 
 
 /**

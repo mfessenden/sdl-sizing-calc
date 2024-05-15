@@ -128,6 +128,16 @@ export default function stateReducer(state, action) {
             break;
         }
 
+        // user sets the device EPS manually
+        case 'UPDATE_EPS': {
+            const deviceId = action.deviceId
+            const eventsPerSecond = action.eventsPerSecond
+
+            const device = devices.filter((d) => d.id === deviceId)[0]
+            device.eps = eventsPerSecond
+            break;
+        }
+
         default:
             console.log(`Error: ${action.type} not caught by State reducer`);
     }

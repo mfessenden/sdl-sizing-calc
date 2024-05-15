@@ -11,6 +11,7 @@ import {
     calculateEventsPerSecond
 } from '../Utils';
 import {SECONDS_PER_DAY} from '../Constants';
+import {useState} from 'react';
 
 
 const headerData = [
@@ -40,6 +41,64 @@ const headerData = [
 
 
 /**
+ * Editable text component allows the user to edit and display a numerical value. The value
+ * represents the device's **events per second** variable. Allows the user to customize the
+ * quote.
+ *
+ * @param {Object} device - The device object representing the device being edited.
+ * @return {JSX.Element} The rendered component.
+ */
+function EditableEPSInput({deviceId, eventsPerSecond, hasCustomValue}) {
+    const {actions: {setDeviceEPS}} = useStateStore();
+    const [isEditable: boolean, setEditable] = useState(false);
+
+    const eventsPerSecondTruncated: number = Number(eventsPerSecond.toFixed(1))
+    const eventsPerSecondString: string = numberToString(eventsPerSecond)
+
+    let smallClassName = 'text-center'
+    if (hasCustomValue) {
+        smallClassName = smallClassName + ' custom-eps'
+    }
+
+    const handleChange = (e) => {
+        e.preventDefault();
+        const value: number = Number(e.target.value)
+        setDeviceEPS(deviceId, value)
+    }
+
+    const handleBlur = (e) => {
+        e.preventDefault();
+        // if the user tabs out or clicks on another value, set 'not editable'
+        setEditable()
+    }
+
+    if (!isEditable) {
+        return (
+            <small
+                className={smallClassName}
+                onClick={setEditable}
+            >
+                {eventsPerSecondString}
+            </small>
+        );
+    }
+    return (
+        <>
+            <form>
+                <input
+                    type='number'
+                    value={eventsPerSecondTruncated}
+                    className='text-center form-control small-input'
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                />
+            </form>
+        </>
+    )
+}
+
+
+/**
  * Renders a table row component for a device.
  *
  * @param {object} device - The device object.
@@ -49,6 +108,10 @@ const headerData = [
 function CalculatorTableRow({device}) {
     const {state, actions: {setQuantity}} = useStateStore();
     const currentQuoteData = state.current_state.current_quote
+
+    //if this device has a custom EPS value, render the component differently
+    let deviceHasCustomEPS: boolean = device.eps ?? false
+
     // industry variables (or default of 1)
     let industryIdMultiplier: number = 1
     if (currentQuoteData.industry_id) {
@@ -64,7 +127,6 @@ function CalculatorTableRow({device}) {
         orgSizeMultiplier = Number(currentQuoteData.org_size)
     }
 
-    // let eventsPerSecond = device.quantity * device.base_weight
     let eventsPerSecond: number = calculateEventsPerSecond(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
     const bytesPerDay: number = calculateItemPerSecondUsage(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier) * SECONDS_PER_DAY
     const gigsPerDay: number = bytesToGigs(bytesPerDay)
@@ -75,6 +137,7 @@ function CalculatorTableRow({device}) {
                 <RangeSlider
                     device={device}
                     onChange={e => setQuantity(device.id, e.target.value)}
+                    disabled={deviceHasCustomEPS}
                 />
             </td>
             <td className='category-table-numeric'>
@@ -84,12 +147,11 @@ function CalculatorTableRow({device}) {
                     pattern='[0-9]'
                     onChange={e => setQuantity(device.id, e.target.value)}
                     value={Number(device.quantity)}
+                    disabled={deviceHasCustomEPS}
                 />
             </td>
             <td className='text-center category-table-numeric'>
-                <Form.Text key={device.id} type='number'>
-                    {numberToString(eventsPerSecond)}
-                </Form.Text>
+                <EditableEPSInput deviceId={device.id} eventsPerSecond={eventsPerSecond} hasCustomValue={deviceHasCustomEPS}/>
             </td>
             <td className='text-center category-table-numeric'>
                 <Form.Text key={device.id} type='number'>
@@ -129,7 +191,6 @@ function CategoryTable({table_item, columnData}) {
                 </tr>
                 </thead>
                 <tbody>
-
                 {devices.map(device => (
                     <CalculatorTableRow
                         key={device.id}
@@ -157,7 +218,7 @@ export default function CalculatorBody() {
      */
     const buildCategoryTables = (data) => {
         const tableItems = []
-        // const interfaceData = data.interface_data
+
         const devicesData = data.calculator.devices
         const categoryData = devicesData.device_categories
         const deviceTypes = devicesData.device_items

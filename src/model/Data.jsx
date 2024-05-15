@@ -130,6 +130,7 @@ export const useCustomState = (defaultState = initializeAppState()) => {
             addDevice: (payload) => dispatch({type: 'ADD_DEVICE', payload: Object}),
             toggleResultAsBinary: () => dispatch({type: 'TOGGLE_RESULT_BINARY'}),
             inputWeightChanged: (inputId, inputWeight) => dispatch({type: 'INPUT_WEIGHT_CHANGED', inputId, inputWeight}),
+            setDeviceEPS: (deviceId: number, eventsPerSecond: number) => dispatch({type: 'UPDATE_EPS', deviceId, eventsPerSecond}),
         },
     };
 };
