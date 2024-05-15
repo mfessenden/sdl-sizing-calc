@@ -78,7 +78,19 @@ export function calculateItemPerSecondUsage(item: Device): number {
 }
 
 
-export function calculateEventsPerSecond(item: Object, industryIdMultiplier: number = 1, industrySizeMultiplier: number = 1, orgSizeMultiplier: number = 1): number {
+export function calculateEventsPerSecond(item: Device, industryIdMultiplier: number = 1, industrySizeMultiplier: number = 1, orgSizeMultiplier: number = 1): number {
+    if (!item.quantity) {
+        return 0
+    }
+    if (item.eps) {
+        return Number(item.eps)
+    }
+    // was: eventsPerSecond * item.event_size
+    return parseFloat(item.quantity) * item.base_weight
+}
+
+
+export function whatTheFuckIsThis(item: Device, industryIdMultiplier: number = 1, industrySizeMultiplier: number = 1, orgSizeMultiplier: number = 1): number {
     if (!item.quantity) {
         return 0
     }

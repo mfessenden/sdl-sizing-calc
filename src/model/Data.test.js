@@ -1,5 +1,5 @@
 import {calculateQuote} from './Data';
-import {calculateEventsPerSecond, calculateItemPerSecondUsage} from '../Utils';
+import {whatTheFuckIsThis, calculateItemPerSecondUsage} from '../Utils';
 
 
 const TestDevices = [
@@ -21,20 +21,20 @@ const TestDevices = [
     }
 ]
 
-
+// FIXME: broken
 test('calculates quote correctly', () => {
     const retention_quantity: number = 2;
     const retention_interval: number = 7; // weekly
     const result = calculateQuote(TestDevices, retention_quantity, retention_interval)
 
-    const expectedQuoteSize: number = 921715200
+    const expectedQuoteSize: number = 921715200  // 614476800
     expect(result).toBe(expectedQuoteSize)
 });
 
 
 test('calculate device usage', () => {
     // TODO: new test?
-    const result = calculateEventsPerSecond(TestDevices[0])
+    const result = whatTheFuckIsThis(TestDevices[0])
     // 0.5 * 508
     const expectedDeviceSize: number = 254
     expect(result).toBe(expectedDeviceSize)

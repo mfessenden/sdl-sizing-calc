@@ -2,7 +2,7 @@ import {createContext, useContext, useReducer} from 'react';
 import {AppState, Quote} from '../types';
 import stateReducer from './Reducers';
 import {SDL_STATE, SECONDS_PER_DAY} from '../Constants';
-import {calculateEventsPerSecond, calculateItemPerSecondUsage} from '../Utils';
+import {whatTheFuckIsThis, calculateItemPerSecondUsage} from '../Utils';
 
 let DatabaseData = require('../data.json');
 let InitialAppState = initializeAppState()
@@ -174,23 +174,17 @@ export const useStateStore = (): any => useContext(StateContext);
  * @return {number} total bytes of current quote.
  */
 export function calculateQuote(devices, retention_quantity: number = 1, retention_interval: number = 1, industry_id: number = 1, industry_size: number = 1, org_size: number = 1): number {
-    // TODO: add seconds at this level
-    let industryMultiplier: number = industry_id * industry_size * org_size
 
     // get the total in bytes per day
     let totalBytesPerDay = 0
 
     // for each device, calculate the usage for a given timeframe
     for (let device of devices) {
-        const totalBytesPerSecond: number = calculateEventsPerSecond(device, industry_id, industry_size, org_size)
+        const totalBytesPerSecond: number = whatTheFuckIsThis(device, industry_id, industry_size, org_size)
         totalBytesPerDay = totalBytesPerSecond * SECONDS_PER_DAY
     }
 
     // calculate bytes per day * retention period
     // calculate the total size for this ingest
-    let totalBytes: number = totalBytesPerDay * (retention_quantity * retention_interval)
-
-    // weighted industry values
-    totalBytes = totalBytes * industryMultiplier
-    return totalBytes
+    return totalBytesPerDay * (retention_quantity * retention_interval)
 }
