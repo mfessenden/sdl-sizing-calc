@@ -14,10 +14,10 @@ import {useStateStore} from '../model/Data';
  *    +-------------------------'---------------+
  *
  * @param {Object} device - the current device being rendered.
- *
+ * @param {boolean} disabled - device has a set EPS value, so quantity is locked
  * @return {JSX.Element} - The rendered component.
  */
-export default function RangeSlider({device}) {
+export default function RangeSlider({device, disabled}) {
     const {actions: {setQuantity}} = useStateStore();
     return (
         <Container>
@@ -34,6 +34,7 @@ export default function RangeSlider({device}) {
                         key={device.id}
                         value={device.quantity}
                         onChange={e => setQuantity(device.id, e.target.value)}
+                        disabled={disabled}
                     />
                 </Col>
             </Row>

@@ -109,8 +109,9 @@ function CalculatorTableRow({device}) {
     const {state, actions: {setQuantity}} = useStateStore();
     const currentQuoteData = state.current_state.current_quote
 
-
+    //if this device has a custom EPS value, render the component differently
     let deviceHasCustomEPS: boolean = device.eps ?? false
+
     // industry variables (or default of 1)
     let industryIdMultiplier: number = 1
     if (currentQuoteData.industry_id) {
@@ -136,6 +137,7 @@ function CalculatorTableRow({device}) {
                 <RangeSlider
                     device={device}
                     onChange={e => setQuantity(device.id, e.target.value)}
+                    disabled={deviceHasCustomEPS}
                 />
             </td>
             <td className='category-table-numeric'>
@@ -145,6 +147,7 @@ function CalculatorTableRow({device}) {
                     pattern='[0-9]'
                     onChange={e => setQuantity(device.id, e.target.value)}
                     value={Number(device.quantity)}
+                    disabled={deviceHasCustomEPS}
                 />
             </td>
             <td className='text-center category-table-numeric'>
