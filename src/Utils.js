@@ -61,23 +61,14 @@ export function numberToString(value: number): string {
 
 
 /**
- * Calculates the device usage in bytes per day based on the given device information.
+ * Calculates the events per second for a given device.
  *
- * @param item - The device information object.
- * @return {number} - The device usage in bytes for a given time period.
+ * @param {Device} item - device information object
+ * @param industryIdMultiplier - multiplier based on industry identifier
+ * @param industrySizeMultiplier - multiplier based on industry size
+ * @param orgSizeMultiplier - multiplier based on a specific organization size range
+ * @return {number} - calculated events per second value for the given device
  */
-export function calculateItemPerSecondUsage(item: Device): number {
-    if (!item.quantity) {
-        return 0
-    }
-    const eventsPerSecond = parseFloat(item.quantity) * item.base_weight
-    if (item.eps) {
-        return Number(item.eps)
-    }
-    return eventsPerSecond * item.event_size
-}
-
-
 export function calculateEventsPerSecond(item: Device, industryIdMultiplier: number = 1, industrySizeMultiplier: number = 1, orgSizeMultiplier: number = 1): number {
     if (!item.quantity) {
         return 0
@@ -85,34 +76,28 @@ export function calculateEventsPerSecond(item: Device, industryIdMultiplier: num
     if (item.eps) {
         return Number(item.eps)
     }
-    // was: eventsPerSecond * item.event_size
-    return parseFloat(item.quantity) * item.base_weight
+
+    // weighted industry values
+    const industryMultiplier: number = industryIdMultiplier * industrySizeMultiplier * orgSizeMultiplier
+    return (parseFloat(item.quantity) * item.base_weight) * industryMultiplier
 }
 
 
-export function whatTheFuckIsThis(item: Device, industryIdMultiplier: number = 1, industrySizeMultiplier: number = 1, orgSizeMultiplier: number = 1): number {
+/**
+ * Calculates the device usage (in bytes per second) based on the given device information.
+ *
+ * @param item - device information object
+ * @param industryIdMultiplier - multiplier based on industry identifier
+ * @param industrySizeMultiplier - multiplier based on industry size
+ * @param orgSizeMultiplier - multiplier based on a specific organization size range
+ * @return {number} - The device usage in bytes for a given time period.
+ */
+export function calculateItemPerSecondUsage(item: Device, industryIdMultiplier: number = 1, industrySizeMultiplier: number = 1, orgSizeMultiplier: number = 1): number {
     if (!item.quantity) {
         return 0
     }
-    const baseEventValue: number = calculateItemPerSecondUsage(item)
-    const industryMultiplier: number = industryIdMultiplier * industrySizeMultiplier * orgSizeMultiplier
-    return baseEventValue * industryMultiplier
-}
-
-
-export function calculateDeviceUsage(
-    quantity: number,
-    baseWeight: number,
-    eventSize: number,
-    retentionQuantity: number = 1,
-    retentionInterval: number = 1,
-    industryId: number = 1,
-    industrySize: number = 1,
-    orgSize: number = 1,
-    eventsPerSecond: number | null = null,
-
-) : number {
-
+    const eventsPerSecond: number = calculateEventsPerSecond(item, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
+    return eventsPerSecond * item.event_size
 }
 
 

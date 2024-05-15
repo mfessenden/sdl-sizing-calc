@@ -6,7 +6,6 @@ import RangeSlider from './Slider';
 import {useStateStore} from '../model/Data';
 import {
     bytesToGigs,
-    whatTheFuckIsThis,
     calculateItemPerSecondUsage,
     numberToString,
     calculateEventsPerSecond
@@ -51,15 +50,23 @@ function CalculatorTableRow({device}) {
     const {state, actions: {setQuantity}} = useStateStore();
     const currentQuoteData = state.current_state.current_quote
     // industry variables (or default of 1)
-    const industryIdMultiplier = Number(currentQuoteData.industry_id) ?? 1
-    const industrySizeMultiplier = Number(currentQuoteData.industry_size) ?? 1
-    const orgSizeMultiplier = Number(currentQuoteData.org_size) ?? 1
+    let industryIdMultiplier: number = 1
+    if (currentQuoteData.industry_id) {
+        industryIdMultiplier = Number(currentQuoteData.industry_id)
+    }
 
+    let industrySizeMultiplier: number = 1
+    if (currentQuoteData.industry_size) {
+        industrySizeMultiplier = Number(currentQuoteData.industry_size)
+    }
+    let orgSizeMultiplier: number = 1
+    if (currentQuoteData.org_size) {
+        orgSizeMultiplier = Number(currentQuoteData.org_size)
+    }
+    console.log(industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
     // let eventsPerSecond = device.quantity * device.base_weight
     let eventsPerSecond: number = calculateEventsPerSecond(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
-
-    console.log(`Events per second: ${eventsPerSecond}`)
-    const bytesPerDay: number = calculateItemPerSecondUsage(device) * SECONDS_PER_DAY
+    const bytesPerDay: number = calculateItemPerSecondUsage(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier) * SECONDS_PER_DAY
     const gigsPerDay: number = bytesToGigs(bytesPerDay)
 
     return (
