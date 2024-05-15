@@ -89,13 +89,18 @@ export default function stateReducer(state, action) {
         }
 
         case 'SET_RETENTION_PERIODS': {
-            currentQuoteData.retention_quantity = action.value
+            let retentionValue: number = 0
+            if (action.value) {
+                retentionValue = action.value
+            }
+
+            currentQuoteData.retention_quantity = retentionValue
             break;
         }
 
         // reset the app ui state
         case 'RESET_APP_STATE': {
-            for (let device of updatedState.calculator.devices.device_items) {
+            for (let device of devices) {
                 device.quantity = 0
                 device.eps = null
             }

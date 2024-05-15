@@ -184,6 +184,10 @@ export function calculateQuote(devices, retentionQuantity: number = 1, retention
         totalBytesPerPeriod = totalBytesPerPeriod + (totalBytesPerSecond * SECONDS_PER_DAY)
     }
 
+    if (retentionQuantity < 1) {
+        // console.log('retention quantity cannot be zero.')
+    }
+
     // calculate bytes per day * retention period
     // calculate the total size for this ingest
     return totalBytesPerPeriod * (retentionQuantity * retentionInterval)
