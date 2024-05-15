@@ -1,5 +1,5 @@
 import {saveCurrentState} from './Data';
-import {Quote} from '../types/State';
+import {Quote} from '../types';
 
 
 /**

@@ -1,5 +1,5 @@
 import {createContext, useContext, useReducer} from 'react';
-import {AppState, Quote} from '../types/State';
+import {AppState, Quote} from '../types';
 import stateReducer from './Reducers';
 import {SDL_STATE, SECONDS_PER_DAY} from '../Constants';
 import {calculateEventsPerSecond, calculateItemPerSecondUsage} from '../Utils';
