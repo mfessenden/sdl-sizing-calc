@@ -15,6 +15,10 @@ import {IndustryDetailData, RetentionPeriodData} from '../Constants';
 function DataRetentionInput({tabData}) {
     const {state, actions: {setRetentionPeriods}} = useStateStore();
     const currentQuote = state.current_state.current_quote
+    let retentionQuantity = currentQuote.retention_quantity
+    if (isNaN(retentionQuantity)) {
+        retentionQuantity = 1
+    }
     return (
         <Container key={tabData.id} className='m-3 text-center'>
             <Form>
@@ -24,7 +28,8 @@ function DataRetentionInput({tabData}) {
                     </Form.Label>
                     <Form.Control
                         size='sm'
-                        value={currentQuote.retention_quantity}
+                        pattern='[0-9]'
+                        value={retentionQuantity}
                         className='result-input mx-auto text-center'
                         onChange={e => setRetentionPeriods(parseInt(e.target.value))}
                     />
@@ -36,8 +41,8 @@ function DataRetentionInput({tabData}) {
 
 
 /**
- * Tabbed component for selection data retention periods.
- *
+ * Tabbed component for selection data retention periods. Selecting a tab updates the
+ * current quote's 'retention_interval' property.
  *
  *    +---------+---------+---------+---------+
  *    |  Daily  | Weekly  | Monthly | Yearly  |

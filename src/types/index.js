@@ -25,7 +25,7 @@ export const Device = {
     quantity: 0,
     eps: null,     // this should be an optional value (`eps?`) in ts
     name: null,
-    display_name: null,
+    display_name: null
 }
 
 
@@ -35,5 +35,6 @@ export const Quote = {
     org_size: null,
     retention_interval: 1,
     retention_quantity:  1,
+    display_name: null,
     metadata: {...QuoteMetadata}
 }

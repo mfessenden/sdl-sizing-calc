@@ -10,7 +10,7 @@ import {
     numberToString,
     calculateEventsPerSecond
 } from '../Utils';
-
+import {SECONDS_PER_DAY} from '../Constants';
 import {useState} from 'react';
 
 
@@ -92,16 +92,22 @@ function EditableText({device}) {
     )
 }
 
-
+/**
+ * Renders a table row component for a device.
+ *
+ * @param {object} device - The device object.
+ *
+ * @returns {JSX.Element} - The rendered table row.
+ */
 function CalculatorTableRow({device}) {
     const {state, actions: {setQuantity}} = useStateStore();
     const currentQuoteData = state.current_state.current_quote
-
     // industry variables (or default of 1)
     let industryIdMultiplier: number = 1
     if (currentQuoteData.industry_id) {
         industryIdMultiplier = Number(currentQuoteData.industry_id)
     }
+
     let industrySizeMultiplier: number = 1
     if (currentQuoteData.industry_size) {
         industrySizeMultiplier = Number(currentQuoteData.industry_size)
@@ -110,6 +116,8 @@ function CalculatorTableRow({device}) {
     if (currentQuoteData.org_size) {
         orgSizeMultiplier = Number(currentQuoteData.org_size)
     }
+    console.log(industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
+    // let eventsPerSecond = device.quantity * device.base_weight
     let eventsPerSecond: number = calculateEventsPerSecond(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
     const bytesPerDay: number = calculateItemPerSecondUsage(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier) * SECONDS_PER_DAY
     const gigsPerDay: number = bytesToGigs(bytesPerDay)
