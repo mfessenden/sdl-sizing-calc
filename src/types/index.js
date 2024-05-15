@@ -38,3 +38,8 @@ export const Quote = {
     display_name: null,
     metadata: {...QuoteMetadata}
 }
+
+export const SavedQuote = {
+    data: AppState,
+    metadata: QuoteMetadata
+}
