@@ -127,10 +127,12 @@ input[type="range"]::-webkit-slider-thumb {
    vertical-align: middle;
 }
 
+/*.small-input, .form-control.small-input {*/
 .small-input {
   color: #212529BF;
   font-size: 0.875em;
   padding: 4px;
+  /*width: 70%;*/
 }
 
 .custom-eps {
