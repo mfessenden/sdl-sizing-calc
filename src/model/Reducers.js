@@ -97,6 +97,7 @@ export default function stateReducer(state, action) {
         case 'RESET_APP_STATE': {
             for (let device of updatedState.calculator.devices.device_items) {
                 device.quantity = 0
+                device.eps = null
             }
             updatedState.current_state.current_quote = {...Quote}
             updatedState.current_state.filter_active = false
