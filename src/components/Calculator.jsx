@@ -4,7 +4,13 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import RangeSlider from './Slider';
 import {useStateStore} from '../model/Data';
-import {bytesToGigs, calculateItemUsage, numberToString} from '../Utils';
+import {
+    bytesToGigs,
+    calculateItemPerSecondUsage,
+    numberToString,
+    calculateEventsPerSecond
+} from '../Utils';
+
 import {useState} from 'react';
 
 
@@ -45,7 +51,7 @@ const headerData = [
 function EditableText({device}) {
     const [isEditable: boolean, setEditable] = useState(false);
     const {state, actions: {setDeviceEPS}} = useStateStore();
-    const eventsPerSecond: number = calculateItemUsage(device, 1)
+    const eventsPerSecond: number = calculateEventsPerSecond(device, 1)
     const eventsPerSecondString: string = numberToString(eventsPerSecond)
 
     const handleChange = (e) => {
@@ -87,19 +93,26 @@ function EditableText({device}) {
 }
 
 
-/**
- * Renders a table row component for a device.
- *
- * @param {object} device - The device object.
- *
- * @returns {JSX.Element} - The rendered table row.
- */
 function CalculatorTableRow({device}) {
-    const {actions: {setQuantity}} = useStateStore();
+    const {state, actions: {setQuantity}} = useStateStore();
+    const currentQuoteData = state.current_state.current_quote
 
-    const eventsPerSecond = device.eps ?? device.quantity * device.base_weight
-    const bytesPerDay = calculateItemUsage(device)
-    const gigsPerDay = bytesToGigs(bytesPerDay)
+    // industry variables (or default of 1)
+    let industryIdMultiplier: number = 1
+    if (currentQuoteData.industry_id) {
+        industryIdMultiplier = Number(currentQuoteData.industry_id)
+    }
+    let industrySizeMultiplier: number = 1
+    if (currentQuoteData.industry_size) {
+        industrySizeMultiplier = Number(currentQuoteData.industry_size)
+    }
+    let orgSizeMultiplier: number = 1
+    if (currentQuoteData.org_size) {
+        orgSizeMultiplier = Number(currentQuoteData.org_size)
+    }
+    let eventsPerSecond: number = calculateEventsPerSecond(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
+    const bytesPerDay: number = calculateItemPerSecondUsage(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier) * SECONDS_PER_DAY
+    const gigsPerDay: number = bytesToGigs(bytesPerDay)
 
     return (
         <tr key={device.id}>
@@ -119,10 +132,9 @@ function CalculatorTableRow({device}) {
                 />
             </td>
             <td className='text-center category-table-numeric'>
-                {/*<Form.Text key={device.id} type='number'>*/}
-                {/*    {numberToString(eventsPerSecond)}*/}
-                {/*</Form.Text>*/}
-                <EditableText device={device}/>
+                <Form.Text key={device.id} type='number'>
+                    {numberToString(eventsPerSecond)}
+                </Form.Text>
             </td>
             <td className='text-center category-table-numeric'>
                 <Form.Text key={device.id} type='number'>
@@ -149,25 +161,25 @@ function CategoryTable({table_item, columnData}) {
         <div>
             <Table key={table_item.category_id}>
                 <thead>
-                    <tr>
-                        {columnData.map(column => (
-                            <th
-                                key={column.id}
-                                title={column.description}
-                                className={column.align_center ? 'category-header-center' : 'category-header-left'}
-                            >
-                                {column.display_name}
-                            </th>
-                        ))}
-                    </tr>
+                <tr>
+                    {columnData.map(column => (
+                        <th
+                            key={column.id}
+                            title={column.description}
+                            className={column.align_center ? 'category-header-center' : 'category-header-left'}
+                        >
+                            {column.display_name}
+                        </th>
+                    ))}
+                </tr>
                 </thead>
                 <tbody>
-                    {devices.map(device => (
-                        <CalculatorTableRow
-                            key={device.id}
-                            device={device}
-                        />
-                    ))}
+                {devices.map(device => (
+                    <CalculatorTableRow
+                        key={device.id}
+                        device={device}
+                    />
+                ))}
                 </tbody>
             </Table>
         </div>
