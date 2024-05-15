@@ -1,3 +1,4 @@
+import {Device} from './types';
 import {BYTES_TO_GB, SECONDS_PER_DAY} from './Constants';
 
 
@@ -49,7 +50,7 @@ export function numberToString(value: number): string {
     } else if (value < 0.1) {
         return '0.1'
     } else {
-        const valueString = value.toFixed(1)
+        const valueString: string = value.toFixed(1)
         if (valueString.endsWith('.0')) {
             return value.toFixed()
         } else {
@@ -60,21 +61,43 @@ export function numberToString(value: number): string {
 
 
 /**
- * Calculates the device usage in bytes per day based on the given device information.
+ * Calculates the events per second for a given device.
  *
- * @param item - The device information object.
- * @param duration - optional duration (defaults to seconds in a day)
- * @return {number} - The device usage in bytes for a given time period.
+ * @param {Device} item - device information object
+ * @param industryIdMultiplier - multiplier based on industry identifier
+ * @param industrySizeMultiplier - multiplier based on industry size
+ * @param orgSizeMultiplier - multiplier based on a specific organization size range
+ * @return {number} - calculated events per second value for the given device
  */
-export function calculateItemUsage(item, duration: number | null = null): number {
+export function calculateEventsPerSecond(item: Device, industryIdMultiplier: number = 1, industrySizeMultiplier: number = 1, orgSizeMultiplier: number = 1): number {
     if (!item.quantity) {
         return 0
     }
-    const eventsPerSecond = parseFloat(item.quantity) * item.base_weight
-    const bytesPerSecond = eventsPerSecond * item.event_size
+    if (item.eps) {
+        return Number(item.eps)
+    }
 
-    const secondsMultiplier: number = duration ?? SECONDS_PER_DAY
-    return bytesPerSecond * secondsMultiplier
+    // weighted industry values
+    const industryMultiplier: number = industryIdMultiplier * industrySizeMultiplier * orgSizeMultiplier
+    return (parseFloat(item.quantity) * item.base_weight) * industryMultiplier
+}
+
+
+/**
+ * Calculates the device usage (in bytes per second) based on the given device information.
+ *
+ * @param item - device information object
+ * @param industryIdMultiplier - multiplier based on industry identifier
+ * @param industrySizeMultiplier - multiplier based on industry size
+ * @param orgSizeMultiplier - multiplier based on a specific organization size range
+ * @return {number} - The device usage in bytes for a given time period.
+ */
+export function calculateItemPerSecondUsage(item: Device, industryIdMultiplier: number = 1, industrySizeMultiplier: number = 1, orgSizeMultiplier: number = 1): number {
+    if (!item.quantity) {
+        return 0
+    }
+    const eventsPerSecond: number = calculateEventsPerSecond(item, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
+    return eventsPerSecond * item.event_size
 }
 
 

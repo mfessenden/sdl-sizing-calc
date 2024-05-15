@@ -1,5 +1,5 @@
 import {saveCurrentState} from './Data';
-import {Quote} from '../types/State';
+import {Quote} from '../types';
 
 
 /**
@@ -99,6 +99,8 @@ export default function stateReducer(state, action) {
                 device.quantity = 0
             }
             updatedState.current_state.current_quote = {...Quote}
+            updatedState.current_state.filter_active = false
+            updatedState.current_state.filter_string = null
             break;
         }
 

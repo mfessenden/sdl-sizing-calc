@@ -1,8 +1,8 @@
 import {createContext, useContext, useReducer} from 'react';
-import {AppState, Quote} from '../types/State';
+import {AppState, Quote} from '../types';
 import stateReducer from './Reducers';
-import {SDL_STATE} from '../Constants';
-import {calculateItemUsage} from '../Utils';
+import {SDL_STATE, SECONDS_PER_DAY} from '../Constants';
+import {calculateItemPerSecondUsage} from '../Utils';
 
 let DatabaseData = require('../data.json');
 let InitialAppState = initializeAppState()
@@ -165,31 +165,25 @@ export const useStateStore = (): any => useContext(StateContext);
  * Calculates the current ingest quote based on the given devices, retention period, and retention interval.
  *
  * @param {Array<object>} devices - current calculator devices.
- * @param {number} retention_quantity - data retention period quantity (from the result period input).
- * @param {number} retention_interval - data retention interval (days, weeks, etc.)
- *
- * @param industry_id
- * @param industry_size
- * @param org_size
+ * @param {number} retentionQuantity - data retention period quantity (from the result period input).
+ * @param {number} retentionInterval - data retention interval (days, weeks, etc.)
+ * @param industryIdMultiplier - multiplier based on industry identifier
+ * @param industrySizeMultiplier - multiplier based on industry size
+ * @param orgSizeMultiplier - multiplier based on a specific organization size range
  * @return {number} total bytes of current quote.
  */
-export function calculateQuote(devices, retention_quantity: number = 1, retention_interval: number = 1, industry_id: number = 1, industry_size: number = 1, org_size: number = 1): number {
+export function calculateQuote(devices, retentionQuantity: number = 1, retentionInterval: number = 1, industryIdMultiplier: number = 1, industrySizeMultiplier: number = 1, orgSizeMultiplier: number = 1): number {
 
-    let industryMultiplier = industry_id * industry_size * org_size
-
-    // get the total in bytes per day
-    let totalBytesPerDay = 0
+    // get the total in bytes per time period (in days)
+    let totalBytesPerPeriod = 0
 
     // for each device, calculate the usage for a given timeframe
     for (let device of devices) {
-        totalBytesPerDay = totalBytesPerDay + calculateItemUsage(device)
+        const totalBytesPerSecond: number = calculateItemPerSecondUsage(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
+        totalBytesPerPeriod = totalBytesPerPeriod + (totalBytesPerSecond * SECONDS_PER_DAY)
     }
 
     // calculate bytes per day * retention period
     // calculate the total size for this ingest
-    let totalBytes: number = totalBytesPerDay * (retention_quantity * retention_interval)
-
-    // weighted industry values
-    totalBytes = totalBytes * industryMultiplier
-    return totalBytes
+    return totalBytesPerPeriod * (retentionQuantity * retentionInterval)
 }

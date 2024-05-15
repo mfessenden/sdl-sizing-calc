@@ -24,7 +24,8 @@ export const Device = {
     event_size: 508,
     quantity: 0,
     name: null,
-    display_name: null
+    display_name: null,
+    eps: null
 }
 
 
@@ -34,6 +35,7 @@ export const Quote = {
     org_size: null,
     retention_interval: 1,
     retention_quantity:  1,
+    display_name: null,
     metadata: {...QuoteMetadata}
 }
 

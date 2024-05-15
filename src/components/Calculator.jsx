@@ -4,7 +4,13 @@ import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 import RangeSlider from './Slider';
 import {useStateStore} from '../model/Data';
-import {bytesToGigs, calculateItemUsage, numberToString} from '../Utils';
+import {
+    bytesToGigs,
+    calculateItemPerSecondUsage,
+    numberToString,
+    calculateEventsPerSecond
+} from '../Utils';
+import {SECONDS_PER_DAY} from '../Constants';
 
 
 const headerData = [
@@ -41,11 +47,27 @@ const headerData = [
  * @returns {JSX.Element} - The rendered table row.
  */
 function CalculatorTableRow({device}) {
-    const {actions: {setQuantity}} = useStateStore();
+    const {state, actions: {setQuantity}} = useStateStore();
+    const currentQuoteData = state.current_state.current_quote
+    // industry variables (or default of 1)
+    let industryIdMultiplier: number = 1
+    if (currentQuoteData.industry_id) {
+        industryIdMultiplier = Number(currentQuoteData.industry_id)
+    }
 
-    const eventsPerSecond = device.quantity * device.base_weight
-    const bytesPerDay = calculateItemUsage(device)
-    const gigsPerDay = bytesToGigs(bytesPerDay)
+    let industrySizeMultiplier: number = 1
+    if (currentQuoteData.industry_size) {
+        industrySizeMultiplier = Number(currentQuoteData.industry_size)
+    }
+    let orgSizeMultiplier: number = 1
+    if (currentQuoteData.org_size) {
+        orgSizeMultiplier = Number(currentQuoteData.org_size)
+    }
+    console.log(industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
+    // let eventsPerSecond = device.quantity * device.base_weight
+    let eventsPerSecond: number = calculateEventsPerSecond(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
+    const bytesPerDay: number = calculateItemPerSecondUsage(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier) * SECONDS_PER_DAY
+    const gigsPerDay: number = bytesToGigs(bytesPerDay)
 
     return (
         <tr key={device.id}>
