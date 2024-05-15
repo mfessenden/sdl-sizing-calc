@@ -95,7 +95,7 @@ input[type="range"]::-webkit-slider-thumb {
 .tableitem-header{
   font-size: 2.5em;
   font-weight: bolder;
-  text-shadow: 1px 1px 2px black;
+  text-shadow: 1px 1px 2px rgba(33, 37, 41, 0.75);
 }
 
 /* Result widget size overrides */
@@ -125,6 +125,18 @@ input[type="range"]::-webkit-slider-thumb {
 
 .table>tbody {
    vertical-align: middle;
+}
+
+.small-input {
+  color: #212529BF;
+  font-size: 0.875em;
+  padding: 4px;
+}
+
+.custom-eps {
+  font-weight: 600;
+  color: #6101FF;
+  font-size: 0.9em;
 }
 
 /* Table columns */

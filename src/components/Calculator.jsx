@@ -48,17 +48,22 @@ const headerData = [
  * @param {Object} device - The device object representing the device being edited.
  * @return {JSX.Element} The rendered component.
  */
-function EditableText({device}) {
+function EditableEPSInput({deviceId, eventsPerSecond, hasCustomValue}) {
+    const {actions: {setDeviceEPS}} = useStateStore();
     const [isEditable: boolean, setEditable] = useState(false);
-    const {state, actions: {setDeviceEPS}} = useStateStore();
-    const eventsPerSecond: number = calculateEventsPerSecond(device, 1)
+
+    const eventsPerSecondTruncated: number = Number(eventsPerSecond.toFixed(1))
     const eventsPerSecondString: string = numberToString(eventsPerSecond)
+
+    let smallClassName = 'text-center'
+    if (hasCustomValue) {
+        smallClassName = smallClassName + ' custom-eps'
+    }
 
     const handleChange = (e) => {
         e.preventDefault();
         const value: number = Number(e.target.value)
-        setDeviceEPS(device.id, value)
-        console.log(`Value updated: ${value}`)
+        setDeviceEPS(deviceId, value)
     }
 
     const handleBlur = (e) => {
@@ -69,12 +74,12 @@ function EditableText({device}) {
 
     if (!isEditable) {
         return (
-            <p
-                className='text-center'
+            <small
+                className={smallClassName}
                 onClick={setEditable}
             >
                 {eventsPerSecondString}
-            </p>
+            </small>
         );
     }
     return (
@@ -82,8 +87,8 @@ function EditableText({device}) {
             <form>
                 <input
                     type='number'
-                    value={eventsPerSecond}
-                    className='text-center form-control'
+                    value={eventsPerSecondTruncated}
+                    className='text-center form-control small-input'
                     onChange={handleChange}
                     onBlur={handleBlur}
                 />
@@ -91,6 +96,7 @@ function EditableText({device}) {
         </>
     )
 }
+
 
 /**
  * Renders a table row component for a device.
@@ -102,6 +108,9 @@ function EditableText({device}) {
 function CalculatorTableRow({device}) {
     const {state, actions: {setQuantity}} = useStateStore();
     const currentQuoteData = state.current_state.current_quote
+
+
+    let deviceHasCustomEPS: boolean = device.eps ?? false
     // industry variables (or default of 1)
     let industryIdMultiplier: number = 1
     if (currentQuoteData.industry_id) {
@@ -116,8 +125,7 @@ function CalculatorTableRow({device}) {
     if (currentQuoteData.org_size) {
         orgSizeMultiplier = Number(currentQuoteData.org_size)
     }
-    console.log(industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
-    // let eventsPerSecond = device.quantity * device.base_weight
+
     let eventsPerSecond: number = calculateEventsPerSecond(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier)
     const bytesPerDay: number = calculateItemPerSecondUsage(device, industryIdMultiplier, industrySizeMultiplier, orgSizeMultiplier) * SECONDS_PER_DAY
     const gigsPerDay: number = bytesToGigs(bytesPerDay)
@@ -140,9 +148,7 @@ function CalculatorTableRow({device}) {
                 />
             </td>
             <td className='text-center category-table-numeric'>
-                <Form.Text key={device.id} type='number'>
-                    {numberToString(eventsPerSecond)}
-                </Form.Text>
+                <EditableEPSInput deviceId={device.id} eventsPerSecond={eventsPerSecond} hasCustomValue={deviceHasCustomEPS}/>
             </td>
             <td className='text-center category-table-numeric'>
                 <Form.Text key={device.id} type='number'>
