@@ -87,6 +87,7 @@ function EditableEPSInput({deviceId, eventsPerSecond, hasCustomValue, hasCurrent
             <form>
                 <input
                     type='number'
+                    placeholder=''
                     value={eventsPerSecondTruncated}
                     className='text-center form-control small-input'
                     onChange={handleChange}
