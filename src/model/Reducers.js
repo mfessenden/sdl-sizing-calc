@@ -137,8 +137,7 @@ export default function stateReducer(state, action) {
         // user sets the device EPS manually
         case 'UPDATE_EPS': {
             const deviceId = action.deviceId
-            const eventsPerSecond = action.eventsPerSecond
-
+            let eventsPerSecond = action.eventsPerSecond
             const device = devices.filter((d) => d.id === deviceId)[0]
             device.eps = eventsPerSecond
             break;

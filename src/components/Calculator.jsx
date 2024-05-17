@@ -51,9 +51,12 @@ const headerData = [
 function EditableEPSInput({deviceId, eventsPerSecond, hasCustomValue, hasCurrentQuantity}) {
     const {actions: {setDeviceEPS}} = useStateStore();
     const [isEditable: boolean, setEditable] = useState(false);
-
-    const eventsPerSecondTruncated: number = Number(eventsPerSecond.toFixed(1))
-    const eventsPerSecondString: string = numberToString(eventsPerSecond)
+    let eventsPerSecondString: string = '0'
+    let eventsPerSecondTruncated: string = ''
+    if (eventsPerSecond) {
+        eventsPerSecondTruncated = Number(eventsPerSecond.toFixed(1))
+        eventsPerSecondString = numberToString(eventsPerSecond)
+    }
 
     let smallClassName = 'text-center'
     if (hasCustomValue) {
@@ -62,8 +65,7 @@ function EditableEPSInput({deviceId, eventsPerSecond, hasCustomValue, hasCurrent
 
     const handleChange = (e) => {
         e.preventDefault();
-        const value: number = Number(e.target.value)
-        setDeviceEPS(deviceId, value)
+        setDeviceEPS(deviceId, e.target.value)
     }
 
     const handleBlur = (e) => {
