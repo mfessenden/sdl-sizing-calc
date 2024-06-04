@@ -176,31 +176,31 @@
                 {
                     "id": 21,
                     "name": "hypervisors",
-                    "display_name": "Hypervisors (VMWare, KWM)",
+                    "display_name": "Hypervisors (VMWare, KWM",
                     "base_weight": 3,
                     "event_size": 958,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 22,
                     "name": "identity",
                     "display_name": "Identity / Access Management",
                     "base_weight": 2,
-                    "category_id": 3
+                    "category_id": 1
                 },
                 {
                     "id": 23,
                     "name": "load_balancers",
                     "display_name": "Load Balancers",
                     "event_size": 142,
-                    "category_id": 3
+                    "category_id": 2
                 },
                 {
                     "id": 24,
                     "name": "mainframe",
                     "display_name": "Mainframe / iSeries",
                     "base_weight": 15,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 25,
@@ -208,7 +208,7 @@
                     "display_name": "Malware / Sandbox / Threat Servers - (Use # Endpoints)",
                     "base_weight": 0.01,
                     "event_size": 711,
-                    "category_id": 3
+                    "category_id": 1
                 },
                 {
                     "id": 26,
@@ -216,20 +216,20 @@
                     "display_name": "Netflows - (Use # Endpoints)",
                     "base_weight": 0.75,
                     "event_size": 383,
-                    "category_id": 3
+                    "category_id": 2
                 },
                 {
                     "id": 27,
                     "name": "radius",
                     "display_name": "RADIUS / LDAP / Directory Services",
                     "base_weight": 12,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 28,
                     "name": "storage",
                     "display_name": "Storage Servers / Systems",
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 29,
@@ -237,14 +237,14 @@
                     "display_name": "Unix/Linux - High Activity",
                     "base_weight": 2,
                     "event_size": 277,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 30,
                     "name": "unix_average",
                     "display_name": "Unix/Linux - Average Activity",
                     "event_size": 277,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 31,
@@ -252,7 +252,7 @@
                     "display_name": "Unix/Linux - Desktops",
                     "base_weight": 0.3,
                     "event_size": 277,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 32,
@@ -260,26 +260,26 @@
                     "display_name": "VPN",
                     "base_weight": 2,
                     "event_size": 296,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 33,
                     "name": "vulnerability_sever",
                     "display_name": "Vulnerability Management - Server",
-                    "category_id": 3
+                    "category_id": 1
                 },
                 {
                     "id": 34,
                     "name": "vulnerability_endpoints",
                     "display_name": "Vulnerability Management - Endpoints",
                     "base_weight": 0.003,
-                    "category_id": 3
+                    "category_id": 1
                 },
                 {
                     "id": 35,
                     "name": "wan_accelerators",
                     "display_name": "WAN Accelerators",
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 36,
@@ -287,7 +287,7 @@
                     "display_name": "Web Application Firewall - High Load",
                     "base_weight": 50,
                     "event_size": 711,
-                    "category_id": 3
+                    "category_id": 1
                 },
                 {
                     "id": 37,
@@ -295,7 +295,7 @@
                     "display_name": "Web Application Firewall - Low Load",
                     "base_weight": 10,
                     "event_size": 711,
-                    "category_id": 3
+                    "category_id": 1
                 },
                 {
                     "id": 38,
@@ -303,14 +303,14 @@
                     "display_name": "Web Gateway / Proxy / Content Filtering",
                     "base_weight": 15,
                     "event_size": 622,
-                    "category_id": 3
+                    "category_id": 1
                 },
                 {
                     "id": 39,
                     "name": "web_servers_internal",
                     "display_name": "Web Servers (Apache, IIS, etc) - Internal/Workgroup",
                     "event_size": 711,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 40,
@@ -318,7 +318,7 @@
                     "display_name": "Web Servers (Apache, IIS, etc) - External non-eCommerce",
                     "base_weight": 3,
                     "event_size": 711,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 41,
@@ -326,7 +326,7 @@
                     "display_name": "Windows - Domain Controllers - Corporate",
                     "base_weight": 20,
                     "event_size": 660,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 42,
@@ -334,7 +334,7 @@
                     "display_name": "Windows - Domain Controllers - Regional",
                     "base_weight": 12,
                     "event_size": 660,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 43,
@@ -342,7 +342,7 @@
                     "display_name": "Windows - Domain Controllers - Office",
                     "base_weight": 3,
                     "event_size": 660,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 44,
@@ -350,7 +350,7 @@
                     "display_name": "Windows - Servers - (Hosting Apps, DB, or other services listed)",
                     "base_weight": 1.25,
                     "event_size": 660,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 45,
@@ -358,7 +358,7 @@
                     "display_name": "Windows - Servers - Low Activity (ie: Print or Workgroup hosts)",
                     "base_weight": 2,
                     "event_size": 660,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 46,
@@ -366,7 +366,7 @@
                     "display_name": "Windows - Servers - Medium Activity",
                     "base_weight": 8,
                     "event_size": 660,
-                    "category_id": 3
+                    "category_id": 0
                 },
                 {
                     "id": 47,
@@ -374,7 +374,7 @@
                     "display_name": "Windows - Servers - High Activity (ie: File Servers, ERP or CRM)",
                     "base_weight": 30,
                     "event_size": 660,
-                    "category_id": 3
+                    "category_id": 0
                 }
             ],
             "device_defaults": {
