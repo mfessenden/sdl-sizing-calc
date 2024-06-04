@@ -176,7 +176,7 @@
                 {
                     "id": 21,
                     "name": "hypervisors",
-                    "display_name": "Hypervisors (VMWare, KWM",
+                    "display_name": "Hypervisors (VMWare, KWM)",
                     "base_weight": 3,
                     "event_size": 958,
                     "category_id": 0
