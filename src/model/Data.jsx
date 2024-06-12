@@ -1,5 +1,5 @@
 import {createContext, useContext, useReducer} from 'react';
-import {AppState, Quote} from '../types';
+import {AppState, Device, Quote} from '../types';
 import stateReducer from './Reducers';
 import {SDL_STATE, SECONDS_PER_DAY} from '../Constants';
 import {calculateItemPerSecondUsage} from '../Utils';
@@ -163,7 +163,7 @@ export const useStateStore = (): any => useContext(StateContext);
 /**
  * Calculates the current ingest quote based on the given devices, retention period, and retention interval.
  *
- * @param {Array<object>} devices - current calculator devices.
+ * @param {Device[]} devices - current calculator devices.
  * @param {number} retentionQuantity - data retention period quantity (from the result period input).
  * @param {number} retentionInterval - data retention interval (days, weeks, etc.)
  * @param industryIdMultiplier - multiplier based on industry identifier
@@ -172,12 +172,13 @@ export const useStateStore = (): any => useContext(StateContext);
  * @return {number} total bytes of current quote.
  */
 export function calculateQuote(
-    devices,
+    devices: Device[],
     retentionQuantity: number = 1,
     retentionInterval: number = 1,
     industryIdMultiplier: number = 1,
     industrySizeMultiplier: number = 1,
-    orgSizeMultiplier: number = 1): number {
+    orgSizeMultiplier: number = 1
+): number {
 
     // get the total in bytes per time period (in days)
     let totalBytesPerPeriod = 0
