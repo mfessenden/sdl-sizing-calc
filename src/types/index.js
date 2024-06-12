@@ -39,6 +39,8 @@ export const Quote = {
     metadata: {...QuoteMetadata}
 }
 
+
+// TODO: saved quotes
 export const SavedQuote = {
     data: AppState,
     metadata: QuoteMetadata
