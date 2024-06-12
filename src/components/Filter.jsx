@@ -15,6 +15,8 @@ import {useStateStore} from '../model/Data';
  *   |Filter            | | Active: On  |
  *   +------------------+ +-------------+
  *
+ * Updating either of these inputs affects the current app state's 'filter_active' & 'filter_string' attributes.
+ *
  * @param {boolean} hasActiveDevices - Indicates there are active devices in the application.
  * @return {Element} - filtered input component.
  */

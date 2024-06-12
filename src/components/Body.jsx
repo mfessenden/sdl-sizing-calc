@@ -6,7 +6,16 @@ import ResultBody from './Result';
 
 
 /**
- * Renders the body of the calculator page.
+ * Renders the body of the calculator app:
+ *
+ *  - list of devices
+ *  - quote options & result
+ *
+ *    +---------------------+ +--------------+
+ *    |                     | |              |
+ *    |     Device List     | | Quote Result |
+ *    |                     | |              |
+ *    +---------------------+ +--------------+
  *
  * @returns {JSX.Element} JSX element representing the calculator body.
  */

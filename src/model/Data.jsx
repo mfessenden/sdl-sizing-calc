@@ -92,9 +92,6 @@ export function initializeAppState() {
         databaseData.current_state = currentState
     }
 
-    // live updates
-    databaseData.current_state.admin_mode = process.env.SDL_ADMIN === 1
-    databaseData.current_state.has_saved_data = hasSavedState
     return databaseData
 }
 

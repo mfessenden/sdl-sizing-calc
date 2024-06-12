@@ -14,6 +14,7 @@ import {SECONDS_PER_DAY} from '../Constants';
 import {useState} from 'react';
 
 
+// Header data for device list items
 const headerData = [
     {
         id: 0,
@@ -41,14 +42,13 @@ const headerData = [
 
 
 /**
- * Editable text component allows the user to edit and display a numerical value. The value
- * represents the device's **events per second** variable. Allows the user to customize the
- * quote.
+ * Editable text component allows the user to edit and display a device's **events per second** variable. Allows the
+ * user to customize the quote by clicking the text and adding a new value.
  *
- * @param {Object} device - The device object representing the device being edited.
+ * @param {Device} device - The device object representing the device being edited.
  * @return {JSX.Element} The rendered component.
  */
-function EditableEPSInput({deviceId, eventsPerSecond, hasCustomValue, hasCurrentQuantity}) {
+function EditableEPSComponent({deviceId, eventsPerSecond, hasCustomValue, hasCurrentQuantity}) {
     const {actions: {setDeviceEPS}} = useStateStore();
     const [isEditable: boolean, setEditable] = useState(false);
     let eventsPerSecondString: string = '0'
@@ -76,10 +76,7 @@ function EditableEPSInput({deviceId, eventsPerSecond, hasCustomValue, hasCurrent
 
     if (!isEditable || !hasCurrentQuantity) {
         return (
-            <small
-                className={smallClassName}
-                onClick={setEditable}
-            >
+            <small className={smallClassName} onClick={setEditable}>
                 {eventsPerSecondString}
             </small>
         );
@@ -102,9 +99,9 @@ function EditableEPSInput({deviceId, eventsPerSecond, hasCustomValue, hasCurrent
 
 
 /**
- * Renders a table row component for a device.
+ * Renders a table row component for a device, including an editable range slider widget used to change device quantity.
  *
- * @param {object} device - The device object.
+ * @param {Device} device - The device object.
  *
  * @returns {JSX.Element} - The rendered table row.
  */
@@ -155,7 +152,7 @@ function CalculatorTableRow({device}) {
                 />
             </td>
             <td className='text-center category-table-numeric'>
-                <EditableEPSInput
+                <EditableEPSComponent
                     deviceId={device.id}
                     eventsPerSecond={eventsPerSecond}
                     hasCustomValue={deviceHasCustomEPS}
@@ -173,39 +170,36 @@ function CalculatorTableRow({device}) {
 
 
 /**
- * Renders a table for a given category & associated devices.
+ * Renders the table element for a given category & associated devices.
  *
- * @param {Object} table_item - The category object containing category_id and device_types.
- * @param {Array} columnData - Column header values.
+ * @param {Object} tableItem - The category object containing category_id and device_types.
+ * @param {Array} headerData - Column header values.
  *
  * @return {JSX.Element} The rendered table for the category.
  */
-function CategoryTable({table_item, columnData}) {
+function CategoryTable({tableItem, headerData}) {
     // query the devices associated with this category
-    const devices = table_item.device_types
+    const devices = tableItem.device_types
     return (
         <div>
-            <Table key={table_item.category_id}>
+            <Table key={tableItem.category_id}>
                 <thead>
-                <tr>
-                    {columnData.map(column => (
-                        <th
-                            key={column.id}
-                            title={column.description}
-                            className={column.align_center ? 'category-header-center' : 'category-header-left'}
-                        >
-                            {column.display_name}
-                        </th>
-                    ))}
-                </tr>
+                    <tr>
+                        {headerData.map(column => (
+                            <th
+                                key={column.id}
+                                title={column.description}
+                                className={column.align_center ? 'category-header-center' : 'category-header-left'}
+                            >
+                                {column.display_name}
+                            </th>
+                        ))}
+                    </tr>
                 </thead>
                 <tbody>
-                {devices.map(device => (
-                    <CalculatorTableRow
-                        key={device.id}
-                        device={device}
-                    />
-                ))}
+                    {devices.map(device => (
+                        <CalculatorTableRow key={device.id} device={device}/>
+                    ))}
                 </tbody>
             </Table>
         </div>
@@ -287,7 +281,7 @@ export default function CalculatorBody() {
                     <Accordion.Item eventKey='filtered'>
                         <Accordion.Header>{filterDescription}</Accordion.Header>
                         <Accordion.Body>
-                            <CategoryTable table_item={filteredTableItem} columnData={headerData}>
+                            <CategoryTable tableItem={filteredTableItem} headerData={headerData}>
                                 {filteredDevices.map(device => (
                                     <CalculatorTableRow key={device.id} device={device}/>
                                 ))}
@@ -298,22 +292,22 @@ export default function CalculatorBody() {
             </Container>
         )
 
-        // build table items from the current state
+    // build table items from the current state
     } else {
-        const table_items = buildCategoryTables(state)
+        const tableItems = buildCategoryTables(state)
         return (
             <Container fluid className='d-grid gap-3'>
-                {table_items.map(table_item => (
+                {tableItems.map(tableItem => (
                     // don't show the table if there are no entries
-                    table_item.device_types.length > 0 ? (
-                        <Accordion alwaysOpen key={table_item.category_id} defaultActiveKey={0}>
-                            <Accordion.Item eventKey={table_item.category_id}>
-                                <Accordion.Header>{table_item.display_name}</Accordion.Header>
+                    tableItem.device_types.length > 0 ? (
+                        <Accordion alwaysOpen key={tableItem.category_id} defaultActiveKey={0}>
+                            <Accordion.Item eventKey={tableItem.category_id}>
+                                <Accordion.Header>{tableItem.display_name}</Accordion.Header>
                                 <Accordion.Body>
                                     <CategoryTable
-                                        key={`category-table-${table_item.category_id}`}
-                                        table_item={table_item}
-                                        columnData={headerData}
+                                        key={`category-table-${tableItem.category_id}`}
+                                        tableItem={tableItem}
+                                        headerData={headerData}
                                     />
                                 </Accordion.Body>
                             </Accordion.Item>

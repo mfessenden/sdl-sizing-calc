@@ -10,10 +10,10 @@ import {useStateStore} from '../model/Data';
  * the device's quantity. This is used as the first column in the calculator tables.
  *
  *     +-------------------------.---------------+
- *    |Generic Data Source     ( )------------  |
+ *    | Generic Data Source     ( )------------ |
  *    +-------------------------'---------------+
  *
- * @param {Object} device - the current device being rendered.
+ * @param {Device} device - the current device being rendered.
  * @param {boolean} disabled - device has a set EPS value, so quantity is locked
  * @return {JSX.Element} - The rendered component.
  */

@@ -12,10 +12,29 @@ import {IndustryDetailData, RetentionPeriodData} from '../Constants';
 
 
 // form group for the given tab
+
+/**
+ * Renders the data retention input component:
+ *
+ *      +----------------------------------+
+ *      |  Data Retention Period (Daily)   |
+ *      |                                  |
+ *      |      +--------------------+      |
+ *      |      |         1          |      |
+ *      |      +--------------------+      |
+ *      +----------------------------------+
+ *
+ * Updating the retention value updates the current quote.
+ *
+ * @param {boolean} adminMode - Indicates whether to enable debug/admin mode.
+ * @return {JSX.Element} - The rendered top navigation bar component.
+ */
 function DataRetentionInput({tabData}) {
     const {state, actions: {setRetentionPeriods}} = useStateStore();
     const currentQuote = state.current_state.current_quote
     let retentionQuantity = currentQuote.retention_quantity
+
+    // assume 1 if NaN
     if (isNaN(retentionQuantity)) {
         retentionQuantity = 1
     }
