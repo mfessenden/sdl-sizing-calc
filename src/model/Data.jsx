@@ -4,8 +4,15 @@ import stateReducer from './Reducers';
 import {SDL_STATE, SECONDS_PER_DAY} from '../Constants';
 import {calculateItemPerSecondUsage} from '../Utils';
 
+
+// default app state data
 let DatabaseData = require('../data.json');
+
+// app state, either from a saved state or from an initialized new state
 let InitialAppState = initializeAppState()
+
+// create a state provider context, used by child components, initialized via 'StateProvider'
+export const StateContext: React.Context<any | Object> = createContext(InitialAppState);
 
 
 /**
@@ -53,37 +60,35 @@ export function saveCurrentState(state) {
 
 
 /**
- * Builds the context data for the application. Retrieves saved state data and sets default property
- * values for device types.
+ * Builds context data for the current app state.
+ *
+ * Retrieves saved state data and sets default property values for device types.
  *
  * @return {object} The context data object containing saved state and device type information.
  */
 export function initializeAppState() {
-    const hasSavedState = hasSavedData()
+
+    // if saved app state exists, use that, else default data
     let databaseData = getSavedState() ?? {...DatabaseData}
 
-    // default property values
+    // calculator default attributes
     const calculatorData = databaseData['calculator']
 
-    // devices
-    const devicesData = calculatorData['devices']
+    // update the devices with defaults if the attributes are not present (quantity, etc.)
+    const devicesData = calculatorData['devices']  // todo: get this from default data
     const deviceDefaults = devicesData['device_defaults']
-    const defaultBaseWeight = deviceDefaults['base_weight']
-    const defaultEventSize = deviceDefaults['event_size']
-    const defaultCategoryId = deviceDefaults['category_id']
-    const defaultQuantity = deviceDefaults['quantity']
-
-    // devices
-    const deviceTypes = devicesData['device_items']
-
+    const devices = devicesData['device_items']
 
     // set defaults if not present
-    for (const deviceType of deviceTypes) {
-        deviceType.base_weight = deviceType.base_weight ? deviceType.base_weight : defaultBaseWeight
-        deviceType.event_size = deviceType.event_size ? deviceType.event_size : defaultEventSize
-        deviceType.category_id = deviceType.category_id ? deviceType.category_id : defaultCategoryId
-        deviceType.quantity = deviceType.quantity ? deviceType.quantity : defaultQuantity
+    for (const device of devices) {
+        device.base_weight = device.base_weight ? device.base_weight : deviceDefaults['base_weight']
+        device.event_size = device.event_size ? device.event_size : deviceDefaults['event_size']
+        device.category_id = device.category_id ? device.category_id : deviceDefaults['category_id']
+        device.quantity = device.quantity ? device.quantity : deviceDefaults['quantity']
     }
+
+    // if there isn't saved state in localStorage, initialize the current app state & quote
+    const hasSavedState = hasSavedData()
 
     if (!hasSavedState) {
         // add app state & quote
@@ -96,11 +101,8 @@ export function initializeAppState() {
 }
 
 
-export const StateContext: React.Context<any | Object> = createContext(InitialAppState);
-
-
 /**
- * Creates a custom state using a reducer and provides actions to manipulate the state.
+ * Combines an initialized state & reducer actions, used to update the current app state.
  *
  * @param {Object} defaultState - default state to initialize the custom state with.
  * @returns {Object} An object containing the custom state and actions to manipulate the state.
@@ -134,17 +136,16 @@ export const useCustomState = (defaultState = initializeAppState()) => {
 
 
 /**
- * Component that provides state to the app's child components.
+ * Component that provides app state to the app's child components.
  *
- * @param {Object} props - The component props.
- * @param {ReactNode} props.children - The children components.
+ * @param {ReactNode} children - The children components.
  * @returns {ReactElement} The StateProvider component.
  */
 export const StateProvider = ({children}: any) => {
     // state contains two items: 'devices' & 'actions'
     const state = useCustomState();
     return <StateContext.Provider value={state}>{children}</StateContext.Provider>;
-};
+}
 
 
 /**
@@ -170,7 +171,13 @@ export const useStateStore = (): any => useContext(StateContext);
  * @param orgSizeMultiplier - multiplier based on a specific organization size range
  * @return {number} total bytes of current quote.
  */
-export function calculateQuote(devices, retentionQuantity: number = 1, retentionInterval: number = 1, industryIdMultiplier: number = 1, industrySizeMultiplier: number = 1, orgSizeMultiplier: number = 1): number {
+export function calculateQuote(
+    devices,
+    retentionQuantity: number = 1,
+    retentionInterval: number = 1,
+    industryIdMultiplier: number = 1,
+    industrySizeMultiplier: number = 1,
+    orgSizeMultiplier: number = 1): number {
 
     // get the total in bytes per time period (in days)
     let totalBytesPerPeriod = 0

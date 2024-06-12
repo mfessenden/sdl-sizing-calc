@@ -10,43 +10,20 @@ import {
     numberToString,
     calculateEventsPerSecond
 } from '../Utils';
-import {SECONDS_PER_DAY} from '../Constants';
+import {CalculatorHeaderData, SECONDS_PER_DAY} from '../Constants';
 import {useState} from 'react';
-
-
-// Header data for device list items
-const headerData = [
-    {
-        id: 0,
-        display_name: 'Device Type',
-        align_center: false
-    },
-    {
-        id: 1,
-        display_name: 'Quantity',
-        description: 'Number of Devices',
-        align_center: true
-    },
-    {
-        id: 2,
-        display_name: 'EPS',
-        description: 'Events per Second',
-        align_center: true
-    },
-    {
-        id: 3,
-        display_name: 'GB/Day',
-        align_center: true
-    }
-]
 
 
 /**
  * Editable text component allows the user to edit and display a device's **events per second** variable. Allows the
  * user to customize the quote by clicking the text and adding a new value.
  *
- * @param {Device} device - The device object representing the device being edited.
- * @return {JSX.Element} The rendered component.
+ * @param {string} deviceId - The ID of the device.
+ * @param {number} eventsPerSecond - device events per second.
+ * @param {boolean} hasCustomValue - Indicates whether the component has a custom EPS value set.
+ * @param {boolean} hasCurrentQuantity - Indicates whether the component has a current quantity value.
+ *
+ * @return {React.Element} The EditableEPSComponent.
  */
 function EditableEPSComponent({deviceId, eventsPerSecond, hasCustomValue, hasCurrentQuantity}) {
     const {actions: {setDeviceEPS}} = useStateStore();
@@ -281,7 +258,7 @@ export default function CalculatorBody() {
                     <Accordion.Item eventKey='filtered'>
                         <Accordion.Header>{filterDescription}</Accordion.Header>
                         <Accordion.Body>
-                            <CategoryTable tableItem={filteredTableItem} headerData={headerData}>
+                            <CategoryTable tableItem={filteredTableItem} headerData={CalculatorHeaderData}>
                                 {filteredDevices.map(device => (
                                     <CalculatorTableRow key={device.id} device={device}/>
                                 ))}
@@ -307,7 +284,7 @@ export default function CalculatorBody() {
                                     <CategoryTable
                                         key={`category-table-${tableItem.category_id}`}
                                         tableItem={tableItem}
-                                        headerData={headerData}
+                                        headerData={CalculatorHeaderData}
                                     />
                                 </Accordion.Body>
                             </Accordion.Item>

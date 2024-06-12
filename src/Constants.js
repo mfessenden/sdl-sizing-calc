@@ -10,6 +10,33 @@ export const ADMIN_PANEL_NAME: string = 'Admin Panel';
 export const DEFAULT_CATEGORY_ID: number = 3;
 
 
+// Header data for calculator device list items
+export const CalculatorHeaderData = [
+    {
+        id: 0,
+        display_name: 'Device Type',
+        align_center: false
+    },
+    {
+        id: 1,
+        display_name: 'Quantity',
+        description: 'Number of Devices',
+        align_center: true
+    },
+    {
+        id: 2,
+        display_name: 'EPS',
+        description: 'Events per Second',
+        align_center: true
+    },
+    {
+        id: 3,
+        display_name: 'GB/Day',
+        align_center: true
+    }
+]
+
+
 // data for the retention period tabs
 export const RetentionPeriodData = [
     {
