@@ -1,6 +1,5 @@
 import {useEffect} from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import AdminPanel from './components/Admin';
 import Body from './components/Body';
 import TopNavbar from './components/Navbar';
 import {StateProvider} from './model/Data';
@@ -23,7 +22,6 @@ export default function App() {
                 <BrowserRouter>
                     <Routes>
                         <Route path='/' element={<Body/>}/>
-                        <Route path='admin' element={<AdminPanel/>}/>
                     </Routes>
                 </BrowserRouter>
             </StateProvider>
